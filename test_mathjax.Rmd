@@ -1,0 +1,15 @@
+---
+title: "Untitled"
+author: "Roger J Bos"
+date: "2/28/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+$ solve.QP(Dmat, dvec, Amat, bvec, meq=0)$
+$ Find w$
+$ \max  d' w - 1/2 w' D w$
+$ suchthat A' q \ge b$
