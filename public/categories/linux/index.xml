@@ -6,7 +6,7 @@
     <description>Recent content in Linux on Roger J. Bos, CFA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Dec 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Dec 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/linux/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,11 +14,11 @@
     <item>
       <title>Linux Notes</title>
       <link>/linux/</link>
-      <pubDate>Sun, 23 Dec 2018 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 22 Dec 2018 00:00:00 +0000</pubDate>
       
       <guid>/linux/</guid>
-      <description>I am a huge fan of linux. I enjoy ssh-ing into servers and using the command line, but since I don&amp;rsquo;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this handy reference for myself.
- df shows the amount of free space on your drive free shows the amount of free memory on your machine. history shows a list of previous commands. What&amp;rsquo;s nice is that you can re-run any command by using the bang operator and the line number (i.</description>
+      <description>I am a huge fan of linux. I enjoy ssh-ing into servers and using the command line, but since I don&amp;rsquo;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.
+Linux Commands  df shows the amount of free space on your drive free shows the amount of free memory on your machine. history shows a list of previous commands.</description>
     </item>
     
   </channel>

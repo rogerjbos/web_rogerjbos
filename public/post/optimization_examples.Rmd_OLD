@@ -1,0 +1,357 @@
+---
+title: "Optimization Examples"
+author: "Roger J. Bos, CFA"
+date: "1/16/2019"
+output: 
+  html_document:
+    number_sections: TRUE
+    includes:
+      after_body: footer.html    
+    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options("getSymbols.warning4.0"=FALSE)
+options("getSymbols.yahoo.warning"=FALSE)
+library(xts)
+library(quantmod)
+library(ggplot2)
+```
+# Prerequisites
+
+Before we get to the optimization examples, we will download the price history for a small number of ETFs and show how to calculate the returns, standard deviations, variance matrix and other inputs that we will need for the optimizer.
+
+## Prices
+
+For these examples, we will download the daily prices for a handfull of ETFs from Yahoo Finance, starting in 2003.  Once the daily data is downlaoded, we use the *to.weekly()* function to convert the prices to a weekly series (there is also a *to.monthly()* function) and then combine the series column by column into a data.frame.
+
+```{r prices, warnings=FALSE, messages=FALSE, cache=TRUE}
+symbols <- c("IWD","IWF","IWN","IWO","IWP","IWS")
+initDate <- "2003-01-01"
+go <- try(getSymbols(symbols, from = initDate))
+
+prices <- list()
+for(i in 1:length(symbols)) {
+  tmp <- Ad(get(symbols[i]))
+  tmp <- to.weekly(tmp, indexat="%m/%d/%Y")
+  tmp <- tmp$tmp.Close
+  names(tmp) <- symbols[i]
+  prices[[i]] <- tmp
+}
+prices <- do.call(cbind, prices)
+tail(prices)
+```
+
+## Returns
+
+Once we have the prices, we can use the *lag* function to calculate the (weekly) returns. We also create a logprices series just for good measure.
+
+```{r returns, warnings=FALSE, messages=FALSE}
+prices <- as.xts(prices)
+returns <- (prices / lag(prices, k = 1) - 1)
+returns[is.na(returns)] <- 0
+logprices <- log(prices)
+tail(logprices)
+tail(returns)
+```
+
+## Expected returns and Standard Deviation
+
+The greek letter $\mu$ (mu) is usually used to represent the expected return.  Often we don't have an actual forcast of the return, so we use the naive forecast, which is the historical mean return.  The mean return can be easily calculated in R using the apply function on the second dimension (the columns) using the *mean* function.  If one or more observations are NA then the mean function will return NA unless you tell it to remove NAs by setting na.rm = TRUE.  Likewise, you can use apply with the standard deviation (sd) function, which is usually represented with the greek letter $\sigma$.
+
+The standard deviation of returns is by far the most widely used measure of risk, but there are other options.  One option is the downside deviation.  Recall the formula for standard deviation is $\sqrt\sum(x-\overline{x})^{2}$.  The downside deviation calculation focuses only on the cases where $x \lt \overline{x}$.  The rational given for this is that it is the negative deviations in returns that are problematic.  No on complains about large positive deviations, unless of course, you are short the stock, in which case you could use the upside deviation calculation.  For the vast majority of stocks all the deviation calculations are very similar and as stated before, it is probably best to stick to the the regular standard deviation calculation.
+
+```{r sd, warnings=FALSE, messages=FALSE}
+mu <- apply(returns, MARGIN=2, FUN=mean, na.rm=TRUE)
+sigma <- apply(returns, MARGIN=2, FUN=sd)
+sigma2 <- sqrt(apply(returns, MARGIN=2, FUN=var))
+library(magrittr)
+sigma3 <- apply(returns, MARGIN=2, FUN=var) %>% sqrt()
+rbind(sigma, sigma2, sigma3)
+
+```
+
+We show three different ways to calculate the same stndard deviation above.  The third one is essentially the same as the second, we just use the magrittr package in R which gives us the *%>%* operator that makes the code easier to read.  We will show you a fourth way to calculate standard deviation in the next section.
+
+```
+
+## Variance Matrix
+
+There are a couple of different ways to calculate the variance matrix (V).  The simplest method is the esimate the sample covariance matrix.
+
+```{r variance, warnings=FALSE, messages=FALSE}
+V <- cov(returns, use="complete")
+V
+sigma4 <- sqrt(diag(V))
+sigma4
+
+```
+
+The *cov* function calculations the co-variance of the returns between each pair of stocks using the formula $\sqrt\sum((x-\overline{x})(y-\overline{y})}$. On the diagonal of the matrix $x$ and $y$ are the same and the resulting calculation is the variance, so that is why $\sqrt \diag(V))$ produces the standard deviation, which you can verify matches the prior methods of calculating standard deviation.
+
+## Robust methods of handling outliers
+
+To simulate an outlier, we will create a second returns series with only one observation different, but the difference being very large (an outlier).
+
+```{r outliers, warnings=FALSE, messages=FALSE}
+returns2 <- returns
+returns2[60,2]
+returns2[60,2] <- 5
+```
+
+Graphically, we can see how changing just one observation changes the correlation relationship of that ETF with the other ETFs.
+```{r dendrogram}
+
+par(mfrow=c(1,2))
+plot(as.dendrogram( hclust(
+    as.dist(sqrt(2-cor(returns, use="complete")))
+  ), h = .1 ), horiz = TRUE, xlim = c(1.3, 1)
+)
+plot(as.dendrogram( hclust(
+    as.dist(sqrt(2-cor(returns2, use="complete")))
+  ), h = .1 ), horiz = TRUE, xlim = c(1.3, 1)
+)
+
+```
+
+
+
+```{r cov, warnings=FALSE, messages=FALSE}
+V <- cov(returns, use="pairwise")
+V2 <- cov(returns2, use="pairwise")
+print(V[1:3, 1:3])
+print(V2[1:3, 1:3])
+```
+
+R package *corpcor* has a function called *cov.shrink* that shrinks all of the covariances closer to the mean, based on a *lambda.var* parameter.  Using *lambda.var* of zero returns the (unshrunk) sample covariance matrix and we verify that below.  If *lambda.var* is not specified it is automatically determined.  You can see that the shrunk covariance matrix does a good job of minimizing the effect of the outlier.
+
+```{r srhink, warnings=FALSE, messages=FALSE}
+library(corpcor)
+V2.sample <- cov.shrink(returns2, lambda.var = 0)
+V2.shrink <- cov.shrink(returns2)
+print(V2[1:3, 1:3])
+print(V2.sample[1:3, 1:3])
+print(V2.shrink[1:3, 1:3])
+print(V[1:3, 1:3])
+
+```
+
+
+```{r, warnings=FALSE, messages=FALSE}
+# create exponential weights for a weighted covariance matrix
+wgts <- .98^(nrow(returns):1)
+V.weighted <- cov.shrink(returns, w=wgts)
+
+returns2 <- returns
+returns2[60,2] <- -100
+
+V2 <- cov(returns2, use="pairwise")
+dim(V2)
+dim(V2.shrink)
+
+V2.shrink <- cov.shrink(returns2, lambda = 0.99)
+V2
+V2[1:3, 1:3]
+V2.shrink[1:3, 1:3]
+
+library(ellipse)
+plotcorr(cov2cor(V))
+```
+
+## Risk and Expected returns
+
+$\mu$ is supposed to be the expected return.  Often we don't have any actual forcast of the return, so we use the naive forecast, which is the mean return.  The mean return can be easily calculated in R using the apply function on the second dimension (the columns) using the *mean* function.  If one or more observations are NA then the mean function will return NA unless you tell it to remove NAs by setting na.rm = TRUE.
+
+```
+mu <- apply(returns, MARGIN=2, FUN=mean, na.rm=TRUE)
+```
+and $\sigma$ (sigma) is the standard deviation (the square root of the variance).
+
+```
+sigma2 <- apply(returns, 2, sd)
+sigma <- sqrt(diag(V))
+```
+
+```{r plot_assets, warnings=FALSE, messages=FALSE}
+
+plot_assets <- function(V, mu) {
+  rd <- data.frame(mu=mu, sigma=sqrt(diag(V)))
+  rd$assets <- row.names(rd)
+  
+  ggplot(rd, aes(x = sigma, y = mu, color = assets)) +
+    geom_point(size = 2) +
+    ylab("Expected Return") +
+    xlab("Standard Deviation (Risk)") +
+    xlim(0, max(sigma)) + 
+    ylim(0, 1.2*max(mu)) +
+    ggtitle("Expected Returns versus Risk")
+    
+}
+  
+plot_assets(V, mu)
+
+```
+
+# Optimization
+
+There are many optimization packages available for R.  To start off, we will use the  *solve.QP* package, then move on to show some other optimizers.
+
+## Equal-weighted
+
+The portfolio optimization problem is the problem of finding the optimal weights of a portfolio.  For example, how much you should invest in each asset to maximize some desirable quantity, say risk-adjusted return.
+
+If you do not have any information about the assets (or, more realistically, any reliable information) you can assign the same weight to each asset: this maximizes the entropy (a measure of diversity) of the weights.
+
+```{r frontier, warnings=FALSE, messages=FALSE}
+
+plot_portfolio <- function(w, label, V, mu) {
+
+  require(quadprog)
+  n <- length(mu)
+  A <- cbind( # Each column is a constraint
+    matrix( rep(1,n), nr=n ),
+    diag(n)
+  )
+  b <- c(1, rep(0,n))
+  f <- function(u) {
+    solve.QP(Dmat = u * V, bvec = mu, Amat = A, bvec = b, meq = 1)$solution
+  }
+  require(parallel) # Run the computations in parallel
+  risk_aversions <- seq(.1, 100, length=ceiling(1e5/length(mu)))
+  efw <- mclapply(risk_aversions, f)
+  efw <- do.call(cbind, efw)
+  x <- sqrt( colSums(efw * (V %*% efw)) )
+  y <- t(efw) %*% mu
+  
+  # Efficient frontier points
+  ef <- data.frame(x=x, y=y)
+  
+  rd <- data.frame(mu=mu, sigma=sqrt(diag(V)))
+  rd$assets <- row.names(rd)
+  
+  port_risk <- sqrt( t(w) %*% V %*% w )
+  port_return <- t(w) %*% mu
+  
+  gg <- ggplot(rd, aes(x = sigma, y = mu, color = assets)) +
+    geom_point(size = 2) +
+    ylab("Expected Return") +
+    xlab("Standard Deviation (Risk)") +
+    xlim(0, max(sigma)) + 
+    ylim(0, 1.2*max(mu)) +
+    ggtitle("Expected Returns versus Risk") +
+    geom_segment(data = ef, aes(x = x, xend = dplyr::lead(x), y = y, yend = dplyr::lead(y)), color="grey") + 
+    geom_point(aes(x = port_risk, y = port_return), color = "cornflowerblue", size = 6) +
+    geom_text(aes(x = port_risk, y = port_return, label = label, color="Portfolio"), 
+      position = position_dodge(width = 1), vjust = 1.5,) 
+  print(gg)
+
+}
+
+plot_portfolio(w = rep(1/length(mu), length(mu)), label = "Equal weighted", V = V, mu = mu)
+
+```
+
+## Mean-Variance
+
+The mean-variance portfolio maximizes the risk-adjusted expected return of the portfolio.
+Usually this takes the form of $\mu - \lambda * \sigma^{2}$, where 
+    * $\lambda$ is the risk aversion parameter as determined by the investor
+    * $\mu$ is the expected return (probably proxied by the historical return)
+    * $\sigma^{2}$ is the risk measure, but other choices are available
+
+We will use the *solve.QP* function in library quadprog, which requires converting the problem to the following format:
+
+Functin call: solve.QP(Dmat, dvec, Amat, bvec, meq=0)
+  Find w
+  to maximize  dvec' w - 1/2 w' Dmat w
+  such that    Amat' q >= bvec   (the first meq constraints are equalities)
+
+## No constraints
+```{r noConstraints, warnings=FALSE, messages=FALSE}
+
+n <- length(mu)
+Amat <- matrix(nr=n, nc=0)
+bvec <- c()
+r <- solve.QP(Dmat=V, dvec=mu, Amat, bvec, meq=0)
+round(r$solution, 4)
+```
+
+With absolutely no constraints the weights no not sum to one, rather summing to 'r sum(r$solution)`, the positions are highly levered, and there are many negative weights, implying shorting.  We will now add a constraint to requie that the weights sum to one by using the Amat, bvec, and meq parameters as follows:  $Amat' q >= bvec$ 
+We can create equality constraints, but they must be the first meq constraints and the remaining constraints will be inequality constraints.  For long only we will only have one constraint, and that is that all the weights sum to exactly one.
+
+```{r weightsConstraint1, warnings=FALSE, messages=FALSE}
+Amat <- matrix( rep(1,n), nr=n )
+bvec <- 1
+print(Amat)
+print(bvec)
+```
+
+As you can see, we created Amat as a column of all ones, bvec as a single 1, and set meq=1 so the function knows it is an equality constraint.
+
+```{r weightsConstraint2, warnings=FALSE, messages=FALSE}
+r <- solve.QP(Dmat=V, dvec=mu, Amat, bvec, meq=1)
+sum(r$solution)
+round(r$solution, 2)
+```
+
+Now the weights sum to one, but the leverage is still too high.  Lets modify Amat and bvec as follows:
+
+```{r Amat, warnings=FALSE, messages=FALSE}
+Amat <- cbind(matrix( rep(1,n), nr=n ), diag(n))
+bvec <- c(1, rep(0,n))
+print(Amat)
+print(bvec)
+```
+
+This make this concept concrete, here is how the matrix would look in equation form:
+
+```{r matrix, warnings=FALSE, messages=FALSE}
+eq <- c("=", rep(">=", n))
+print(rbind(Amat, eq, bvec))
+```
+
+We can move along the efficient frontier (the grey line) by adjusting the risk-aversion parameter $\lambda$.  $\lambda$=1 gives a balance between expected return and risk, whereas $\lambda$ < 1 will shift the optimal portfolio to the right and $\lambda$ > 1 will shift the optimal portfolio to the left.
+
+## $\lambda$ = 1: Neutral risk-averse investor
+```{r longonly, warnings=FALSE, messages=FALSE}
+r <- solve.QP(Dma=V, dvec=mu, Amat, bvec, meq=1)
+sum(r$solution)
+round(r$solution, 2)
+plot_portfolio(w=r$solution, label="lambda = 1", V, mu)
+```
+
+$\lambda$ < 1 downplays the risk component and gives more importance to expected return, thus shifting the optimal portfolio to the right along the efficient frontier.
+
+## $\lambda$ < 1:  More risk-tolerant investor
+```{r riskTolerant, warnings=FALSE, messages=FALSE, out.width=c('50%','50%'), fig.show='hold'}
+r5 <- solve.QP(Dmat = .5 * V, dvec = mu, Amat, bvec, meq = 1)
+r1 <- solve.QP(Dmat = .1 * V, dvec = mu, Amat, bvec, meq = 1)
+plot_portfolio(w=r5$solution, label="lambda = .5", V, mu)
+plot_portfolio(w=r1$solution, label="lambda = .1", V, mu)
+```
+
+$\lambda$ > 1 increases the importance of the risk component and while keeping the expected returns the same, thus shifting the optimal portfolio to the left along the efficient frontier.
+
+# $\lambda$ > 1:  More risk-averse investor
+```{r riskAverse, warnings=FALSE, messages=FALSE, out.width=c('50%','50%'), fig.show='hold'}
+r3 <- solve.QP(Dmat = 3 * V, dvec = mu, Amat, bvec, meq = 1)
+r10 <- solve.QP(Dmat = 10 * V, dvec = mu, Amat, bvec, meq = 1)
+plot_portfolio(w=r3$solution, label = "lambda = 3", V, mu)
+plot_portfolio(w=r10$solution, label = "lambda = 10", V, mu)
+```
+
+# Minimum Volatilty (Minv-Vol)
+
+The minimum volatility portfolio to achieve by setting $\mu$ to zero and solving the same optimization probme, so the optimizer finds the portfolio with the lowest risk regardless of the expected return.  The minimum volatility portfolio is on the left and the mean variance portfolio is on the right for comparison purposes.
+
+```{r riskAverse, warnings=FALSE, messages=FALSE, out.width=c('50%','50%'), fig.show='hold'}
+r0 <- solve.QP(Dmat = V, dvec = 0 * mu, Amat, bvec, meq = 1)
+plot_portfolio(w=r0$solution, label = "Minv-Vol", V, mu)
+r <- solve.QP(Dmat = V, dvec = mu, Amat, bvec, meq = 1)
+plot_portfolio(w=r$solution, label = "Mean-Variance vol", V, mu)
+```
+
+
+
+We hope this helps you understand the basics of efficient frontiers and portfolio optimization, and gives you a starting point to optimizing portfolios in R.

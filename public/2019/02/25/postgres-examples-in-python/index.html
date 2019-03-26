@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Postgresql Examples in Python &middot; </title>
+        <meta name="description" content="Postgresql Examples in Python">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.54.0" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="/dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+        
+        
+    </head>
+    <body>
+        
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <a class="site-logo" title="" href="">
+                                <img src="#ZgotmplZ" alt="" />
+                            </a>
+                        
+                        <a class="button-square" href="/index.xml"><i class="fa fa-rss"></i></a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="About" href="/about/">About</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Blog" href="/">Blog</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Investing" href="/investing/">Investing</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Linux" href="/linux/">Linux</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="DIY" href="/diy/">DIY</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="GitHub" href="https://github.com/rogerjbos">GitHub</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Twitter" href="https://twitter.com/rogerjbos1">Twitter</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Postgresql Examples in Python</h1>
+    
+        <p class="post-description" itemprop="description">Postgresql Examples in Python</p>
+    
+    <p class="post-date post-line">
+        <span>Published <time datetime="2019-02-25" itemprop="datePublished">Mon, Feb 25, 2019</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="#" itemprop="url" rel="author">Roger J. Bos, CFA</a>
+            </span>
+        </span>
+    </p>
+    
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    
+
+<h1 id="python-sqlalchemy-orm-versus-raw-sql">Python: SQLAlchemy ORM versus Raw SQL</h1>
+
+<p>I was reading this blog post [<a href="https://auth0.com/blog/sqlalchemy-orm-tutorial-for-python-developers/">https://auth0.com/blog/sqlalchemy-orm-tutorial-for-python-developers/</a>] about SQLAlchemy and how to run queries using its Object Relational Mapper (ORM).  It is a very good intruduction to the pythonic ORM way of talking to databases, but I think I still prefer using raw SQL.  In this post I will show you some reasons why I prefer raw SQL.  I will use the same database and tables used in the original tutorial for these examples.</p>
+
+<p>We will import sqlalchemy to connect to the Postgres database and pandas to execute the raw SQL statements.</p>
+
+<pre><code class="language-python">import sqlalchemy as sqla
+from sqlalchemy.orm import sessionmaker
+import pandas as pd
+from datetime import date
+
+</code></pre>
+
+<p>If you get any errors, please see the original blog post above for the requirements that need to be installed, such as sqlalchemy.  I am using pandas later on in this blog, so you would need to have that installed too.  The &lsquo;psycopg2&rsquo; module is also used, and has been renamed, so I would recommend something like the following to install it:</p>
+
+<pre><code class="language-python">pip install psycopg2-binary
+</code></pre>
+
+<p>Again, the original blog post above creates the classes and data for the example tables.  Once they are created, here is the code to import them.</p>
+
+<pre><code class="language-python">
+from base import Session
+from actor import Actor
+from contact_details import ContactDetails
+from movie import Movie
+
+</code></pre>
+
+<pre><code>/Users/rjbos2/anaconda3/lib/python3.7/site-packages/psycopg2/__init__.py:144: UserWarning: The psycopg2 wheel package will be renamed from release 2.8; in order to keep installing from binary please use &quot;pip install psycopg2-binary&quot; instead. For details see: &lt;http://initd.org/psycopg/docs/install.html#binary-install-from-pypi&gt;.
+  &quot;&quot;&quot;)
+</code></pre>
+
+<p>The code below shows the connection string for a postgres database named roger with username &lsquo;usr&rsquo; and password &lsquo;pass&rsquo; running on 127.0.0.1 (also knwon as localhost) port 5432 (the default port).</p>
+
+<pre><code class="language-python">xf = sqla.create_engine('postgresql://usr:pass@localhost:5432/roger')
+Session = sessionmaker(bind=xf)
+session = Session()
+</code></pre>
+
+<p>Finally, we are able to run our first query.  We are going to query all the movies defined by the Movie class and stored in the movies table.</p>
+
+<pre><code class="language-python">movies = session.query(Movie).all()
+</code></pre>
+
+<p>The movies object is a class, so you can&rsquo;t just its contents directly.</p>
+
+<pre><code class="language-python">movies
+</code></pre>
+
+<pre><code>[&lt;movie.Movie at 0x1177f5be0&gt;,
+ &lt;movie.Movie at 0x1177f5c88&gt;,
+ &lt;movie.Movie at 0x1177f5908&gt;]
+</code></pre>
+
+<p>Instead you have to use a for loop to print out each row of data.</p>
+
+<pre><code class="language-python">for movie in movies:
+     print(f'{movie.title} was released on {movie.release_date}')
+</code></pre>
+
+<pre><code>The Bourne Identity was released on 2002-10-11
+Furious 7 was released on 2015-04-02
+Pain &amp; Gain was released on 2013-08-23
+</code></pre>
+
+<p>Whereas using the read_sql_query function from pandas with raw SQL gives use hte returned rows in a nice format that prints easily.</p>
+
+<pre><code class="language-python">pd.read_sql_query('select * from movies', xf)
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>title</th>
+      <th>release_date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>The Bourne Identity</td>
+      <td>2002-10-11</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Furious 7</td>
+      <td>2015-04-02</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Pain &amp; Gain</td>
+      <td>2013-08-23</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Using raw SQL is a quick way to remind yourself of the column names of each table you are using without having to refer back to the class object.  These tables are very small, but with bigger tables you would want to limit the number of rows returned.  For many databases you use the word &lsquo;top&rsquo; to do so, but for Postgres (and MySQL) you use &lsquo;limit&rsquo;, as is done in the next few queries.</p>
+
+<pre><code class="language-python">pd.read_sql_query('select * from actors limit 3', xf)
+
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>name</th>
+      <th>birthday</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Matt Damon</td>
+      <td>1970-10-08</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Dwayne Johnson</td>
+      <td>1972-05-02</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Mark Wahlberg</td>
+      <td>1971-06-05</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">pd.read_sql_query('select * from movies_actors limit 4', xf)
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>movie_id</th>
+      <th>actor_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code class="language-python">
+pd.read_sql_query('select * from contact_details limit 4', xf)
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>phone_number</th>
+      <th>address</th>
+      <th>actor_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>415 555 2671</td>
+      <td>Burbank, CA</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>423 555 5623</td>
+      <td>Glendale, CA</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>421 444 2323</td>
+      <td>West Hollywood, CA</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>421 333 9428</td>
+      <td>Glendale, CA</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>SQLAlchemy also has an inspect method to list the names of all the tables in a database.</p>
+
+<pre><code class="language-python">inspector = sqla.inspect(xf)
+print(inspector.get_table_names())
+</code></pre>
+
+<pre><code>['returns', 'actors', 'contact_details', 'movies', 'movies_actors', 'stuntmen']
+</code></pre>
+
+<p>Now we will look at how to run some more complex queries.  Say we want to find all the movies that have been released since 2015.</p>
+
+<pre><code class="language-python"># get movies after 15-01-01
+movies = session.query(Movie) \
+     .filter(Movie.release_date &gt;= date(2015, 1, 1)) \
+     .all()
+
+for movie in movies:
+     print(f'{movie.title} was released since 2015')
+
+</code></pre>
+
+<pre><code>Furious 7 was released since 2015
+</code></pre>
+
+<p>This can be accomplished in raw SQL as follows</p>
+
+<pre><code class="language-python">pd.read_sql_query(&quot;select * from movies \
+where release_date &gt;= '1/1/2015'&quot;, xf)
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>title</th>
+      <th>release_date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>Furious 7</td>
+      <td>2015-04-02</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Continuing with the examples, we can find all the movies featuring &lsquo;Dwayne Johnson&rsquo;</p>
+
+<pre><code class="language-python">the_rock_movies = session.query(Movie) \
+    .join(Actor, Movie.actors) \
+    .filter(Actor.name == 'Dwayne Johnson') \
+    .all()
+
+for movie in the_rock_movies:
+    print(f'The Rock starred in {movie.title}')
+
+</code></pre>
+
+<pre><code>The Rock starred in Pain &amp; Gain
+The Rock starred in Furious 7
+</code></pre>
+
+<p>In the raw SQL version we have to use the movies_actors table to join the ids from the movies and actors tables.  There is more than one way to do this join, but here is an easy and straightforward method.</p>
+
+<pre><code class="language-python">pd.read_sql_query(&quot;select m.title as Movie, a.name as Actor, m.release_date as Released \
+                  from movies m, actors a, movies_actors ma \
+                  where m.id=movie_id and a.id=actor_id and a.name = 'Dwayne Johnson'&quot;, xf)
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>movie</th>
+      <th>actor</th>
+      <th>released</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Pain &amp; Gain</td>
+      <td>Dwayne Johnson</td>
+      <td>2013-08-23</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Furious 7</td>
+      <td>Dwayne Johnson</td>
+      <td>2015-04-02</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>As another example of joining and filtering, we can also find all the actors that live in Glendale. SQL uses the &lsquo;%&rsquo; sign to indicate a wildcard, so there can be any number of characters before and after &lsquo;glendale&rsquo; and the &lsquo;like&rsquo; parameter will find a match.  If you knew all the addresses started (or ended) with &lsquo;glendale&rsquo;, you could use &lsquo;%glendale&rsquo; (or &lsquo;glendale%&rsquo;).</p>
+
+<pre><code class="language-python">glendale_stars = session.query(Actor) \
+    .join(ContactDetails) \
+    .filter(ContactDetails.address.ilike('%glendale%')) \
+    .all()
+
+for actor in glendale_stars:
+    print(f'{actor.name} has a house in Glendale')
+</code></pre>
+
+<pre><code>Dwayne Johnson has a house in Glendale
+Mark Wahlberg has a house in Glendale
+</code></pre>
+
+<p>The following raw SQL query does not work.  Can you spot the problem?  (hint: There are actually two problems.)</p>
+
+<pre><code class="language-python">pd.read_sql_query(&quot;select a.name \
+                  from actors a, contact_details c \
+                  where a.id=c.actor_id and c.address like '%glendale%'&quot;, xf)
+
+</code></pre>
+
+<pre><code>---------------------------------------------------------------------------
+
+TypeError                                 Traceback (most recent call last)
+
+&lt;ipython-input-17-603009ecee61&gt; in &lt;module&gt;
+      1 pd.read_sql_query(&quot;select a.name \
+      2                   from actors a, contact_details c \
+----&gt; 3                   where a.id=c.actor_id and c.address like '%glendale%'&quot;, xf)
+
+
+~/anaconda3/lib/python3.7/site-packages/pandas/io/sql.py in read_sql_query(sql, con, index_col, coerce_float, params, parse_dates, chunksize)
+    312     return pandas_sql.read_query(
+    313         sql, index_col=index_col, params=params, coerce_float=coerce_float,
+--&gt; 314         parse_dates=parse_dates, chunksize=chunksize)
+    315 
+    316 
+
+
+~/anaconda3/lib/python3.7/site-packages/pandas/io/sql.py in read_query(self, sql, index_col, coerce_float, parse_dates, params, chunksize)
+   1061         args = _convert_params(sql, params)
+   1062 
+-&gt; 1063         result = self.execute(*args)
+   1064         columns = result.keys()
+   1065 
+
+
+~/anaconda3/lib/python3.7/site-packages/pandas/io/sql.py in execute(self, *args, **kwargs)
+    952     def execute(self, *args, **kwargs):
+    953         &quot;&quot;&quot;Simple passthrough to SQLAlchemy connectable&quot;&quot;&quot;
+--&gt; 954         return self.connectable.execute(*args, **kwargs)
+    955 
+    956     def read_table(self, table_name, index_col=None, coerce_float=True,
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in execute(self, statement, *multiparams, **params)
+   2073 
+   2074         connection = self.contextual_connect(close_with_result=True)
+-&gt; 2075         return connection.execute(statement, *multiparams, **params)
+   2076 
+   2077     def scalar(self, statement, *multiparams, **params):
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in execute(self, object, *multiparams, **params)
+    940         &quot;&quot;&quot;
+    941         if isinstance(object, util.string_types[0]):
+--&gt; 942             return self._execute_text(object, multiparams, params)
+    943         try:
+    944             meth = object._execute_on_connection
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_text(self, statement, multiparams, params)
+   1102             statement,
+   1103             parameters,
+-&gt; 1104             statement, parameters
+   1105         )
+   1106         if self._has_events or self.engine._has_events:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_context(self, dialect, constructor, statement, parameters, *args)
+   1198                 parameters,
+   1199                 cursor,
+-&gt; 1200                 context)
+   1201 
+   1202         if self._has_events or self.engine._has_events:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _handle_dbapi_exception(self, e, statement, parameters, cursor, context)
+   1414                 )
+   1415             else:
+-&gt; 1416                 util.reraise(*exc_info)
+   1417 
+   1418         finally:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/util/compat.py in reraise(tp, value, tb, cause)
+    247         if value.__traceback__ is not tb:
+    248             raise value.with_traceback(tb)
+--&gt; 249         raise value
+    250 
+    251 else:
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/base.py in _execute_context(self, dialect, constructor, statement, parameters, *args)
+   1191                         statement,
+   1192                         parameters,
+-&gt; 1193                         context)
+   1194         except BaseException as e:
+   1195             self._handle_dbapi_exception(
+
+
+~/anaconda3/lib/python3.7/site-packages/sqlalchemy/engine/default.py in do_execute(self, cursor, statement, parameters, context)
+    507 
+    508     def do_execute(self, cursor, statement, parameters, context=None):
+--&gt; 509         cursor.execute(statement, parameters)
+    510 
+    511     def do_execute_no_params(self, cursor, statement, context=None):
+
+
+TypeError: 'dict' object does not support indexing
+</code></pre>
+
+<p>The interpreter throws a really long error with absolutely no clue as to the actual problem, which is that Python treats &lsquo;%&rsquo; as a special character.  So if you want to use the &lsquo;%&rsquo; character in a string, you need to double it, like so&hellip;</p>
+
+<pre><code class="language-python">pd.read_sql_query(&quot;select a.name \
+                  from actors a, contact_details c \
+                  where a.id=c.actor_id and c.address like '%%glendale%%'&quot;, xf)
+
+</code></pre>
+
+<p>Now the query runs without error, but it does not return us the two rows we are expecting.  That leads us to the second problem, which is that &lsquo;like&rsquo; is case sensitive.</p>
+
+<pre><code class="language-python">pd.read_sql_query(&quot;select a.name \
+                  from actors a, contact_details c \
+                  where a.id=c.actor_id and c.address like '%%Glendale%%'&quot;, xf)
+
+
+</code></pre>
+
+<p>The problem now is that if some of the city names were capitalized and some were not, the query would not be accurate.  A better fix is to use ilike which is not case sensitive.</p>
+
+<pre><code class="language-python">pd.read_sql_query(&quot;select a.name \
+                  from actors a, contact_details c \
+                  where a.id=c.actor_id and c.address ilike '%%glendale%%'&quot;, xf)
+
+</code></pre>
+
+<p>That&rsquo;s all I wanted to show you based on the small Movies database.  We spent a lot of time disecting that last query, but I hope it was helpful in your future SQL debugging efforts.  Those debugging steps should be helpful whether you decide to use ORM or raw SQL.</p>
+
+<p>To show some more examples of raw SQL, we will build a small table of stock prices for GE.</p>
+
+<h2 id="a-stock-example">A Stock Example</h2>
+
+<p>The pandas module has a nice function to read in stock prices from Yahoo!</p>
+
+<pre><code class="language-python">from pandas_datareader import data as wb  
+ticker = 'GE' 
+GE = wb.DataReader(ticker, data_source='yahoo', start='2007-1-1')['Adj Close']
+ret = pd.DataFrame(data = GE)
+ret.tail()
+</code></pre>
+
+<p>Lets say we wanted to save this price history into a database.  Using the ORM method, we would have to create a class for the table, but using pandas and raw SQL we can just save the DataFrame to a table and use it right away.  In the first line I drop the table in case it already exists and in the second line the DataFrame &lsquo;ret&rsquo; is saved to a table named &lsquo;returns&rsquo; in the &lsquo;xf&rsquo; database.</p>
+
+<pre><code class="language-python">xf.execute(&quot;drop table returns&quot;)
+ret.to_sql('returns', xf)
+</code></pre>
+
+<p>To see if the save worked, we can query the table, as we do below.</p>
+
+<pre><code class="language-python">pd.read_sql_query(&quot;select * from returns limit 4&quot;, xf)
+</code></pre>
+
+<p>You can see the table output and everything looks fine.  If I ended the post here everything would seem pretty simple and straightforward, but there are many problems which would make it hard for someone new to Python and SQL to work with this table.</p>
+
+<p>In the above query everything worked smoothly because I used the &lsquo;*&rsquo; wildcard and didn&rsquo;t specify the column names.  What problems would I encounter if I tried to use the actual column names?  I can predict that Adj Close will be a problem because of the space, so I will quote it.</p>
+
+<pre><code class="language-python">pd.read_sql_query(&quot;select Date, 'Adj Close' from returns limit 4&quot;, xf)
+</code></pre>
+
+<p>Python doesn&rsquo;t like the column &ldquo;Date&rdquo; either.  It turns out that Postgres SQL doesn&rsquo;t like any column names that are capitalized.  Maybe that&rsquo;s one reason to use ORM, but a simple fix is just to adjust the column names before you save the table.</p>
+
+<pre><code class="language-python">ret = ret.rename(index=str, columns={&quot;Adj Close&quot;: &quot;adj_close&quot;})
+ret.index.name = &quot;date&quot;
+ret.tail()
+</code></pre>
+
+<p>The above code shows two different methods for modifying column names.  For regular columns you just use the rename function in pandas.  For the index of the dataframe, you have to do something different.  &lsquo;Date&rsquo; is an index rather than a column, so we had to use the &lsquo;name&rsquo; function change its name.  Now both column are lower case and do not contain spaces.  We are making everyone happy.  Now lets add a column with the return.</p>
+
+<pre><code class="language-python">ret['return'] = ret['adj_close'].pct_change()
+ret.tail()
+</code></pre>
+
+<p>The DataFrame looks good now.  Lets save this new DataFrame to a table so I can show you what I really want to show you.</p>
+
+<pre><code class="language-python">xf.execute(&quot;drop table returns&quot;)
+ret.to_sql('returns', xf)
+</code></pre>
+
+<p>Then test out the save and make sure it worked.</p>
+
+<pre><code class="language-python">out = pd.read_sql_query(&quot;select * from returns limit 10&quot;, xf)
+out.head()
+</code></pre>
+
+<p>Just to verify, we can now specify the column names without a problem.</p>
+
+<pre><code class="language-python">pd.read_sql_query(&quot;select date, adj_close, return from returns limit 10&quot;, xf)
+</code></pre>
+
+<p>We can condition on date to get the daily returns for January.</p>
+
+<pre><code class="language-python">pd.read_sql_query(&quot;select date, returns from returns \
+                  where date between '2019-01-01' and '2019-02-01'&quot;, xf)
+
+
+</code></pre>
+
+<p>Now I can finally show you a good example of something you can do in raw SQL.  If you have a table of daily returns, you can calculate cumulative returns for any time period within SQL.  SQL does not have a product function, but you can sum the log returns and then exponentiate them to accomplish the same thing.</p>
+
+<pre><code class="language-python">pd.read_sql_query(&quot;select EXP(SUM(LOG(1+return))) - 1 as cumret from returns \
+                  where date between '2019-01-01' and '2019-02-01'&quot;, xf)
+
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cumret</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.136323</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>We can also calculate the standard deviation of daily returns in the same query as below. Let&rsquo;s expand the window to six months.</p>
+
+<pre><code class="language-python">pd.read_sql_query(&quot;select EXP(SUM(LOG(1 + return))) - 1 as cumret, \
+                  SQRT(21 * SUM(return * return) / 126) as volatility \
+                  from returns \
+                  where date between '2018-06-30' and '2018-12-31'&quot;, xf)
+</code></pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cumret</th>
+      <th>volatility</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.223921</td>
+      <td>0.12785</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>I hope this tutorial has been helpful.  We looked at a number of queries using with ORM and raw SQL and reviewed some of the pitfalls you may encounter when working with databases in Python.  The ORM approach is probably a good one for large applications with fixed database structions, but raw SQL is a good approach for smaller projects and ad-hoc analysis.</p>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=Postgresql%20Examples%20in%20Python&url=%2f2019%2f02%2f25%2fpostgres-examples-in-python%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2019%2f02%2f25%2fpostgres-examples-in-python%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=%2f2019%2f02%2f25%2fpostgres-examples-in-python%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+</footer>
+
+        
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="Roger J. Bos, CFA" href="/">Roger J. Bos, CFA</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2019 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="/js/jquery-1.11.3.min.js"></script>
+        <script src="/js/jquery.fitvids.js"></script>
+        
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        
+        
+        <script src="/js/scripts.js"></script>
+    </body>
+</html>
+

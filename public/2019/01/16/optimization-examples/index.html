@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Optimization Examples &middot; </title>
+        <meta name="description" content="Optimization examples in R">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.54.0" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="/dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+        
+        
+    </head>
+    <body>
+        
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <a class="site-logo" title="" href="">
+                                <img src="#ZgotmplZ" alt="" />
+                            </a>
+                        
+                        <a class="button-square" href="/index.xml"><i class="fa fa-rss"></i></a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="About" href="/about/">About</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Blog" href="/">Blog</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Investing" href="/investing/">Investing</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Linux" href="/linux/">Linux</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="DIY" href="/diy/">DIY</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="GitHub" href="https://github.com/rogerjbos">GitHub</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Twitter" href="https://twitter.com/rogerjbos1">Twitter</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Optimization Examples</h1>
+    
+        <p class="post-description" itemprop="description">Optimization examples in R</p>
+    
+    <p class="post-date post-line">
+        <span>Published <time datetime="2019-01-16" itemprop="datePublished">Wed, Jan 16, 2019</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="#" itemprop="url" rel="author">Roger J. Bos, CFA</a>
+            </span>
+        </span>
+    </p>
+    
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    
+
+
+<pre class="r"><code>knitr::opts_chunk$set(echo = TRUE)
+options(&quot;getSymbols.warning4.0&quot;=FALSE)
+options(&quot;getSymbols.yahoo.warning&quot;=FALSE)
+library(quantmod)</code></pre>
+<pre><code>## Loading required package: TTR</code></pre>
+<pre><code>## Version 0.4-0 included new data defaults. See ?getSymbols.</code></pre>
+<pre class="r"><code>library(xts)
+library(ggplot2)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;ggplot2&#39;</code></pre>
+<pre><code>## The following object is masked _by_ &#39;.GlobalEnv&#39;:
+## 
+##     %+%</code></pre>
+<div id="prerequisites" class="section level1">
+<h1>Prerequisites</h1>
+<p>Before we get to the optimization examples, we will download the price history for a small number of ETFs and show how to calculate the returns, standard deviations, variance matrix and other inputs that we will need for the optimizer.</p>
+<div id="prices" class="section level2">
+<h2>Prices</h2>
+<p>For these examples, we will download the daily prices for a handfull of ETFs from Yahoo Finance, starting in 2003. Once the daily data is downlaoded, we use the <em>to.weekly()</em> function to convert the prices to a weekly series (there is also a <em>to.monthly()</em> function) and then combine the series column by column into a data.frame.</p>
+<pre class="r"><code>symbols &lt;- c(&quot;IWD&quot;,&quot;IWF&quot;,&quot;IWN&quot;,&quot;IWO&quot;,&quot;IWP&quot;,&quot;IWS&quot;)
+initDate &lt;- &quot;2003-01-01&quot;
+go &lt;- try(getSymbols(symbols, from = initDate))</code></pre>
+<pre><code>## pausing 1 second between requests for more than 5 symbols
+## pausing 1 second between requests for more than 5 symbols</code></pre>
+<pre class="r"><code>prices &lt;- list()
+for(i in 1:length(symbols)) {
+  tmp &lt;- Ad(get(symbols[i]))
+  tmp &lt;- to.weekly(tmp, indexat=&quot;%m/%d/%Y&quot;)
+  tmp &lt;- tmp$tmp.Close
+  names(tmp) &lt;- symbols[i]
+  prices[[i]] &lt;- tmp
+}
+prices &lt;- do.call(cbind, prices)
+tail(prices)</code></pre>
+<pre><code>##                 IWD      IWF      IWN      IWO      IWP      IWS
+## 2019-02-15 122.2537 146.4225 123.5220 197.5105 132.7818 86.31949
+## 2019-02-22 123.0593 147.3498 125.2645 199.8069 133.6403 87.05615
+## 2019-03-01 123.3776 148.3370 124.0597 201.7339 134.7384 86.98646
+## 2019-03-08 120.7020 144.9766 119.1507 192.9177 130.5656 84.81628
+## 2019-03-15 123.8750 149.5635 121.2218 197.5305 134.0197 86.64800
+## 2019-03-22 121.9900 149.3800 116.9800 192.2000 133.1000 85.49000</code></pre>
+</div>
+<div id="returns" class="section level2">
+<h2>Returns</h2>
+<p>Once we have the prices, we can use the <em>lag.xts</em> function to calculate the (weekly) returns. Note the explicit call to <em>lag.xts</em> instead of just <em>lag</em>. A number of different packages have a <em>lag</em> function and they do not all work the same, so it is better to be safe here and explicityly call the one we want to use. We also create a logprices series just for good measure.</p>
+<pre class="r"><code>prices &lt;- as.xts(prices)
+returns &lt;- (prices / lag.xts(prices, k = 1) - 1)
+returns[is.na(returns)] &lt;- 0
+logprices &lt;- log(prices)
+tail(logprices)</code></pre>
+<pre><code>##                 IWD      IWF      IWN      IWO      IWP      IWS
+## 2019-02-15 4.806098 4.986496 4.816419 5.285792 4.888707 4.458055
+## 2019-02-22 4.812667 4.992810 4.830428 5.297352 4.895152 4.466553
+## 2019-03-01 4.815250 4.999487 4.820763 5.306950 4.903335 4.465753
+## 2019-03-08 4.793325 4.976572 4.780389 5.262264 4.871876 4.440488
+## 2019-03-15 4.819273 5.007721 4.797622 5.285893 4.897986 4.461854
+## 2019-03-22 4.803939 5.006493 4.762003 5.258536 4.891101 4.448399</code></pre>
+<pre class="r"><code>tail(returns)</code></pre>
+<pre><code>##                     IWD          IWF          IWN         IWO          IWP
+## 2019-02-15  0.027847535  0.023417921  0.035475794  0.04844189  0.030366373
+## 2019-02-22  0.006590158  0.006333509  0.014107173  0.01162666  0.006465647
+## 2019-03-01  0.002586484  0.006699479 -0.009618501  0.00964424  0.008217058
+## 2019-03-08 -0.021686621 -0.022653904 -0.039569701 -0.04370208 -0.030969912
+## 2019-03-15  0.026287670  0.031639104  0.017382563  0.02391059  0.026454682
+## 2019-03-22 -0.015216667 -0.001226917 -0.034992103 -0.02698573 -0.006862031
+##                      IWS
+## 2019-02-15  0.0244565162
+## 2019-02-22  0.0085341446
+## 2019-03-01 -0.0008004833
+## 2019-03-08 -0.0249484905
+## 2019-03-15  0.0215963128
+## 2019-03-22 -0.0133644742</code></pre>
+</div>
+<div id="expected-returns-and-standard-deviation" class="section level2">
+<h2>Expected returns and Standard Deviation</h2>
+<p>The greek letter <span class="math inline">\(\mu\)</span> (mu) is usually used to represent the expected return. Often we don’t have an actual forcast of the return, so we use the naive forecast, which is the historical mean return. The mean return can be easily calculated in R using the apply function on the second dimension (the columns) using the <em>mean</em> function. If one or more observations are NA then the mean function will return NA unless you tell it to remove NAs by setting na.rm = TRUE. Likewise, you can use apply with the standard deviation (sd) function, which is usually represented with the greek letter <span class="math inline">\(\sigma\)</span>.</p>
+<p>The standard deviation of returns is by far the most widely used measure of risk, but there are other options. One option is the downside deviation. Recall the formula for standard deviation is <span class="math inline">\(\sqrt\sum(x-\overline{x})^{2}\)</span>. The downside deviation calculation focuses only on the cases where <span class="math inline">\(x \lt \overline{x}\)</span>. The rational given for this is that it is the negative deviations in returns that are problematic. No on complains about large positive deviations, unless of course, you are short the stock, in which case you could use the upside deviation calculation. For the vast majority of stocks all the deviation calculations are very similar and as stated before, it is probably best to stick to the the regular standard deviation calculation.</p>
+<pre class="r"><code>mu &lt;- apply(returns, MARGIN=2, FUN=mean, na.rm=TRUE)
+sigma &lt;- apply(returns, MARGIN=2, FUN=sd)
+sigma2 &lt;- sqrt(apply(returns, MARGIN=2, FUN=var))
+library(magrittr)
+sigma3 &lt;- apply(returns, MARGIN=2, FUN=var) %&gt;% sqrt()
+rbind(sigma, sigma2, sigma3)</code></pre>
+<pre><code>##               IWD        IWF        IWN        IWO        IWP        IWS
+## sigma  0.02425083 0.02287204 0.02943899 0.03068888 0.02651517 0.02565805
+## sigma2 0.02425083 0.02287204 0.02943899 0.03068888 0.02651517 0.02565805
+## sigma3 0.02425083 0.02287204 0.02943899 0.03068888 0.02651517 0.02565805</code></pre>
+<p>We show three different ways to calculate the same stndard deviation above. The third one is essentially the same as the second, we just use the magrittr package in R which gives us the <em>%&gt;%</em> operator that makes the code easier to read. We will show you a fourth way to calculate standard deviation in the next section.</p>
+<p>```</p>
+</div>
+<div id="variance-matrix" class="section level2">
+<h2>Variance Matrix</h2>
+<p>There are a couple of different ways to calculate the variance matrix (V). The simplest method is the esimate the sample covariance matrix.</p>
+<pre class="r"><code>V &lt;- cov(returns, use=&quot;complete&quot;)
+V</code></pre>
+<pre><code>##              IWD          IWF          IWN          IWO          IWP
+## IWD 0.0005881026 0.0005131510 0.0006464571 0.0006496150 0.0005887671
+## IWF 0.0005131510 0.0005231302 0.0005917964 0.0006441924 0.0005838039
+## IWN 0.0006464571 0.0005917964 0.0008666542 0.0008585985 0.0007164124
+## IWO 0.0006496150 0.0006441924 0.0008585985 0.0009418074 0.0007747613
+## IWP 0.0005887671 0.0005838039 0.0007164124 0.0007747613 0.0007030540
+## IWS 0.0006032311 0.0005426583 0.0007120028 0.0007149743 0.0006465624
+##              IWS
+## IWD 0.0006032311
+## IWF 0.0005426583
+## IWN 0.0007120028
+## IWO 0.0007149743
+## IWP 0.0006465624
+## IWS 0.0006583356</code></pre>
+<pre class="r"><code>sigma4 &lt;- sqrt(diag(V))
+sigma4</code></pre>
+<pre><code>##        IWD        IWF        IWN        IWO        IWP        IWS 
+## 0.02425083 0.02287204 0.02943899 0.03068888 0.02651517 0.02565805</code></pre>
+<p>The <em>cov</em> function calculations the co-variance of the returns between each pair of stocks using the formula <span class="math inline">\(\sqrt\sum((x-\overline{x})(y-\overline{y})}\)</span>. On the diagonal of the matrix <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are the same and the resulting calculation is the variance, so that is why <span class="math inline">\(\sqrt(diag(V))\)</span> produces the standard deviation, which you can verify matches the prior methods of calculating standard deviation.</p>
+</div>
+<div id="robust-methods-of-handling-outliers" class="section level2">
+<h2>Robust methods of handling outliers</h2>
+<p>To simulate an outlier, we will create a second returns series with only one observation different, but the difference being very large (an outlier).</p>
+<pre class="r"><code>returns2 &lt;- returns
+returns2[60,2]</code></pre>
+<pre><code>##                      IWF
+## 2004-02-20 -0.0002074271</code></pre>
+<pre class="r"><code>returns2[60,2] &lt;- 5</code></pre>
+<p>Graphically, we can see how changing just one observation changes the correlation relationship of that ETF with the other ETFs.</p>
+<pre class="r"><code>par(mfrow=c(1,2))
+plot(as.dendrogram( hclust(
+    as.dist(sqrt(2-cor(returns, use=&quot;complete&quot;)))
+  ), h = .1 ), horiz = TRUE, xlim = c(1.3, 1)
+)
+plot(as.dendrogram( hclust(
+    as.dist(sqrt(2-cor(returns2, use=&quot;complete&quot;)))
+  ), h = .1 ), horiz = TRUE, xlim = c(1.3, 1)
+)</code></pre>
+<p><img src="/post/2019-03-25-optimization-examples_files/figure-html/dendrogram-1.png" width="672" /></p>
+<pre class="r"><code>V &lt;- cov(returns, use=&quot;pairwise&quot;)
+V2 &lt;- cov(returns2, use=&quot;pairwise&quot;)
+print(V[1:3, 1:3])</code></pre>
+<pre><code>##              IWD          IWF          IWN
+## IWD 0.0005881026 0.0005131510 0.0006464571
+## IWF 0.0005131510 0.0005231302 0.0005917964
+## IWN 0.0006464571 0.0005917964 0.0008666542</code></pre>
+<pre class="r"><code>print(V2[1:3, 1:3])</code></pre>
+<pre><code>##              IWD          IWF          IWN
+## IWD 0.0005881026 0.0004864336 0.0006464571
+## IWF 0.0004864336 0.0300138328 0.0005373914
+## IWN 0.0006464571 0.0005373914 0.0008666542</code></pre>
+<p>R package <em>corpcor</em> has a function called <em>cov.shrink</em> that shrinks all of the covariances closer to the mean, based on a <em>lambda.var</em> parameter. Using <em>lambda.var</em> of zero returns the (unshrunk) sample covariance matrix and we verify that below. If <em>lambda.var</em> is not specified it is automatically determined. You can see that the shrunk covariance matrix does a good job of minimizing the effect of the outlier.</p>
+<pre class="r"><code>library(corpcor)
+V2.sample &lt;- cov.shrink(returns2, lambda.var = 0)</code></pre>
+<pre><code>## Specified shrinkage intensity lambda.var (variance vector): 0 
+## 
+## Estimating optimal shrinkage intensity lambda (correlation matrix): 0.0101</code></pre>
+<pre class="r"><code>V2.shrink &lt;- cov.shrink(returns2)</code></pre>
+<pre><code>## Estimating optimal shrinkage intensity lambda.var (variance vector): 1 
+## 
+## Estimating optimal shrinkage intensity lambda (correlation matrix): 0.0101</code></pre>
+<pre class="r"><code>print(V2[1:3, 1:3])</code></pre>
+<pre><code>##              IWD          IWF          IWN
+## IWD 0.0005881026 0.0004864336 0.0006464571
+## IWF 0.0004864336 0.0300138328 0.0005373914
+## IWN 0.0006464571 0.0005373914 0.0008666542</code></pre>
+<pre class="r"><code>print(V2.sample[1:3, 1:3])</code></pre>
+<pre><code>##              IWD          IWF          IWN
+## IWD 0.0005881026 0.0004815051 0.0006399071
+## IWF 0.0004815051 0.0300138328 0.0005319466
+## IWN 0.0006399071 0.0005319466 0.0008666542</code></pre>
+<pre class="r"><code>print(V2.shrink[1:3, 1:3])</code></pre>
+<pre><code>##               IWD           IWF           IWN
+## IWD 0.00078485409 0.00008995028 0.00070348757
+## IWF 0.00008995028 0.00078485409 0.00008186029
+## IWN 0.00070348757 0.00008186029 0.00078485409</code></pre>
+<pre class="r"><code>print(V[1:3, 1:3])</code></pre>
+<pre><code>##              IWD          IWF          IWN
+## IWD 0.0005881026 0.0005131510 0.0006464571
+## IWF 0.0005131510 0.0005231302 0.0005917964
+## IWN 0.0006464571 0.0005917964 0.0008666542</code></pre>
+<pre class="r"><code># create exponential weights for a weighted covariance matrix
+wgts &lt;- .98^(nrow(returns):1)
+V.weighted &lt;- cov.shrink(returns, w=wgts)</code></pre>
+<pre><code>## Estimating optimal shrinkage intensity lambda.var (variance vector): 0.5581 
+## 
+## Estimating optimal shrinkage intensity lambda (correlation matrix): 0.0362</code></pre>
+<pre class="r"><code>returns2 &lt;- returns
+returns2[60,2] &lt;- -100
+
+V2 &lt;- cov(returns2, use=&quot;pairwise&quot;)
+dim(V2)</code></pre>
+<pre><code>## [1] 6 6</code></pre>
+<pre class="r"><code>dim(V2.shrink)</code></pre>
+<pre><code>## [1] 6 6</code></pre>
+<pre class="r"><code>V2.shrink &lt;- cov.shrink(returns2, lambda = 0.99)</code></pre>
+<pre><code>## Estimating optimal shrinkage intensity lambda.var (variance vector): 0.9977 
+## 
+## Specified shrinkage intensity lambda (correlation matrix): 0.99</code></pre>
+<pre class="r"><code>V2</code></pre>
+<pre><code>##              IWD           IWF          IWN          IWO          IWP
+## IWD 0.0005881026  0.0010474752 0.0006464571 0.0006496150 0.0005887671
+## IWF 0.0010474752 11.8074032707 0.0016798485 0.0019145001 0.0009144859
+## IWN 0.0006464571  0.0016798485 0.0008666542 0.0008585985 0.0007164124
+## IWO 0.0006496150  0.0019145001 0.0008585985 0.0009418074 0.0007747613
+## IWP 0.0005887671  0.0009144859 0.0007164124 0.0007747613 0.0007030540
+## IWS 0.0006032311  0.0012357669 0.0007120028 0.0007149743 0.0006465624
+##              IWS
+## IWD 0.0006032311
+## IWF 0.0012357669
+## IWN 0.0007120028
+## IWO 0.0007149743
+## IWP 0.0006465624
+## IWS 0.0006583356</code></pre>
+<pre class="r"><code>V2[1:3, 1:3]</code></pre>
+<pre><code>##              IWD          IWF          IWN
+## IWD 0.0005881026  0.001047475 0.0006464571
+## IWF 0.0010474752 11.807403271 0.0016798485
+## IWN 0.0006464571  0.001679849 0.0008666542</code></pre>
+<pre class="r"><code>V2.shrink[1:3, 1:3]</code></pre>
+<pre><code>##                 IWD             IWF             IWN
+## IWD 0.0007843979143 0.0000005907678 0.0000071056756
+## IWF 0.0000005907678 0.0281589936774 0.0000007807743
+## IWN 0.0000071056756 0.0000007807743 0.0007850437478</code></pre>
+<pre class="r"><code>library(ellipse)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;ellipse&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     pairs</code></pre>
+<pre class="r"><code>plotcorr(cov2cor(V))</code></pre>
+<p><img src="/post/2019-03-25-optimization-examples_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+<div id="risk-and-expected-returns" class="section level2">
+<h2>Risk and Expected returns</h2>
+<p><span class="math inline">\(\mu\)</span> is supposed to be the expected return. Often we don’t have any actual forcast of the return, so we use the naive forecast, which is the mean return. The mean return can be easily calculated in R using the apply function on the second dimension (the columns) using the <em>mean</em> function. If one or more observations are NA then the mean function will return NA unless you tell it to remove NAs by setting na.rm = TRUE.</p>
+<pre class="r"><code>mu &lt;- apply(returns, MARGIN=2, FUN=mean, na.rm=TRUE)</code></pre>
+<p>and <span class="math inline">\(\sigma\)</span> (sigma) is the standard deviation (the square root of the variance).</p>
+<pre class="r"><code>sigma2 &lt;- apply(returns, 2, sd)
+sigma &lt;- sqrt(diag(V))</code></pre>
+<pre class="r"><code>plot_assets &lt;- function(V, mu) {
+  rd &lt;- data.frame(mu=mu, sigma=sqrt(diag(V)))
+  rd$assets &lt;- row.names(rd)
+  
+  ggplot(rd, aes(x = sigma, y = mu, color = assets)) +
+    geom_point(size = 2) +
+    ylab(&quot;Expected Return&quot;) +
+    xlab(&quot;Standard Deviation (Risk)&quot;) +
+    xlim(0, max(sigma)) + 
+    ylim(0, 1.2*max(mu)) +
+    ggtitle(&quot;Expected Returns versus Risk&quot;)
+    
+}
+  
+plot_assets(V, mu)</code></pre>
+<p><img src="/post/2019-03-25-optimization-examples_files/figure-html/plot_assets-1.png" width="672" /></p>
+</div>
+</div>
+<div id="optimization" class="section level1">
+<h1>Optimization</h1>
+<p>There are many optimization packages available for R. To start off, we will use the <em>solve.QP</em> package, then move on to show some other optimizers.</p>
+<div id="equal-weighted" class="section level2">
+<h2>Equal-weighted</h2>
+<p>The portfolio optimization problem is the problem of finding the optimal weights of a portfolio. For example, how much you should invest in each asset to maximize some desirable quantity, say risk-adjusted return.</p>
+<p>If you do not have any information about the assets (or, more realistically, any reliable information) you can assign the same weight to each asset: this maximizes the entropy (a measure of diversity) of the weights.</p>
+<pre class="r"><code>plot_portfolio &lt;- function(w, label, V, mu) {
+
+  require(quadprog)
+  n &lt;- length(mu)
+  A &lt;- cbind( # Each column is a constraint
+    matrix( rep(1,n), nr=n ),
+    diag(n)
+  )
+  b &lt;- c(1, rep(0,n))
+  f &lt;- function(u) {
+    solve.QP(Dmat = u * V, dvec = mu, Amat = A, bvec = b, meq = 1)$solution
+  }
+  require(parallel) # Run the computations in parallel
+  risk_aversions &lt;- seq(.1, 100, length=ceiling(1e5/length(mu)))
+  efw &lt;- mclapply(risk_aversions, f)
+  efw &lt;- do.call(cbind, efw)
+  x &lt;- sqrt( colSums(efw * (V %*% efw)) )
+  y &lt;- t(efw) %*% mu
+  
+  # Efficient frontier points
+  ef &lt;- data.frame(x=x, y=y)
+  
+  rd &lt;- data.frame(mu=mu, sigma=sqrt(diag(V)))
+  rd$assets &lt;- row.names(rd)
+  
+  port_risk &lt;- sqrt( t(w) %*% V %*% w )
+  port_return &lt;- t(w) %*% mu
+  
+  gg &lt;- ggplot(rd, aes(x = sigma, y = mu, color = assets)) +
+    geom_point(size = 2) +
+    ylab(&quot;Expected Return&quot;) +
+    xlab(&quot;Standard Deviation (Risk)&quot;) +
+    xlim(0, max(sigma)) + 
+    ylim(0, 1.2*max(mu)) +
+    ggtitle(&quot;Expected Returns versus Risk&quot;) +
+    geom_segment(data = ef, aes(x = x, xend = dplyr::lead(x), y = y, yend = dplyr::lead(y)), color=&quot;grey&quot;) + 
+    geom_point(aes(x = port_risk, y = port_return), color = &quot;cornflowerblue&quot;, size = 6) +
+    geom_text(aes(x = port_risk, y = port_return, label = label, color=&quot;Portfolio&quot;), 
+      position = position_dodge(width = 1), vjust = 1.5,) 
+  print(gg)
+
+}
+
+plot_portfolio(w = rep(1/length(mu), length(mu)), label = &quot;Equal weighted&quot;, V = V, mu = mu)</code></pre>
+<pre><code>## Loading required package: quadprog</code></pre>
+<pre><code>## Loading required package: parallel</code></pre>
+<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
+<p><img src="/post/2019-03-25-optimization-examples_files/figure-html/frontier-1.png" width="672" /></p>
+</div>
+<div id="mean-variance" class="section level2">
+<h2>Mean-Variance</h2>
+<p>The mean-variance portfolio maximizes the risk-adjusted expected return of the portfolio.
+Usually this takes the form of <span class="math inline">\(\mu - \lambda * \sigma^{2}\)</span>, where
+* <span class="math inline">\(\lambda\)</span> is the risk aversion parameter as determined by the investor
+* <span class="math inline">\(\mu\)</span> is the expected return (probably proxied by the historical return)
+* <span class="math inline">\(\sigma^{2}\)</span> is the risk measure, but other choices are available</p>
+<p>We will use the <em>solve.QP</em> function in library quadprog, which requires converting the problem to the following format:</p>
+<p>Functin call: solve.QP(Dmat, dvec, Amat, bvec, meq=0)
+Find w
+to maximize dvec’ w - 1/2 w’ Dmat w
+such that Amat’ q &gt;= bvec (the first meq constraints are equalities)</p>
+</div>
+<div id="no-constraints" class="section level2">
+<h2>No constraints</h2>
+<pre class="r"><code>n &lt;- length(mu)
+Amat &lt;- matrix(nr = n, nc = 0)
+bvec &lt;- c()
+r &lt;- solve.QP(Dmat = V, dvec = mu, Amat, bvec, meq = 0)
+round(r$solution, 4)</code></pre>
+<pre><code>## [1] -10.1378   7.5701  -4.1429   0.3429  -2.7900  13.3351</code></pre>
+<p>With absolutely no constraints the weights no not sum to one, rather summing to ’r sum(r$solution)`, the positions are highly levered, and there are many negative weights, implying shorting. We will now add a constraint to requie that the weights sum to one by using the Amat, bvec, and meq parameters as follows: <span class="math inline">\(Amat&#39; q &gt;= bvec\)</span>
+We can create equality constraints, but they must be the first meq constraints and the remaining constraints will be inequality constraints. For long only we will only have one constraint, and that is that all the weights sum to exactly one.</p>
+<pre class="r"><code>Amat &lt;- matrix(rep(1, n), nr = n)
+bvec &lt;- 1
+print(Amat)</code></pre>
+<pre><code>##      [,1]
+## [1,]    1
+## [2,]    1
+## [3,]    1
+## [4,]    1
+## [5,]    1
+## [6,]    1</code></pre>
+<pre class="r"><code>print(bvec)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<p>As you can see, we created Amat as a column of all ones, bvec as a single 1, and set meq=1 so the function knows it is an equality constraint.</p>
+<pre class="r"><code>r &lt;- solve.QP(Dmat=V, dvec=mu, Amat, bvec, meq=1)
+sum(r$solution)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>round(r$solution, 2)</code></pre>
+<pre><code>## [1] -10.24   1.63  -5.17   2.77  -1.03  13.05</code></pre>
+<p>Now the weights sum to one, but the leverage is still too high. Lets modify Amat and bvec as follows:</p>
+<pre class="r"><code>Amat &lt;- cbind(matrix( rep(1,n), nr=n ), diag(n))
+bvec &lt;- c(1, rep(0,n))
+print(Amat)</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+## [1,]    1    1    0    0    0    0    0
+## [2,]    1    0    1    0    0    0    0
+## [3,]    1    0    0    1    0    0    0
+## [4,]    1    0    0    0    1    0    0
+## [5,]    1    0    0    0    0    1    0
+## [6,]    1    0    0    0    0    0    1</code></pre>
+<pre class="r"><code>print(bvec)</code></pre>
+<pre><code>## [1] 1 0 0 0 0 0 0</code></pre>
+<p>This make this concept concrete, here is how the matrix would look in equation form:</p>
+<pre class="r"><code>eq &lt;- c(&quot;=&quot;, rep(&quot;&gt;=&quot;, n))
+print(rbind(Amat, eq, bvec))</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+##      &quot;1&quot;  &quot;1&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot; 
+##      &quot;1&quot;  &quot;0&quot;  &quot;1&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot; 
+##      &quot;1&quot;  &quot;0&quot;  &quot;0&quot;  &quot;1&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot; 
+##      &quot;1&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot;  &quot;1&quot;  &quot;0&quot;  &quot;0&quot; 
+##      &quot;1&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot;  &quot;1&quot;  &quot;0&quot; 
+##      &quot;1&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot;  &quot;1&quot; 
+## eq   &quot;=&quot;  &quot;&gt;=&quot; &quot;&gt;=&quot; &quot;&gt;=&quot; &quot;&gt;=&quot; &quot;&gt;=&quot; &quot;&gt;=&quot;
+## bvec &quot;1&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot;  &quot;0&quot;</code></pre>
+<p>We can move along the efficient frontier (the grey line) by adjusting the risk-aversion parameter <span class="math inline">\(\lambda\)</span>. <span class="math inline">\(\lambda\)</span>=1 gives a balance between expected return and risk, whereas <span class="math inline">\(\lambda\)</span> &lt; 1 will shift the optimal portfolio to the right and <span class="math inline">\(\lambda\)</span> &gt; 1 will shift the optimal portfolio to the left.</p>
+</div>
+<div id="lambda-1-risk-averse-investor" class="section level2">
+<h2><span class="math inline">\(\lambda\)</span> = 1: Risk-averse investor</h2>
+<pre class="r"><code>r &lt;- solve.QP(Dma=V, dvec=mu, Amat, bvec, meq=1)
+sum(r$solution)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>round(r$solution, 2)</code></pre>
+<pre><code>## [1] 0 0 0 0 1 0</code></pre>
+<pre class="r"><code>plot_portfolio(w=r$solution, label=&quot;lambda = 1&quot;, V, mu)</code></pre>
+<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
+<p><img src="/post/2019-03-25-optimization-examples_files/figure-html/longonly-1.png" width="672" /></p>
+<p><span class="math inline">\(\lambda\)</span> &lt; 1 downplays the risk component and gives more importance to expected return, thus shifting the optimal portfolio to the right along the efficient frontier.</p>
+</div>
+<div id="lambda-1-more-risk-tolerant-investor" class="section level2">
+<h2><span class="math inline">\(\lambda\)</span> &lt; 1: More risk-tolerant investor</h2>
+<pre class="r"><code>r5 &lt;- solve.QP(Dmat = .5 * V, dvec = mu, Amat, bvec, meq = 1)
+r1 &lt;- solve.QP(Dmat = .1 * V, dvec = mu, Amat, bvec, meq = 1)
+plot_portfolio(w=r5$solution, label=&quot;lambda = .5&quot;, V, mu)</code></pre>
+<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
+<pre class="r"><code>plot_portfolio(w=r1$solution, label=&quot;lambda = .1&quot;, V, mu)</code></pre>
+<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
+<pre><code>## Warning: Removed 6 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 6 rows containing missing values (geom_text).</code></pre>
+<p><img src="/post/2019-03-25-optimization-examples_files/figure-html/riskTolerant-1.png" width="50%" /><img src="/post/2019-03-25-optimization-examples_files/figure-html/riskTolerant-2.png" width="50%" /></p>
+<p><span class="math inline">\(\lambda\)</span> &gt; 1 increases the importance of the risk component and while keeping the expected returns the same, thus shifting the optimal portfolio to the left along the efficient frontier.</p>
+</div>
+</div>
+<div id="lambda-1-more-risk-averse-investor" class="section level1">
+<h1><span class="math inline">\(\lambda\)</span> &gt; 1: More risk-averse investor</h1>
+<pre class="r"><code>r3 &lt;- solve.QP(Dmat = 3 * V, dvec = mu, Amat, bvec, meq = 1)
+r10 &lt;- solve.QP(Dmat = 10 * V, dvec = mu, Amat, bvec, meq = 1)
+plot_portfolio(w=r3$solution, label = &quot;lambda = 3&quot;, V, mu)</code></pre>
+<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
+<pre class="r"><code>plot_portfolio(w=r10$solution, label = &quot;lambda = 10&quot;, V, mu)</code></pre>
+<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
+<p><img src="/post/2019-03-25-optimization-examples_files/figure-html/riskAverse1-1.png" width="50%" /><img src="/post/2019-03-25-optimization-examples_files/figure-html/riskAverse1-2.png" width="50%" /></p>
+</div>
+<div id="minimum-volatilty-minv-vol" class="section level1">
+<h1>Minimum Volatilty (Minv-Vol)</h1>
+<p>The minimum volatility portfolio to achieve by setting <span class="math inline">\(\mu\)</span> to zero and solving the same optimization probme, so the optimizer finds the portfolio with the lowest risk regardless of the expected return. The minimum volatility portfolio is on the left and the mean variance portfolio is on the right for comparison purposes.</p>
+<pre class="r"><code>r0 &lt;- solve.QP(Dmat = V, dvec = 0 * mu, Amat, bvec, meq = 1)
+r &lt;- solve.QP(Dmat = V, dvec = mu, Amat, bvec, meq = 1)
+plot_portfolio(w=r0$solution, label = &quot;Minv-Vol&quot;, V, mu)</code></pre>
+<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
+<pre class="r"><code>plot_portfolio(w=r$solution, label = &quot;Mean-Variance vol&quot;, V, mu)</code></pre>
+<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
+<p><img src="/post/2019-03-25-optimization-examples_files/figure-html/riskAverse-1.png" width="50%" /><img src="/post/2019-03-25-optimization-examples_files/figure-html/riskAverse-2.png" width="50%" /></p>
+<p>We hope this helps you understand the basics of efficient frontiers and portfolio optimization, and gives you a starting point to optimizing portfolios in R.</p>
+</div>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=Optimization%20Examples&url=%2f2019%2f01%2f16%2foptimization-examples%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2019%2f01%2f16%2foptimization-examples%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=%2f2019%2f01%2f16%2foptimization-examples%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+</footer>
+
+        
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="Roger J. Bos, CFA" href="/">Roger J. Bos, CFA</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2019 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="/js/jquery-1.11.3.min.js"></script>
+        <script src="/js/jquery.fitvids.js"></script>
+        
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        
+        
+        <script src="/js/scripts.js"></script>
+    </body>
+</html>
+

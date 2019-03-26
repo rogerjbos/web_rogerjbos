@@ -6,18 +6,28 @@
     <description>Recent content on Roger J. Bos, CFA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Dec 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>DIY</title>
-      <link>/diy/</link>
-      <pubDate>Sun, 23 Dec 2018 00:00:00 +0000</pubDate>
+      <title>SQLAlchemy ORM versus Raw SQL</title>
+      <link>/2019/02/25/python-sqlalchemy/</link>
+      <pubDate>Mon, 25 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/diy/</guid>
-      <description>TO DO</description>
+      <guid>/2019/02/25/python-sqlalchemy/</guid>
+      <description>Python: SQLAlchemy ORM versus Raw SQL I was reading this blog post [https://auth0.com/blog/sqlalchemy-orm-tutorial-for-python-developers/] about SQLAlchemy and how to run queries using its Object Relational Mapper (ORM). It is a very good intruduction to the pythonic ORM way of talking to databases, but I think I still prefer using raw SQL. In this post I will show you some reasons why I prefer raw SQL. I will use the same database and tables used in the original tutorial for these examples.</description>
+    </item>
+    
+    <item>
+      <title>Optimization Examples in R</title>
+      <link>/2019/01/16/optimization-examples-in-r/</link>
+      <pubDate>Wed, 16 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/2019/01/16/optimization-examples-in-r/</guid>
+      <description>Prerequisites Before we get to the optimization examples, we will download the price history for a small number of ETFs and show how to calculate the returns, standard deviations, variance matrix and other inputs that we will need for the optimizer.
+Prices For these examples, we will download the daily prices for a handful of ETFs from Yahoo Finance, starting in 2003. Once the daily data is downloaded, we use the to.</description>
     </item>
     
     <item>
@@ -30,22 +40,22 @@
     </item>
     
     <item>
-      <title>Linux Notes</title>
-      <link>/linux/</link>
-      <pubDate>Sun, 23 Dec 2018 00:00:00 +0000</pubDate>
+      <title>DIY</title>
+      <link>/diy/</link>
+      <pubDate>Sat, 22 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/linux/</guid>
-      <description>I am a huge fan of linux. I enjoy ssh-ing into servers and using the command line, but since I don&amp;rsquo;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this handy reference for myself.
- df shows the amount of free space on your drive free shows the amount of free memory on your machine. history shows a list of previous commands. What&amp;rsquo;s nice is that you can re-run any command by using the bang operator and the line number (i.</description>
+      <guid>/diy/</guid>
+      <description>This is a collection of some of my adventures (and misadventures) in home ownership and repair. This page will also act as an instruction manual should I ever try to sell my house. I would always recommend someone hire a professional if they feel uncomfortable doing a repair on their house. I do many of these repairs myself because it affords me an opportunity to learn more about how all these systems work and, often times, make improvements that otherwise probably would not happen.</description>
     </item>
     
     <item>
-      <title></title>
-      <link>/1/01/01/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>Linux Notes</title>
+      <link>/linux/</link>
+      <pubDate>Sat, 22 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/1/01/01/</guid>
-      <description>postgresql_examples   /*! * * Twitter Bootstrap * */ /*! * Bootstrap v3.3.7 (http://getbootstrap.com) * Copyright 2011-2016 Twitter, Inc. * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE) */ /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */ html { font-family: sans-serif; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; } body { margin: 0; } article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary { display: block; } audio, canvas, progress, video { display: inline-block; vertical-align: baseline; } audio:not([controls]) { display: none; height: 0; } [hidden], template { display: none; } a { background-color: transparent; } a:active, a:hover { outline: 0; } abbr[title] { border-bottom: 1px dotted; } b, strong { font-weight: bold; } dfn { font-style: italic; } h1 { font-size: 2em; margin: 0.</description>
+      <guid>/linux/</guid>
+      <description>I am a huge fan of linux. I enjoy ssh-ing into servers and using the command line, but since I don&amp;rsquo;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.
+Linux Commands  df shows the amount of free space on your drive free shows the amount of free memory on your machine. history shows a list of previous commands.</description>
     </item>
     
     <item>
@@ -57,16 +67,6 @@
       <description>I am a quant finance professional working in NYC. I have spent my entire career working in the equity markets. My main programming languages are R and SQL.
 I have a deep love of learning and enjoy figuring out how things work, be it the stock market, plumbing systems, electrical systems, or cars. I enjoy using my Rasberry Pi for home automation projects.
 You can reach me at roger dot bos at gmail dot com.</description>
-    </item>
-    
-    <item>
-      <title>Optimization Examples</title>
-      <link>/1/01/01/optimization-examples/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/1/01/01/optimization-examples/</guid>
-      <description>Prices For these examples, we will download the daily prices for a handfull of ETFs from Yahoo Finance, starting in 2003. Once the daily data is downlaoded, we use the to.weekly() function to convert the prices to a weekly series (there is also a to.monthly() function) and then combine the series column by column into a data.frame.
-symbols &amp;lt;- c(&amp;quot;IWD&amp;quot;,&amp;quot;IWF&amp;quot;,&amp;quot;IWN&amp;quot;,&amp;quot;IWO&amp;quot;,&amp;quot;IWP&amp;quot;,&amp;quot;IWS&amp;quot;) initDate &amp;lt;- &amp;quot;2003-01-01&amp;quot; go &amp;lt;- try(getSymbols(symbols, from = initDate)) ## pausing 1 second between requests for more than 5 symbols ## pausing 1 second between requests for more than 5 symbols prices &amp;lt;- list() for(i in 1:length(symbols)) { tmp &amp;lt;- Ad(get(symbols[i])) tmp &amp;lt;- to.</description>
     </item>
     
   </channel>

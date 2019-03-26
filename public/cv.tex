@@ -1,0 +1,191 @@
+\documentclass[11pt,]{article}
+\usepackage[sc, osf]{mathpazo}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+
+
+
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% Now begins the stuff that I added.
+% ----------------------------------
+
+% Custom section fonts
+\usepackage{sectsty}
+\sectionfont{\rmfamily\mdseries\large\bf}
+\subsectionfont{\rmfamily\mdseries\normalsize\itshape}
+
+
+% Make lists without bullets
+\renewenvironment{itemize}{
+  \begin{list}{}{
+    \setlength{\leftmargin}{1.5em}
+  }
+}{
+  \end{list}
+}
+
+
+% Make parskips rather than indent with lists.
+\usepackage{parskip}
+\usepackage{titlesec}
+\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{4pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{4pt plus 2pt minus 2pt}
+
+% Use fontawesome. Note: you'll need TeXLive 2015. Update.
+\usepackage{fontawesome}
+
+% Fancyhdr, as I tend to do with these personal documents.
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\footrulewidth}{0.0pt}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{
+\cfoot{\scriptsize  Roger J. Bos, CFA - CV }}
+\rfoot{\scriptsize \thepage/{\hypersetup{linkcolor=black}\pageref{LastPage}}}
+
+% Always load hyperref last.
+\usepackage{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+
+\hypersetup{unicode=true,
+            pdftitle={Roger J. Bos, CFA:  CV (Curriculum Vitae)},
+            pdfauthor={Roger J. Bos, CFA},
+            pdfkeywords={Factor Investing, Portfolio Construction, Backtesting, R, Shiny},
+            colorlinks=true,
+            linkcolor=blue,
+            citecolor=Blue,
+            urlcolor=blue,
+            breaklinks=true, bookmarks=true}
+\urlstyle{same}  % don't use monospace font for urls
+
+\begin{document}
+
+
+\centerline{\huge \bf Roger J. Bos, CFA}
+
+\vspace{2 mm}
+
+\hrule
+
+\vspace{2 mm}
+
+
+\moveleft.5\hoffset\centerline{175 Newtown Tpke, Weston CT 06883}
+\moveleft.5\hoffset\centerline{ \faEnvelopeO \hspace{1 mm} \href{mailto:}{\tt \href{mailto:roger.bos@gmail.com}{\nolinkurl{roger.bos@gmail.com}}} \hspace{1 mm}  \faPhone \hspace{1 mm}  203 572 1267  \hspace{1 mm}  \faGithub \hspace{1 mm} \href{http://github.com/rogerjbos}{\tt rogerjbos} \hspace{1 mm}    \faGlobe \hspace{1 mm} \href{http://rogerjbos.com}{\tt rogerjbos.com}   }
+
+\vspace{2 mm}
+
+\hrule
+
+
+\hypertarget{employment}{%
+\section{Employment}\label{employment}}
+
+\emph{Rothschild \& Co.~Asset Management US}, Director of Quantitative
+Research (New York) \hfill 2004-Present
+
+Research and develop stock ranking systems used to manage \$10 billion
+in equities.
+
+Detailed achievements:
+
+\begin{itemize}
+\item
+  Efficiently extract S\&P Snapshot (Xpressfeed) data via R \& SQL
+\item
+  Create and maintain a factor library of hundreds of factors
+\item
+  Write R code to backtest factors and stock ranking systems
+\item
+  Developed R Shiny apps to make my analytics available to PMs
+\item
+  Produce daily ranks and feed data to FactSet, Portia, \& Charles River
+\end{itemize}
+
+\emph{Standard \& Poor's Corp.}, Various quantitative roles, New York
+\hfill 1998-2004
+
+\begin{itemize}
+\item
+  Modified S\&P Fair Value model for new data source
+\item
+  Developed S\&P International Quality Ranking System based on the
+  domestic version
+\item
+  Backtested unit investment trust strategies using Research Insight
+  data.
+\item
+  Conducted research on the S\&P indices while a member of the Index
+  Committee.
+\end{itemize}
+
+\emph{Value Line Corp.}, Fundamental Equity Analyst, New York
+\hfill 1996-1998
+
+\hypertarget{education}{%
+\section{Education}\label{education}}
+
+\emph{Carngie Mellon University}, Tepper School of Business, M.S. in
+Computational Finance \hfill 1999
+
+\emph{University of the West Indiex}, Cave Hill Campus, Barbados,
+M.Phil. in Economics \hfill 1996
+
+\emph{Rockhust University}, Kansas City, MO, BSBA in Finance Economics
+\hfill 1994
+
+\hypertarget{publications}{%
+\section{Publications}\label{publications}}
+
+\emph{Index Caclulation Primer}, Standard \& Poors, July 2000
+
+\emph{General Criteria for S\&P U.S. Index Membership}, Standard \&
+Poors, September 2000
+
+\emph{Event Study: Quantifying the Effect of Being Added to an S\&P
+Index}, Standard \& Poors, January 2001
+
+\hypertarget{interests}{%
+\section{Interests}\label{interests}}
+
+Home automation using Python and Rasberry Pi, all things do-it-yourself,
+and running.
+
+\end{document}
