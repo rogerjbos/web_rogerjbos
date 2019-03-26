@@ -2,39 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Roger J. Bos, CFA</title>
-    <link>/tags/</link>
+    <link>https://rogerjbos.com/tags/</link>
     <description>Recent content in Tags on Roger J. Bos, CFA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 23 Dec 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://rogerjbos.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Diy</title>
-      <link>/tags/diy/</link>
+      <link>https://rogerjbos.com/tags/diy/</link>
       <pubDate>Sun, 23 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/diy/</guid>
+      <guid>https://rogerjbos.com/tags/diy/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Investing</title>
-      <link>/tags/investing/</link>
+      <link>https://rogerjbos.com/tags/investing/</link>
       <pubDate>Sun, 23 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/investing/</guid>
+      <guid>https://rogerjbos.com/tags/investing/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Linux</title>
-      <link>/tags/linux/</link>
+      <link>https://rogerjbos.com/tags/linux/</link>
       <pubDate>Sun, 23 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/linux/</guid>
+      <guid>https://rogerjbos.com/tags/linux/</guid>
       <description></description>
     </item>
     
