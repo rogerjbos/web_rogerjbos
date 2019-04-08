@@ -6,10 +6,20 @@
     <description>Recent content on Roger J. Bos, CFA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Linux Notes</title>
+      <link>/linux/</link>
+      <pubDate>Mon, 08 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/linux/</guid>
+      <description>I am a big fan of linux. I enjoy ssh-ing into servers and using the command line, but since I don&amp;rsquo;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.
+Linux Commands  df shows the amount of free space on your drive free shows the amount of free memory on your machine. history shows a list of previous commands.</description>
+    </item>
     
     <item>
       <title>SQLAlchemy ORM versus Raw SQL</title>
@@ -46,16 +56,6 @@ Prices For these examples, we will download the daily prices for a handful of ET
       
       <guid>/diy/</guid>
       <description>This is a collection of some of my adventures (and misadventures) in home ownership and repair. This page will also act as an instruction manual should I ever try to sell my house. I would always recommend someone hire a professional if they feel uncomfortable doing a repair on their house. I do many of these repairs myself because it affords me an opportunity to learn more about how all these systems work and, often times, make improvements that otherwise probably would not happen.</description>
-    </item>
-    
-    <item>
-      <title>Linux Notes</title>
-      <link>/linux/</link>
-      <pubDate>Sat, 22 Dec 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/linux/</guid>
-      <description>I am a huge fan of linux. I enjoy ssh-ing into servers and using the command line, but since I don&amp;rsquo;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.
-Linux Commands  df shows the amount of free space on your drive free shows the amount of free memory on your machine. history shows a list of previous commands.</description>
     </item>
     
     <item>

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Linux Notes &middot; </title>
-        <meta name="description" content="I am a huge fan of linux. I enjoy ssh-ing into servers and using the command line, but since I don&rsquo;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.
+        <meta name="description" content="I am a big fan of linux. I enjoy ssh-ing into servers and using the command line, but since I don&rsquo;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.
 Linux Commands  df shows the amount of free space on your drive free shows the amount of free memory on your machine. history shows a list of previous commands.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
@@ -90,9 +90,9 @@ Linux Commands  df shows the amount of free space on your drive free shows the a
 
     
 
-<p>I am a huge fan of linux.  I enjoy ssh-ing into servers and using the command line, but since I don&rsquo;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.</p>
+<p>I am a big fan of linux.  I enjoy ssh-ing into servers and using the command line, but since I don&rsquo;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.</p>
 
-<h2 id="linux-commands">Linux Commands</h2>
+<h3 id="linux-commands">Linux Commands</h3>
 
 <ul>
 <li><em>df</em> shows the amount of free space on your drive</li>
@@ -104,20 +104,182 @@ Linux Commands  df shows the amount of free space on your drive free shows the a
 <li>_rmdir folder<em>name</em> is used to remove a folder, recursively deleteing the files in the folder.  If you get an error that the folder is not empty (which I always do), add the &lsquo;-r&rsquo; option after &lsquo;rmdir&rsquo;, but make sure you don&rsquo;t want the files because there is no recycle bin in linux.</li>
 </ul>
 
-<h2 id="git-commands-notes">Git Commands / Notes</h2>
+<h3 id="git-commands-notes">Git Commands / Notes</h3>
 
 <pre><code>git init
 git add .
 git commit -m &quot;msg&quot;
 git branch # view branches and see current one
 git checkout -b &quot;new branch name&quot; # add a branch
-git remote add origin &quot;httpss://github.com/rogerjbos/&lt;newrepo&gt;.git&quot; # define origin
+git remote add origin &quot;https://github.com/rogerjbos/&lt;newrepo&gt;.git&quot; # define origin
 git push -u origin master # push local code to remote repo
 git push origin my_new_branch # push new branch to the remove repo
 git pull origin master # get new version of code onto local computer
 git log
 git status
 </code></pre>
+
+<h3 id="misc-notes">Misc Notes</h3>
+
+<h4 id="create-symbolic-soft-link">Create Symbolic (soft) link</h4>
+
+<p>My use case is that I cannot write to my linux drive from Windows (though I can write it my Windows drive from linux), so I write to a windows drive and create a symbolic link on my linux server so I can serve the file via the web server.</p>
+
+<pre><code>ln -s file1 link1
+ln -s //media/research/R_HOME/linux/reports/LC.html //data/shiny/doc/LC.html
+ln -s //media/research/R_HOME/linux/reports/SC_SMC.html //data/shiny/doc/SC_SMC.html
+ln -s //media/research/R_HOME/linux/reports/SCG.html //data/shiny/doc/SCG.html
+
+</code></pre>
+
+<h4 id="to-verify-new-soft-link-run">To verify new soft link run:</h4>
+
+<pre><code>ls -l
+
+</code></pre>
+
+<h4 id="linux-flask-yagmail-cifs">Linux &amp; Flask/yagmail/cifs</h4>
+
+<pre><code>apt-get install cifs-utils
+apt-get install python-dev
+apt-get install python-twisted
+apt-get install python-pip
+pip install setuptools
+pip install requests
+pip install keyrings.alt
+pip install yagmail
+pip install Flask
+pip install flask_login
+dpkg-reconfigure tzdata
+</code></pre>
+
+<h4 id="map-network-drives-using-etc-fstab-entry">Map network drives using /etc/fstab entry</h4>
+
+<pre><code>//192.168.1.1/bosdrive /mnt/bosdrive cifs rw,guest,iocharset=utf8,file_mode=0777,dir_mode=0777,noperm,users 0 0
+</code></pre>
+
+<h4 id="create-a-service-for-honeyalarmserver-in-a-file-called-etc-init-d-honeyalarmserver">Create a service for HoneyAlarmServer in a file called /etc/init.d/HoneyAlarmServer</h4>
+
+<pre><code>#!/bin/sh
+#
+# /etc/init.d/HoneyAlarmServer
+
+RETVAL=0
+prog=&quot;Honey&quot;
+
+start() {
+        echo -n $&quot;Starting $prog:&quot;
+        RETVAL=$?
+        [ &quot;$RETVAL&quot; = 0 ] &amp;&amp; touch /var/lock/subsys/$prog
+        cd /home/rjbos/HoneyAlarmServer
+        sudo python /home/rjbos/HoneyAlarmServer/alarmserver.py&amp;
+        echo
+}
+
+stop() {
+        echo -n $&quot;Stopping $prog:&quot;
+        killproc $prog -TERM
+        RETVAL=$?
+        [ &quot;$RETVAL&quot; = 0 ] &amp;&amp; rm -f /var/lock/subsys/$prog
+        echo
+}
+
+reload() {
+        echo -n $&quot;Reloading $prog:&quot;
+        killproc $prog -HUP
+        RETVAL=$?
+        echo
+}
+
+case &quot;$1&quot; in
+        start)
+                start
+                ;;
+        stop)
+                stop
+                ;;
+        restart)
+                stop
+                start
+                ;;
+        reload)
+                reload
+                ;;
+        condrestart)
+                if [ -f /var/lock/subsys/$prog ] ; then
+                        stop
+                        # avoid race
+                        sleep 3
+                        start
+                fi
+                ;;
+        status)
+                status $prog
+                RETVAL=$?
+                ;;
+        *)
+                echo $&quot;Usage: $0 {start|stop|restart|reload|condrestart|status}&quot;
+                RETVAL=1
+esac
+exit $RETVAL
+</code></pre>
+
+<h4 id="configuring-cups-for-network-printing">Configuring CUPS for network printing</h4>
+
+<pre><code>http://localhost:631/
+Administrator &gt; Add Printer
+select Internet Printing Protocol
+something like socket://192.168.1.3:9100
+Select PPD File: For Brother 2230 select 2170
+</code></pre>
+
+<h4 id="common-apache2-tasks">Common Apache2 Tasks</h4>
+
+<pre><code>Restating Apache2:
+sudo service apache2 restart
+Viewing the error log in Apache2:
+tail -40 /var/log/apache2/error.log
+</code></pre>
+
+<h4 id="other-packages-needed">Other Packages Needed</h4>
+
+<pre><code>sudo apt-get install r-cran-rodbc
+sudo apt-get install r-cran-xml
+# needed for devtools package
+sudo apt-get install libcurl4-gnutls-dev 
+sudo apt-get install texinfo
+</code></pre>
+
+<h4 id="etc-r-rprofile">/etc/R/Rprofile</h4>
+
+<pre><code># Get your current repo name
+current_repo &lt;- getOption(&quot;repos&quot;)
+current_repo[&quot;CRAN&quot;] &lt;- &quot;http://lib.stat.cmu.edu/R/CRAN/&quot;
+options(repos = current_repo)
+if (length(.libPaths() &gt; 1)) .libPaths(.libPaths()[-1])
+roger_env &lt;- new.env()
+# If you don't want to clutter this file, leave functions elsewhere.
+sys.source(&quot;.my_custom_functions.r&quot;, envir = roger_env)
+attach(roger_env)
+</code></pre>
+
+<h4 id="install-kodi-to-the-fire-tv">Install Kodi to the Fire TV</h4>
+
+<pre><code>adb kill-server
+adb start-server
+adb connect &lt;ip-address-of-fire-tv&gt;
+adb is connected when it reports the message &quot;connected to &lt;ip-address-of-fire-tv&gt;:&lt;port&gt;&quot;
+</code></pre>
+
+<h3 id="new-install">New Install</h3>
+
+<pre><code>adb install &lt;apk-file-name&gt;
+Upgrade
+adb install -r &lt;apk-file-name&gt;
+</code></pre>
+
+<p>Installation is complete when it reports the message &ldquo;success&rdquo;
+(Note: For Android you need to type in the full path. e.g. &gt;adb install /sdcard/Download/apk-file-name.apk)</p>
 
 </div>
     </article>
