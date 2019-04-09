@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>R Shiny / Rstudio Server on CentOS &middot; </title>
+        <meta name="description" content="Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly. Rstudio&rsquo;s @winston and @joe came to my rescue and determined that it was a problem with my nginx proxy settings.
+Install and configure Nginx Here is the Rstudio article. Here is my corrected nginx.conf file:
+/etc/nginx/nginx.conf #user nobody; worker_processes 1; error_log /data/log/nginx_error.log debug; pid /var/run/nginx.pid; events { worker_connections 1024; } http { include mime.types; default_type application/octet-stream; access_log /data/log/nginx_access.">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.54.0" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="/dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+        
+        
+    </head>
+    <body>
+        
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <a class="site-logo" title="" href="">
+                                <img src="#ZgotmplZ" alt="" />
+                            </a>
+                        
+                        <a class="button-square" href="/index.xml"><i class="fa fa-rss"></i></a>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="About" href="/about/">About</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Blog" href="/">Blog</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Investing" href="/investing/">Investing</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Linux" href="/linux/">Linux</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="DIY" href="/diy/">DIY</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="GitHub" href="https://github.com/rogerjbos">GitHub</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Twitter" href="https://twitter.com/rogerjbos1">Twitter</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">R Shiny / Rstudio Server on CentOS</h1>
+    
+    <p class="post-date post-line">
+        <span>Published <time datetime="2019-04-09" itemprop="datePublished">Tue, Apr 9, 2019</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="#" itemprop="url" rel="author">Roger J. Bos</a>
+            </span>
+        </span>
+    </p>
+    
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    
+
+<p>Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly.  Rstudio&rsquo;s @winston and @joe came to my rescue and determined that it was a problem with my nginx proxy settings.</p>
+
+<h3 id="install-and-configure-nginx">Install and configure Nginx</h3>
+
+<p>Here is the <a href="https://support.rstudio.com/hc/en-us/articles/213733868-Running-Shiny-Server-with-a-Proxy">Rstudio article</a>.  Here is my corrected nginx.conf file:</p>
+
+<h4 id="etc-nginx-nginx-conf">/etc/nginx/nginx.conf</h4>
+
+<pre><code>#user nobody;
+worker_processes  1;
+error_log  /data/log/nginx_error.log  debug;
+pid        /var/run/nginx.pid;
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    access_log /data/log/nginx_access.log combined;
+
+    sendfile        on;
+    #tcp_nopush     on;
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+    #gzip  on;
+
+    map $http_upgrade $connection_upgrade {
+      default upgrade;
+      ''      close;
+    }
+    
+    server {
+
+        # Open shiny server
+        location / {
+          proxy_pass http://127.0.0.1:3838/;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection $connection_upgrade;
+          proxy_read_timeout 20d;
+          proxy_buffering off;
+        }
+
+        # Open shiny server
+        location /apps/ {
+          proxy_pass http://127.0.0.1:3838/apps/;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection $connection_upgrade;
+          proxy_read_timeout 20d;
+          proxy_buffering off;
+        }
+
+        # Rstudio server
+        location /editor/ {
+          proxy_pass http://127.0.0.1:8787/;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection $connection_upgrade;
+          proxy_read_timeout 20d;
+          proxy_buffering off;
+        }
+
+
+        listen      80;
+        server_name nycsa0204;
+
+        #charset koi8-r;
+        access_log  /data/log/nginx_access.log;
+        error_log /data/log/nginx_error.log;
+        error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+
+        location ~ \.php$ {
+                try_files $uri =404;
+                fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;
+                fastcgi_index index.php;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                include fastcgi_params;
+        }
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        location ~ /\.ht {
+            deny  all;
+        }
+    }
+
+}
+</code></pre>
+
+<p>What I like about the above nginx.conf file is that if I use servername as the URL it will show the shiny index and if I browse to the servername/editor it will open the Rstudio server IDE.</p>
+
+<h3 id="rstudio-server-configuration">Rstudio server configuration</h3>
+
+<p>The only change I made here was to run it under my username:</p>
+
+<h4 id="etc-rstudio-rserver-conf">/etc/rstudio/rserver.conf</h4>
+
+<pre><code># Server Configuration File
+server-user=bosr
+</code></pre>
+
+<h3 id="shiny-server-configuration">Shiny server configuration</h3>
+
+<p>Shiny runs as user shiny.  You can also set where to want your log files:</p>
+
+<h4 id="etc-shiny-server-shiny-server-conf">/etc/shiny-server/shiny-server.conf</h4>
+
+<pre><code># Instruct Shiny Server to run applications as the user &quot;shiny&quot;
+run_as shiny;
+
+access_log /data/log/shiny-access.log combined;
+
+sanitize_errors off;
+
+# Define a server that listens on port 3838
+server {
+  listen 3838 127.0.0.1;
+
+  # Define a location at the base URL
+  location / {
+
+    simple_scheduler 15;
+
+    # Host the directory of Shiny Apps stored in this directory
+    site_dir /data/shiny;
+
+    # Log all Shiny output to files in this directory
+    log_dir /data/log;
+
+    # When a user visits the base URL rather than a particular application,
+    # an index of the applications available in this directory will be shown.
+    directory_index on;
+  }
+}
+
+</code></pre>
+
+<h3 id="permissions">Permissions</h3>
+
+<p>My shiny apps are located in /data/shiny, so I want both users (bosr and shiny) to have access to that location.  This is done by creating a shiny-apps group and making both users a member of that group.  That way I can use Rstudio server to develope apps (as user bosr) and users can run them on Shiny (as user shiny).</p>
+
+<pre><code>sudo groupadd shiny-apps
+sudo usermod -aG shiny-apps bosr
+sudo usermod -aG shiny-apps shiny
+cd /data/shiny
+sudo chown -R bosr:shiny-apps .
+sudo chmod g+w .
+sudo chmod g+s .
+
+</code></pre>
+
+<h3 id="set-up-automatic-drive-mappings-as-needed">Set up automatic drive mappings as needed</h3>
+
+<h4 id="etc-fstab">/etc/fstab</h4>
+
+<pre><code>#
+# /etc/fstab
+# Created by anaconda on Thu Feb  1 07:41:28 2018
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/vg00-rootvol /                       xfs     defaults        0 0
+UUID=ba660186-313b-4482-82aa-23ce7ef7727b /boot                   xfs     defaults        0 0
+/dev/mapper/vg00-homevol /home                   xfs     defaults        0 0
+/dev/mapper/vg00-tmpvol /tmp                    xfs     defaults        0 0
+/dev/mapper/vg00-varvol /var                    xfs     defaults        0 0
+/dev/mapper/vg00-crashvol /var/crash              xfs     defaults        0 0
+/dev/mapper/vg00-auditvol /var/log/audit          xfs     defaults        0 0
+/dev/mapper/vg00-swapvol swap                    swap    defaults        0 0
+/dev/mapper/datafs-datafslv1    /data   xfs     defaults       0 0
+//(server name)/research                            /media/research cifs credentials=/etc/fstab.cred,fil$
+</code></pre>
+
+<h4 id="etc-fstab-cred">/etc/fstab.cred</h4>
+
+<p>Instead of putting your password in the fstab file, put it in a separate credential file with the proper premissions.  They you only have to change the password in one place every time to change it.</p>
+
+<pre><code>username=bosr
+password=(secret)
+domain=(domain)
+
+</code></pre>
+
+<h3 id="troubleshooting">Troubleshooting</h3>
+
+<p>If you want to downgrade to an older version of a package, here is any easy way to do so:</p>
+
+<pre><code>library(devtools)
+install_version(&quot;shiny&quot;, version = &quot;1.2.0&quot;, repos = &quot;http://cran.us.r-project.org&quot;)
+
+</code></pre>
+
+<p>If you want to start R without any automatic loading of packages:</p>
+
+<pre><code>R -vanilla
+</code></pre>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+            
+                <a href="/tags/shiny/">Shiny</a>
+            
+        </p>
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=R%20Shiny%20%2f%20Rstudio%20Server%20on%20CentOS&url=%2f2019%2f04%2f09%2fshiny%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=%2f2019%2f04%2f09%2fshiny%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=%2f2019%2f04%2f09%2fshiny%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+</footer>
+
+        
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="Roger J. Bos, CFA" href="/">Roger J. Bos, CFA</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2019 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="/js/jquery-1.11.3.min.js"></script>
+        <script src="/js/jquery.fitvids.js"></script>
+        
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        
+        
+        <script src="/js/scripts.js"></script>
+    </body>
+</html>
+

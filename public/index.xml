@@ -6,10 +6,21 @@
     <description>Recent content on Roger J. Bos, CFA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>R Shiny / Rstudio Server on CentOS</title>
+      <link>/2019/04/09/shiny/</link>
+      <pubDate>Tue, 09 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/2019/04/09/shiny/</guid>
+      <description>Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly. Rstudio&amp;rsquo;s @winston and @joe came to my rescue and determined that it was a problem with my nginx proxy settings.
+Install and configure Nginx Here is the Rstudio article. Here is my corrected nginx.conf file:
+/etc/nginx/nginx.conf #user nobody; worker_processes 1; error_log /data/log/nginx_error.log debug; pid /var/run/nginx.pid; events { worker_connections 1024; } http { include mime.types; default_type application/octet-stream; access_log /data/log/nginx_access.</description>
+    </item>
     
     <item>
       <title>Linux Notes</title>

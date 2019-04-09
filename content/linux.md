@@ -20,6 +20,9 @@ I am a big fan of linux.  I enjoy ssh-ing into servers and using the command lin
 * _ls_ lists the files in the current folder.  ```ls -l``` is helpful because it shows the owner of each folder and file permissions.  Permission denied problems can be very confusing to fix in linux.  ```ls -alg``` is very comprehensive and shows the list of all files as a list and groups the directories first.
 * _mkdir new_folder_name_ is used to make a directory.
 * _rmdir folder_name_ is used to remove a folder, recursively deleteing the files in the folder.  If you get an error that the folder is not empty (which I always do), add the '-r' option after 'rmdir', but make sure you don't want the files because there is no recycle bin in linux.
+* _rm -r <mydir>_ will delete a folder even if it is not empty
+* _rm -rf <mydir>_ will delete a folder even if it is not empty without any prompts
+
 
 ### Git Commands / Notes
 
@@ -38,6 +41,15 @@ git status
 ```
 
 ### Misc Notes
+
+#### R command line commands for CentOS server
+
+```
+sudo R --vanilla
+yum update R
+
+```
+
 
 #### Create Symbolic (soft) link
 My use case is that I cannot write to my linux drive from Windows (though I can write it my Windows drive from linux), so I write to a windows drive and create a symbolic link on my linux server so I can serve the file via the web server.

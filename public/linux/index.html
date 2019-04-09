@@ -102,6 +102,8 @@ Linux Commands  df shows the amount of free space on your drive free shows the a
 <li><em>ls</em> lists the files in the current folder.  <code>ls -l</code> is helpful because it shows the owner of each folder and file permissions.  Permission denied problems can be very confusing to fix in linux.  <code>ls -alg</code> is very comprehensive and shows the list of all files as a list and groups the directories first.</li>
 <li>_mkdir new_folder<em>name</em> is used to make a directory.</li>
 <li>_rmdir folder<em>name</em> is used to remove a folder, recursively deleteing the files in the folder.  If you get an error that the folder is not empty (which I always do), add the &lsquo;-r&rsquo; option after &lsquo;rmdir&rsquo;, but make sure you don&rsquo;t want the files because there is no recycle bin in linux.</li>
+<li><em>rm -r <mydir></em> will delete a folder even if it is not empty</li>
+<li><em>rm -rf <mydir></em> will delete a folder even if it is not empty without any prompts</li>
 </ul>
 
 <h3 id="git-commands-notes">Git Commands / Notes</h3>
@@ -120,6 +122,13 @@ git status
 </code></pre>
 
 <h3 id="misc-notes">Misc Notes</h3>
+
+<h4 id="r-command-line-commands-for-centos-server">R command line commands for CentOS server</h4>
+
+<pre><code>sudo R --vanilla
+yum update R
+
+</code></pre>
 
 <h4 id="create-symbolic-soft-link">Create Symbolic (soft) link</h4>
 
