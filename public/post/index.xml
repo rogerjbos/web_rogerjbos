@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Roger J. Bos, CFA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Obi202 as ITSP</title>
+      <link>/2019/04/05/voip/</link>
+      <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/2019/04/05/voip/</guid>
+      <description>I have been using Google Voice since it started as Grand Central, before Google bought it. Google Voice became even better when Obihai came out with an analog telephone adapter (ATA) that would connect directly to it. To be able to make free calls to relatives, I installed an Obi110 device at their house as well. Learning VoIP has been a long and confusing journey, but it has also been a good learning experience.</description>
+    </item>
     
     <item>
       <title>SQLAlchemy ORM versus Raw SQL</title>
