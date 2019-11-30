@@ -18,7 +18,7 @@
       
       <guid>/linux/</guid>
       <description>I am a big fan of linux. I enjoy ssh-ing into servers and using the command line, but since I don&amp;rsquo;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.
-Linux Commands  df shows the amount of free space on your drive free shows the amount of free memory on your machine. history shows a list of previous commands.</description>
+Linux Commands  df shows the amount of free space on your drive. free shows the amount of free memory on your machine. groups shows a list of all the groups in use.</description>
     </item>
     
   </channel>

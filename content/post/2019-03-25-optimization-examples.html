@@ -21,6 +21,9 @@ output:
 <pre class="r"><code>library(xts)
 library(quantmod)</code></pre>
 <pre><code>## Loading required package: TTR</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;quantmod&#39;:
+##   method            from
+##   as.zoo.data.frame zoo</code></pre>
 <pre><code>## Version 0.4-0 included new data defaults. See ?getSymbols.</code></pre>
 <pre class="r"><code>library(ggplot2)</code></pre>
 <pre><code>## 
@@ -43,13 +46,13 @@ for(i in 1:length(symbols)) {
 }
 prices &lt;- do.call(cbind, prices)
 tail(prices)</code></pre>
-<pre><code>##                IWD      IWF      IWN      IWO      IWP      IWS
-## 2019-03-08 120.702 144.9766 119.1507 192.9177 130.5656 84.81628
-## 2019-03-15 123.875 149.5635 121.2218 197.5305 134.0197 86.64800
-## 2019-03-22 121.990 149.3800 116.9800 192.2000 133.1000 85.49000
-## 2019-03-29 123.490 151.3600 119.9000 196.6600 135.6700 86.86000
-## 2019-04-05 125.770 154.8700 123.6300 201.5000 139.2600 88.89000
-## 2019-04-08 125.850 155.1100 123.4800 200.9200 139.4400 88.83000</code></pre>
+<pre><code>##                 IWD      IWF      IWN      IWO      IWP      IWS
+## 2019-09-13 129.4231 161.3685 122.8302 201.2653 143.0413 90.31899
+## 2019-09-20 128.6978 160.8699 120.7500 199.4289 143.0113 89.83158
+## 2019-09-27 127.9700 158.4700 119.6300 192.0200 140.3100 89.40000
+## 2019-10-04 126.4800 159.4100 117.4100 190.6300 140.9500 88.11000
+## 2019-10-11 127.0900 160.5700 118.3700 191.8400 141.9400 88.48000
+## 2019-10-15 127.8200 162.3400 119.0100 193.7900 143.0600 88.87000</code></pre>
 </div>
 <div id="returns" class="section level2">
 <h2>Returns</h2>
@@ -60,27 +63,27 @@ returns[is.na(returns)] &lt;- 0
 logprices &lt;- log(prices)
 tail(logprices)</code></pre>
 <pre><code>##                 IWD      IWF      IWN      IWO      IWP      IWS
-## 2019-03-08 4.793325 4.976572 4.780389 5.262264 4.871876 4.440488
-## 2019-03-15 4.819273 5.007721 4.797622 5.285893 4.897986 4.461854
-## 2019-03-22 4.803939 5.006493 4.762003 5.258536 4.891101 4.448399
-## 2019-03-29 4.816160 5.019661 4.786658 5.281476 4.910225 4.464298
-## 2019-04-05 4.834455 5.042586 4.817293 5.305789 4.936343 4.487400
-## 2019-04-08 4.835091 5.044135 4.816079 5.302907 4.937634 4.486724</code></pre>
+## 2019-09-13 4.863087 5.083691 4.810803 5.304624 4.963133 4.503348
+## 2019-09-20 4.857467 5.080596 4.793722 5.295458 4.962924 4.497937
+## 2019-09-27 4.851796 5.065565 4.784404 5.257600 4.943854 4.493121
+## 2019-10-04 4.840084 5.071480 4.765672 5.250334 4.948405 4.478586
+## 2019-10-11 4.844895 5.078730 4.773815 5.256662 4.955404 4.482777
+## 2019-10-15 4.850623 5.089693 4.779208 5.266775 4.963264 4.487175</code></pre>
 <pre class="r"><code>tail(returns)</code></pre>
-<pre><code>##                      IWD          IWF          IWN          IWO
-## 2019-03-08 -0.0216866214 -0.022653904 -0.039569701 -0.043702081
-## 2019-03-15  0.0262876698  0.031639104  0.017382563  0.023910592
-## 2019-03-22 -0.0152166666 -0.001226917 -0.034992103 -0.026985731
-## 2019-03-29  0.0122960900  0.013254759  0.024961523  0.023205032
-## 2019-04-05  0.0184630256  0.023189707  0.031109215  0.024610983
-## 2019-04-08  0.0006360897  0.001549726 -0.001213249 -0.002878422
-##                     IWP           IWS
-## 2019-03-08 -0.030969912 -0.0249484905
-## 2019-03-15  0.026454682  0.0215963128
-## 2019-03-22 -0.006862031 -0.0133644742
-## 2019-03-29  0.019308729  0.0160253016
-## 2019-04-05  0.026461245  0.0233709185
-## 2019-04-08  0.001292597 -0.0006749578</code></pre>
+<pre><code>##                     IWD          IWF          IWN          IWO
+## 2019-09-13  0.024139044 -0.004491409  0.064154538  0.035056224
+## 2019-09-20 -0.005604539 -0.003090274 -0.016935458 -0.009124252
+## 2019-09-27 -0.005654861 -0.014918095 -0.009275198 -0.037150462
+## 2019-10-04 -0.011643338  0.005931741 -0.018557160 -0.007238824
+## 2019-10-11  0.004822841  0.007276852  0.008176467  0.006347327
+## 2019-10-15  0.005743993  0.011023161  0.005406767  0.010164705
+##                     IWP          IWS
+## 2019-09-13 -0.013974967  0.027614361
+## 2019-09-20 -0.000209506 -0.005396561
+## 2019-09-27 -0.018888779 -0.004804313
+## 2019-10-04  0.004561321 -0.014429541
+## 2019-10-11  0.007023803  0.004199319
+## 2019-10-15  0.007890630  0.004407776</code></pre>
 </div>
 <div id="expected-returns-and-standard-deviation" class="section level2">
 <h2>Expected returns and Standard Deviation</h2>
@@ -97,10 +100,10 @@ library(magrittr)</code></pre>
 ##     equals, is_less_than, not</code></pre>
 <pre class="r"><code>sigma3 &lt;- apply(returns, MARGIN=2, FUN=var) %&gt;% sqrt()
 rbind(sigma, sigma2, sigma3)</code></pre>
-<pre><code>##              IWD        IWF        IWN        IWO        IWP        IWS
-## sigma  0.0242173 0.02284619 0.02941437 0.03065287 0.02648748 0.02562745
-## sigma2 0.0242173 0.02284619 0.02941437 0.03065287 0.02648748 0.02562745
-## sigma3 0.0242173 0.02284619 0.02941437 0.03065287 0.02648748 0.02562745</code></pre>
+<pre><code>##               IWD        IWF        IWN        IWO        IWP        IWS
+## sigma  0.02402808 0.02269799 0.02921164 0.03038832 0.02625404 0.02540209
+## sigma2 0.02402808 0.02269799 0.02921164 0.03038832 0.02625404 0.02540209
+## sigma3 0.02402808 0.02269799 0.02921164 0.03038832 0.02625404 0.02540209</code></pre>
 <p>We show three different ways to calculate the same standard deviation above. The third one is essentially the same as the second, we just use the magrittr package in R which gives us the <em>%&gt;%</em> operator that makes the code easier to read. We will show you a fourth way to calculate standard deviation in the next section.</p>
 <p>```</p>
 </div>
@@ -110,23 +113,23 @@ rbind(sigma, sigma2, sigma3)</code></pre>
 <pre class="r"><code>V &lt;- cov(returns, use=&quot;complete&quot;)
 V</code></pre>
 <pre><code>##              IWD          IWF          IWN          IWO          IWP
-## IWD 0.0005864778 0.0005118856 0.0006450229 0.0006480146 0.0005873646
-## IWF 0.0005118856 0.0005219485 0.0005907233 0.0006427403 0.0005825579
-## IWN 0.0006450229 0.0005907233 0.0008652053 0.0008568990 0.0007151582
-## IWO 0.0006480146 0.0006427403 0.0008568990 0.0009395986 0.0007730705
-## IWP 0.0005873646 0.0005825579 0.0007151582 0.0007730705 0.0007015868
-## IWS 0.0006016842 0.0005414451 0.0007105870 0.0007133528 0.0006451518
+## IWD 0.0005773485 0.0005040316 0.0006352614 0.0006371931 0.0005767948
+## IWF 0.0005040316 0.0005151987 0.0005798984 0.0006315692 0.0005735595
+## IWN 0.0006352614 0.0005798984 0.0008533201 0.0008424399 0.0006998718
+## IWO 0.0006371931 0.0006315692 0.0008424399 0.0009234498 0.0007574937
+## IWP 0.0005767948 0.0005735595 0.0006998718 0.0007574937 0.0006892744
+## IWS 0.0005918556 0.0005322335 0.0006991594 0.0007005762 0.0006325194
 ##              IWS
-## IWD 0.0006016842
-## IWF 0.0005414451
-## IWN 0.0007105870
-## IWO 0.0007133528
-## IWP 0.0006451518
-## IWS 0.0006567660</code></pre>
+## IWD 0.0005918556
+## IWF 0.0005322335
+## IWN 0.0006991594
+## IWO 0.0007005762
+## IWP 0.0006325194
+## IWS 0.0006452661</code></pre>
 <pre class="r"><code>sigma4 &lt;- sqrt(diag(V))
 sigma4</code></pre>
 <pre><code>##        IWD        IWF        IWN        IWO        IWP        IWS 
-## 0.02421730 0.02284619 0.02941437 0.03065287 0.02648748 0.02562745</code></pre>
+## 0.02402808 0.02269799 0.02921164 0.03038832 0.02625404 0.02540209</code></pre>
 <p>The <em>cov</em> function calculations the co-variance of the returns between each pair of stocks using the formula <span class="math inline">\(\sqrt\sum((x-\overline{x})(y-\overline{y})}\)</span>. On the diagonal of the matrix <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are the same and the resulting calculation is the variance, so that is why <span class="math inline">\(\sqrt(diag(V))\)</span> produces the standard deviation, which you can verify matches the prior methods of calculating standard deviation.</p>
 </div>
 <div id="robust-methods-of-handling-outliers" class="section level2">
@@ -135,7 +138,7 @@ sigma4</code></pre>
 <pre class="r"><code>returns2 &lt;- returns
 returns2[60,2]</code></pre>
 <pre><code>##                      IWF
-## 2004-02-20 -0.0002074271</code></pre>
+## 2004-02-20 -0.0002072267</code></pre>
 <pre class="r"><code>returns2[60,2] &lt;- 5</code></pre>
 <p>Graphically, we can see how changing just one observation changes the correlation relationship of that ETF with the other ETFs.</p>
 <pre class="r"><code>par(mfrow=c(1,2))
@@ -152,50 +155,50 @@ plot(as.dendrogram( hclust(
 V2 &lt;- cov(returns2, use=&quot;pairwise&quot;)
 print(V[1:3, 1:3])</code></pre>
 <pre><code>##              IWD          IWF          IWN
-## IWD 0.0005864778 0.0005118856 0.0006450229
-## IWF 0.0005118856 0.0005219485 0.0005907233
-## IWN 0.0006450229 0.0005907233 0.0008652053</code></pre>
+## IWD 0.0005773485 0.0005040316 0.0006352614
+## IWF 0.0005040316 0.0005151987 0.0005798984
+## IWN 0.0006352614 0.0005798984 0.0008533201</code></pre>
 <pre class="r"><code>print(V2[1:3, 1:3])</code></pre>
 <pre><code>##              IWD          IWF          IWN
-## IWD 0.0005864778 0.0004850839 0.0006450229
-## IWF 0.0004850839 0.0299081286 0.0005361747
-## IWN 0.0006450229 0.0005361747 0.0008652053</code></pre>
+## IWD 0.0005773485 0.0004781875 0.0006352614
+## IWF 0.0004781875 0.0289967192 0.0005275467
+## IWN 0.0006352614 0.0005275467 0.0008533201</code></pre>
 <p>R package <em>corpcor</em> has a function called <em>cov.shrink</em> that shrinks all of the covariances closer to the mean, based on a <em>lambda.var</em> parameter. Using <em>lambda.var</em> of zero returns the (unshrunk) sample covariance matrix and we verify that below. If <em>lambda.var</em> is not specified it is automatically determined. You can see that the shrunk covariance matrix does a good job of minimizing the effect of the outlier.</p>
 <pre class="r"><code>library(corpcor)
 V2.sample &lt;- cov.shrink(returns2, lambda.var = 0)</code></pre>
 <pre><code>## Specified shrinkage intensity lambda.var (variance vector): 0 
 ## 
-## Estimating optimal shrinkage intensity lambda (correlation matrix): 0.0101</code></pre>
+## Estimating optimal shrinkage intensity lambda (correlation matrix): 0.0099</code></pre>
 <pre class="r"><code>V2.shrink &lt;- cov.shrink(returns2)</code></pre>
 <pre><code>## Estimating optimal shrinkage intensity lambda.var (variance vector): 1 
 ## 
-## Estimating optimal shrinkage intensity lambda (correlation matrix): 0.0101</code></pre>
+## Estimating optimal shrinkage intensity lambda (correlation matrix): 0.0099</code></pre>
 <pre class="r"><code>print(V2[1:3, 1:3])</code></pre>
 <pre><code>##              IWD          IWF          IWN
-## IWD 0.0005864778 0.0004850839 0.0006450229
-## IWF 0.0004850839 0.0299081286 0.0005361747
-## IWN 0.0006450229 0.0005361747 0.0008652053</code></pre>
+## IWD 0.0005773485 0.0004781875 0.0006352614
+## IWF 0.0004781875 0.0289967192 0.0005275467
+## IWN 0.0006352614 0.0005275467 0.0008533201</code></pre>
 <pre class="r"><code>print(V2.sample[1:3, 1:3])</code></pre>
 <pre><code>##              IWD          IWF          IWN
-## IWD 0.0005864778 0.0004801790 0.0006385008
-## IWF 0.0004801790 0.0299081286 0.0005307532
-## IWN 0.0006385008 0.0005307532 0.0008652053</code></pre>
+## IWD 0.0005773485 0.0004734698 0.0006289941
+## IWF 0.0004734698 0.0289967192 0.0005223421
+## IWN 0.0006289941 0.0005223421 0.0008533201</code></pre>
 <pre class="r"><code>print(V2.shrink[1:3, 1:3])</code></pre>
 <pre><code>##               IWD           IWF           IWN
-## IWD 0.00078339606 0.00008981817 0.00070219453
-## IWF 0.00008981817 0.00078339606 0.00008173721
-## IWN 0.00070219453 0.00008173721 0.00078339606</code></pre>
+## IWD 0.00077129727 0.00008925256 0.00069118348
+## IWF 0.00008925256 0.00077129727 0.00008099279
+## IWN 0.00069118348 0.00008099279 0.00077129727</code></pre>
 <pre class="r"><code>print(V[1:3, 1:3])</code></pre>
 <pre><code>##              IWD          IWF          IWN
-## IWD 0.0005864778 0.0005118856 0.0006450229
-## IWF 0.0005118856 0.0005219485 0.0005907233
-## IWN 0.0006450229 0.0005907233 0.0008652053</code></pre>
+## IWD 0.0005773485 0.0005040316 0.0006352614
+## IWF 0.0005040316 0.0005151987 0.0005798984
+## IWN 0.0006352614 0.0005798984 0.0008533201</code></pre>
 <pre class="r"><code># create exponential weights for a weighted covariance matrix
 wgts &lt;- .98^(nrow(returns):1)
 V.weighted &lt;- cov.shrink(returns, w=wgts)</code></pre>
-<pre><code>## Estimating optimal shrinkage intensity lambda.var (variance vector): 0.5846 
+<pre><code>## Estimating optimal shrinkage intensity lambda.var (variance vector): 0.6856 
 ## 
-## Estimating optimal shrinkage intensity lambda (correlation matrix): 0.0377</code></pre>
+## Estimating optimal shrinkage intensity lambda (correlation matrix): 0.0375</code></pre>
 <pre class="r"><code>returns2 &lt;- returns
 returns2[60,2] &lt;- -100
 
@@ -205,34 +208,34 @@ dim(V2)</code></pre>
 <pre class="r"><code>dim(V2.shrink)</code></pre>
 <pre><code>## [1] 6 6</code></pre>
 <pre class="r"><code>V2.shrink &lt;- cov.shrink(returns2, lambda = 0.99)</code></pre>
-<pre><code>## Estimating optimal shrinkage intensity lambda.var (variance vector): 0.9977 
+<pre><code>## Estimating optimal shrinkage intensity lambda.var (variance vector): 0.9978 
 ## 
 ## Specified shrinkage intensity lambda (correlation matrix): 0.99</code></pre>
 <pre class="r"><code>V2</code></pre>
 <pre><code>##              IWD           IWF          IWN          IWO          IWP
-## IWD 0.0005864778  0.0010478954 0.0006450229 0.0006480146 0.0005873646
-## IWF 0.0010478954 11.7657395001 0.0016816485 0.0019137764 0.0009175915
-## IWN 0.0006450229  0.0016816485 0.0008652053 0.0008568990 0.0007151582
-## IWO 0.0006480146  0.0019137764 0.0008568990 0.0009395986 0.0007730705
-## IWP 0.0005873646  0.0009175915 0.0007151582 0.0007730705 0.0007015868
-## IWS 0.0006016842  0.0012365295 0.0007105870 0.0007133528 0.0006451518
+## IWD 0.0005773485  0.0010208910 0.0006352614 0.0006371931 0.0005767948
+## IWF 0.0010208910 11.4035187457 0.0016268870 0.0018512065 0.0008938277
+## IWN 0.0006352614  0.0016268870 0.0008533201 0.0008424399 0.0006998718
+## IWO 0.0006371931  0.0018512065 0.0008424399 0.0009234498 0.0007574937
+## IWP 0.0005767948  0.0008938277 0.0006998718 0.0007574937 0.0006892744
+## IWS 0.0005918556  0.0011997672 0.0006991594 0.0007005762 0.0006325194
 ##              IWS
-## IWD 0.0006016842
-## IWF 0.0012365295
-## IWN 0.0007105870
-## IWO 0.0007133528
-## IWP 0.0006451518
-## IWS 0.0006567660</code></pre>
+## IWD 0.0005918556
+## IWF 0.0011997672
+## IWN 0.0006991594
+## IWO 0.0007005762
+## IWP 0.0006325194
+## IWS 0.0006452661</code></pre>
 <pre class="r"><code>V2[1:3, 1:3]</code></pre>
 <pre><code>##              IWD          IWF          IWN
-## IWD 0.0005864778  0.001047895 0.0006450229
-## IWF 0.0010478954 11.765739500 0.0016816485
-## IWN 0.0006450229  0.001681649 0.0008652053</code></pre>
+## IWD 0.0005773485  0.001020891 0.0006352614
+## IWF 0.0010208910 11.403518746 0.0016268870
+## IWN 0.0006352614  0.001626887 0.0008533201</code></pre>
 <pre class="r"><code>V2.shrink[1:3, 1:3]</code></pre>
 <pre><code>##                IWD             IWF             IWN
-## IWD 0.000782941157 0.0000005902380 0.0000070924678
-## IWF 0.000000590238 0.0279614772931 0.0000007801698
-## IWN 0.000007092468 0.0000007801698 0.0007835850419</code></pre>
+## IWD 0.000770863390 0.0000005662970 0.0000069795705
+## IWF 0.000000566297 0.0262802389424 0.0000007426072
+## IWN 0.000006979570 0.0000007426072 0.0007714807623</code></pre>
 <pre class="r"><code>library(ellipse)</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;ellipse&#39;</code></pre>
@@ -320,7 +323,7 @@ plot_assets(V, mu)</code></pre>
 plot_portfolio(w = rep(1/length(mu), length(mu)), label = &quot;Equal weighted&quot;, V = V, mu = mu)</code></pre>
 <pre><code>## Loading required package: quadprog</code></pre>
 <pre><code>## Loading required package: parallel</code></pre>
-<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_segment).</code></pre>
 <p><img src="/post/2019-03-25-optimization-examples_files/figure-html/frontier-1.png" width="672" /></p>
 </div>
 <div id="mean-variance" class="section level2">
@@ -343,7 +346,7 @@ Amat &lt;- matrix(nr = n, nc = 0)
 bvec &lt;- c()
 r &lt;- solve.QP(Dmat = V, dvec = mu, Amat, bvec, meq = 0)
 round(r$solution, 4)</code></pre>
-<pre><code>## [1] -10.2825   7.7194  -3.6994  -0.0856  -2.4145  13.0264</code></pre>
+<pre><code>## [1] -10.1548   8.4473  -3.3173  -1.0038  -1.9890  12.4618</code></pre>
 <p>With absolutely no constraints the weights no not sum to one, rather summing to ’r sum(r$solution)`, the positions are highly levered, and there are many negative weights, implying shorting. We will now add a constraint to requie that the weights sum to one by using the Amat, bvec, and meq parameters as follows: <span class="math inline">\(Amat&#39; q &gt;= bvec\)</span>
 We can create equality constraints, but they must be the first meq constraints and the remaining constraints will be inequality constraints. For long only we will only have one constraint, and that is that all the weights sum to exactly one.</p>
 <pre class="r"><code>Amat &lt;- matrix(rep(1, n), nr = n)
@@ -363,7 +366,7 @@ print(Amat)</code></pre>
 sum(r$solution)</code></pre>
 <pre><code>## [1] 1</code></pre>
 <pre class="r"><code>round(r$solution, 2)</code></pre>
-<pre><code>## [1] -10.40   1.62  -4.74   2.39  -0.59  12.72</code></pre>
+<pre><code>## [1] -10.27   2.07  -4.35   1.51   0.02  12.02</code></pre>
 <p>Now the weights sum to one, but the leverage is still too high. Lets modify Amat and bvec as follows:</p>
 <pre class="r"><code>Amat &lt;- cbind(matrix( rep(1,n), nr=n ), diag(n))
 bvec &lt;- c(1, rep(0,n))
@@ -399,7 +402,7 @@ sum(r$solution)</code></pre>
 <pre class="r"><code>round(r$solution, 2)</code></pre>
 <pre><code>## [1] 0 0 0 0 1 0</code></pre>
 <pre class="r"><code>plot_portfolio(w=r$solution, label=&quot;lambda = 1&quot;, V, mu)</code></pre>
-<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_segment).</code></pre>
 <p><img src="/post/2019-03-25-optimization-examples_files/figure-html/longonly-1.png" width="672" /></p>
 <p><span class="math inline">\(\lambda\)</span> &lt; 1 downplays the risk component and gives more importance to expected return, thus shifting the optimal portfolio to the right along the efficient frontier.</p>
 </div>
@@ -408,11 +411,9 @@ sum(r$solution)</code></pre>
 <pre class="r"><code>r5 &lt;- solve.QP(Dmat = .5 * V, dvec = mu, Amat, bvec, meq = 1)
 r1 &lt;- solve.QP(Dmat = .1 * V, dvec = mu, Amat, bvec, meq = 1)
 plot_portfolio(w=r5$solution, label=&quot;lambda = .5&quot;, V, mu)</code></pre>
-<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_segment).</code></pre>
 <pre class="r"><code>plot_portfolio(w=r1$solution, label=&quot;lambda = .1&quot;, V, mu)</code></pre>
-<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
-<pre><code>## Warning: Removed 6 rows containing missing values (geom_point).</code></pre>
-<pre><code>## Warning: Removed 6 rows containing missing values (geom_text).</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_segment).</code></pre>
 <p><img src="/post/2019-03-25-optimization-examples_files/figure-html/riskTolerant-1.png" width="50%" /><img src="/post/2019-03-25-optimization-examples_files/figure-html/riskTolerant-2.png" width="50%" /></p>
 <p><span class="math inline">\(\lambda\)</span> &gt; 1 increases the importance of the risk component and while keeping the expected returns the same, thus shifting the optimal portfolio to the left along the efficient frontier.</p>
 </div>
@@ -422,9 +423,9 @@ plot_portfolio(w=r5$solution, label=&quot;lambda = .5&quot;, V, mu)</code></pre>
 <pre class="r"><code>r3 &lt;- solve.QP(Dmat = 3 * V, dvec = mu, Amat, bvec, meq = 1)
 r10 &lt;- solve.QP(Dmat = 10 * V, dvec = mu, Amat, bvec, meq = 1)
 plot_portfolio(w=r3$solution, label = &quot;lambda = 3&quot;, V, mu)</code></pre>
-<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_segment).</code></pre>
 <pre class="r"><code>plot_portfolio(w=r10$solution, label = &quot;lambda = 10&quot;, V, mu)</code></pre>
-<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_segment).</code></pre>
 <p><img src="/post/2019-03-25-optimization-examples_files/figure-html/riskAverse1-1.png" width="50%" /><img src="/post/2019-03-25-optimization-examples_files/figure-html/riskAverse1-2.png" width="50%" /></p>
 </div>
 <div id="minimum-volatilty-minv-vol" class="section level1">
@@ -433,9 +434,9 @@ plot_portfolio(w=r3$solution, label = &quot;lambda = 3&quot;, V, mu)</code></pre
 <pre class="r"><code>r0 &lt;- solve.QP(Dmat = V, dvec = 0 * mu, Amat, bvec, meq = 1)
 r &lt;- solve.QP(Dmat = V, dvec = mu, Amat, bvec, meq = 1)
 plot_portfolio(w=r0$solution, label = &quot;Minv-Vol&quot;, V, mu)</code></pre>
-<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_segment).</code></pre>
 <pre class="r"><code>plot_portfolio(w=r$solution, label = &quot;Mean-Variance vol&quot;, V, mu)</code></pre>
-<pre><code>## Warning: Removed 3 rows containing missing values (geom_segment).</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_segment).</code></pre>
 <p><img src="/post/2019-03-25-optimization-examples_files/figure-html/riskAverse-1.png" width="50%" /><img src="/post/2019-03-25-optimization-examples_files/figure-html/riskAverse-2.png" width="50%" /></p>
 <p>We hope this helps you understand the basics of efficient frontiers and portfolio optimization, and gives you a starting point to optimizing portfolios in R.</p>
 </div>

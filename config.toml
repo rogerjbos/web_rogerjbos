@@ -40,6 +40,8 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [params]
     description = "A quant finance professional in NYC."
+    # <script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script> 
+    # <div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="horizontal" data-theme="light" data-vanity="rogerjboscfa"><a class="LI-simple-link" href='https://www.linkedin.com/in/rogerjboscfa?trk=profile-badge'>Roger J. Bos, CFA</a></div>
 
     # options for highlight.js (version, additional languages, and theme)
     highlightjsVersion = "9.12.0"

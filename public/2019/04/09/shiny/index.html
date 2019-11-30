@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>R Shiny / Rstudio Server on CentOS &middot; </title>
-        <meta name="description" content="Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly. Rstudio&rsquo;s @winston and @joe came to my rescue and determined that it was a problem with my nginx proxy settings.
+        <meta name="description" content="Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly. Rstudio&rsquo;s @winston and @jcheng came to my rescue and determined that it was a problem with my nginx proxy settings.
 Install and configure Nginx Here is the Rstudio article. Here is my corrected nginx.conf file:
 /etc/nginx/nginx.conf #user nobody; worker_processes 1; error_log /data/log/nginx_error.log debug; pid /var/run/nginx.pid; events { worker_connections 1024; } http { include mime.types; default_type application/octet-stream; access_log /data/log/nginx_access.">
         <meta name="HandheldFriendly" content="True">
@@ -101,7 +101,7 @@ Install and configure Nginx Here is the Rstudio article. Here is my corrected ng
 
     
 
-<p>Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly.  Rstudio&rsquo;s @winston and @joe came to my rescue and determined that it was a problem with my nginx proxy settings.</p>
+<p>Today I upgraded to <a href="https://community.rstudio.com/t/having-problems-with-shiny-v1-3-0-and-nginx/28180">Shiny 1.3.0</a> and my Shiny server stopped rendering my apps correctly.  Rstudio&rsquo;s @winston and @jcheng came to my rescue and determined that it was a problem with my nginx proxy settings.</p>
 
 <h3 id="install-and-configure-nginx">Install and configure Nginx</h3>
 
@@ -263,12 +263,26 @@ sudo chmod g+s .
 
 </code></pre>
 
+<p>I also want to use the Rstudio Server IDE to install packages into the default library folder, so I need to change the ownership and permissions of that folder.  Here it is based on my centOS server:</p>
+
+<pre><code>chmod 755 /usr/lib64/R/library
+chown -v bosr:shiny-apps /usr/lib64/R/library
+</code></pre>
+
+<p>You can verify the changes by typing <code>ls -l /usr/lib64/R/library</code>.</p>
+
+<p>To speed up package installs, configure R to use more than one core when compile source code.</p>
+
+<h4 id="usr-lib64-r-etc-renviron-site-create-the-file-if-it-doesn-t-already-exist">/usr/lib64/R/etc/Renviron.site (create the file if it doesn&rsquo;t already exist)</h4>
+
+<pre><code>MAKEFLAGS=-j4
+</code></pre>
+
 <h3 id="set-up-automatic-drive-mappings-as-needed">Set up automatic drive mappings as needed</h3>
 
 <h4 id="etc-fstab">/etc/fstab</h4>
 
-<pre><code>#
-# /etc/fstab
+<pre><code># /etc/fstab
 # Created by anaconda on Thu Feb  1 07:41:28 2018
 #
 # Accessible filesystems, by reference, are maintained under '/dev/disk'

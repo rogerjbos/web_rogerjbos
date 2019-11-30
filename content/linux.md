@@ -13,16 +13,46 @@ I am a big fan of linux.  I enjoy ssh-ing into servers and using the command lin
 
 ### Linux Commands
 
-* _df_ shows the amount of free space on your drive
-* _free_ shows the amount of free memory on your machine.
-* _history_ shows a list of previous commands.  What's nice is that you can re-run any command by using the bang operator and the line number (i.e. !5).  You can clear the history using ```history -c```
-* _pwd_ prints the current working directory
-* _ls_ lists the files in the current folder.  ```ls -l``` is helpful because it shows the owner of each folder and file permissions.  Permission denied problems can be very confusing to fix in linux.  ```ls -alg``` is very comprehensive and shows the list of all files as a list and groups the directories first.
-* _mkdir new_folder_name_ is used to make a directory.
-* _rmdir folder_name_ is used to remove a folder, recursively deleteing the files in the folder.  If you get an error that the folder is not empty (which I always do), add the '-r' option after 'rmdir', but make sure you don't want the files because there is no recycle bin in linux.
-* _rm -r <mydir>_ will delete a folder even if it is not empty
-* _rm -rf <mydir>_ will delete a folder even if it is not empty without any prompts
+#### Users and Groups
+* ```getent passwd``` shows a list of all the users on the server.
+* ```sudo passwd <username>``` allows a sudoer to change the password of a user.
+* ```groups``` shows a list of all the groups in use.
+* ```groups <username>``` shows which groups ```<username>``` is a member of.
+* ```sudo /usr/sbin/usermod -aG <groupname> <username>``` adds ```<username>``` to group ```<username>``` (```/usr/sbin/``` only necessary if ```usermod``` command is not found).
+* ```id -Gn``` shows which groups you belong to.
 
+#### Files
+* ```df``` shows the amount of free space on your drive.
+* ```free``` shows the amount of free memory on your machine.
+* ```ls``` lists the files in the current folder.  ```ls -l``` is helpful because it shows the owner of each folder and file permissions.  Permission denied problems can be very confusing to fix in linux.  ```ls -alg``` is very comprehensive and shows the list of all files as a list and groups the directories first.
+* ```mkdir new_folder_name``` is used to make a directory.
+* ```pwd``` prints the current working directory.
+* ```rmdir folder_name``` is used to remove a folder, recursively deleteing the files in the folder.  If you get an error that the folder is not empty (which I always do), add the ```-r``` option after 'rmdir', but make sure you don't want the files because there is no recycle bin in linux.
+* ```rm -r <mydir>``` will delete a folder even if it is not empty.
+* ```rm -rf <mydir>``` will delete a folder even if it is not empty without any prompts.
+
+#### Other
+* ```history``` shows a list of previous commands.  What's nice is that you can re-run any command by using the bang operator and the line number (i.e. !5).  You can clear the history using ```history -c```.
+* ```ps auxw | grep <program name>``` to get a list of the process ids (pid) associated with a running program.
+* ```lscpu``` shows CPU information.
+
+#### Permissions
+
+If you even get an error that you cannot connect to your home drive, say /home/bosr/, try this as root to fix it (don't ask me how I know this).
+```
+chmod -R 755 /home/bosr
+```
+
+#### Services
+
+You can stop, start, or restart a service as such, using NGINX as an example:
+
+```
+systemctl stop nginx
+systemctl start nginx
+systemctl restart nginx
+
+```
 
 ### Git Commands / Notes
 
@@ -91,7 +121,6 @@ dpkg-reconfigure tzdata
 ```
 
 #### Create a service for HoneyAlarmServer in a file called /etc/init.d/HoneyAlarmServer
-
 
 ```
 #!/bin/sh
@@ -187,6 +216,8 @@ sudo apt-get install libcurl4-gnutls-dev
 sudo apt-get install texinfo
 ```
 
+### R configurations
+
 #### /etc/R/Rprofile
 
 ```
@@ -194,12 +225,19 @@ sudo apt-get install texinfo
 current_repo <- getOption("repos")
 current_repo["CRAN"] <- "http://lib.stat.cmu.edu/R/CRAN/"
 options(repos = current_repo)
-if (length(.libPaths() > 1)) .libPaths(.libPaths()[-1])
 roger_env <- new.env()
 # If you don't want to clutter this file, leave functions elsewhere.
 sys.source(".my_custom_functions.r", envir = roger_env)
 attach(roger_env)
 ```
+
+Handy: Configure R to use more than one core when compile source code.
+
+#### ~/.Renviron or /usr/lib64/R/etc/Renviron.site
+```
+MAKEFLAGS=-j4
+```
+
 
 #### Install Kodi to the Fire TV
 

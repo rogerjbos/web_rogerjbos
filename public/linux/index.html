@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Linux Notes &middot; </title>
         <meta name="description" content="I am a big fan of linux. I enjoy ssh-ing into servers and using the command line, but since I don&rsquo;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.
-Linux Commands  df shows the amount of free space on your drive free shows the amount of free memory on your machine. history shows a list of previous commands.">
+Linux Commands  df shows the amount of free space on your drive. free shows the amount of free memory on your machine. groups shows a list of all the groups in use.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
         <meta name="generator" content="Hugo 0.54.0" />
@@ -95,16 +95,36 @@ Linux Commands  df shows the amount of free space on your drive free shows the a
 <h3 id="linux-commands">Linux Commands</h3>
 
 <ul>
-<li><em>df</em> shows the amount of free space on your drive</li>
+<li><em>df</em> shows the amount of free space on your drive.</li>
 <li><em>free</em> shows the amount of free memory on your machine.</li>
-<li><em>history</em> shows a list of previous commands.  What&rsquo;s nice is that you can re-run any command by using the bang operator and the line number (i.e. !5).  You can clear the history using <code>history -c</code></li>
-<li><em>pwd</em> prints the current working directory</li>
+<li><em>groups</em> shows a list of all the groups in use.</li>
+<li><em>history</em> shows a list of previous commands.  What&rsquo;s nice is that you can re-run any command by using the bang operator and the line number (i.e. !5).  You can clear the history using <code>history -c</code>.</li>
+<li><em>id -Gn</em> shows which groups you belong to.</li>
 <li><em>ls</em> lists the files in the current folder.  <code>ls -l</code> is helpful because it shows the owner of each folder and file permissions.  Permission denied problems can be very confusing to fix in linux.  <code>ls -alg</code> is very comprehensive and shows the list of all files as a list and groups the directories first.</li>
 <li>_mkdir new_folder<em>name</em> is used to make a directory.</li>
+<li><em>ps auxw | grep <program name></em> to get a list of the process ids (pid) associated with a running program.</li>
+<li><em>pwd</em> prints the current working directory.</li>
 <li>_rmdir folder<em>name</em> is used to remove a folder, recursively deleteing the files in the folder.  If you get an error that the folder is not empty (which I always do), add the &lsquo;-r&rsquo; option after &lsquo;rmdir&rsquo;, but make sure you don&rsquo;t want the files because there is no recycle bin in linux.</li>
-<li><em>rm -r <mydir></em> will delete a folder even if it is not empty</li>
-<li><em>rm -rf <mydir></em> will delete a folder even if it is not empty without any prompts</li>
+<li><em>rm -r <mydir></em> will delete a folder even if it is not empty.</li>
+<li><em>rm -rf <mydir></em> will delete a folder even if it is not empty without any prompts.</li>
 </ul>
+
+<h4 id="permissions">Permissions</h4>
+
+<p>If you even get an error that you cannot connect to your home drive, say /home/bosr/, try this as root to fix it (don&rsquo;t ask me how I know this).</p>
+
+<pre><code>chmod -R 755 /home/bosr
+</code></pre>
+
+<h4 id="services">Services</h4>
+
+<p>You can stop, start, or restart a service as such, using NGINX as an example:</p>
+
+<pre><code>systemctl stop nginx
+systemctl start nginx
+systemctl restart nginx
+
+</code></pre>
 
 <h3 id="git-commands-notes">Git Commands / Notes</h3>
 
@@ -259,17 +279,25 @@ sudo apt-get install libcurl4-gnutls-dev
 sudo apt-get install texinfo
 </code></pre>
 
+<h3 id="r-configurations">R configurations</h3>
+
 <h4 id="etc-r-rprofile">/etc/R/Rprofile</h4>
 
 <pre><code># Get your current repo name
 current_repo &lt;- getOption(&quot;repos&quot;)
 current_repo[&quot;CRAN&quot;] &lt;- &quot;http://lib.stat.cmu.edu/R/CRAN/&quot;
 options(repos = current_repo)
-if (length(.libPaths() &gt; 1)) .libPaths(.libPaths()[-1])
 roger_env &lt;- new.env()
 # If you don't want to clutter this file, leave functions elsewhere.
 sys.source(&quot;.my_custom_functions.r&quot;, envir = roger_env)
 attach(roger_env)
+</code></pre>
+
+<p>Handy: Configure R to use more than one core when compile source code.</p>
+
+<h4 id="renviron-or-usr-lib64-r-etc-renviron-site">~/.Renviron or /usr/lib64/R/etc/Renviron.site</h4>
+
+<pre><code>MAKEFLAGS=-j4
 </code></pre>
 
 <h4 id="install-kodi-to-the-fire-tv">Install Kodi to the Fire TV</h4>
