@@ -5,14 +5,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Linux Notes &middot; </title>
         <meta name="description" content="I am a big fan of linux. I enjoy ssh-ing into servers and using the command line, but since I don&rsquo;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.
-Linux Commands  df shows the amount of free space on your drive. free shows the amount of free memory on your machine. groups shows a list of all the groups in use.">
+Linux Commands Users and Groups  getent passwd shows a list of all the users on the server. sudo passwd &lt;username&gt; allows a sudoer to change the password of a user.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
         <meta name="generator" content="Hugo 0.54.0" />
         <meta name="robots" content="index,follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <link rel="stylesheet" href="/dist/styles.css">
+        <link rel="stylesheet" href="https://rogerjbos.com/dist/styles.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         
@@ -31,7 +31,8 @@ Linux Commands  df shows the amount of free space on your drive. free shows the 
                                 <img src="#ZgotmplZ" alt="" />
                             </a>
                         
-                        <a class="button-square" href="/index.xml"><i class="fa fa-rss"></i></a>
+                        <a class="button-square" href="https://rogerjbos.com/index.xml"><i class="fa fa-rss"></i></a>
+                        
                         
                         
                         
@@ -94,19 +95,36 @@ Linux Commands  df shows the amount of free space on your drive. free shows the 
 
 <h3 id="linux-commands">Linux Commands</h3>
 
+<h4 id="users-and-groups">Users and Groups</h4>
+
 <ul>
-<li><em>df</em> shows the amount of free space on your drive.</li>
-<li><em>free</em> shows the amount of free memory on your machine.</li>
-<li><em>groups</em> shows a list of all the groups in use.</li>
-<li><em>history</em> shows a list of previous commands.  What&rsquo;s nice is that you can re-run any command by using the bang operator and the line number (i.e. !5).  You can clear the history using <code>history -c</code>.</li>
-<li><em>id -Gn</em> shows which groups you belong to.</li>
-<li><em>ls</em> lists the files in the current folder.  <code>ls -l</code> is helpful because it shows the owner of each folder and file permissions.  Permission denied problems can be very confusing to fix in linux.  <code>ls -alg</code> is very comprehensive and shows the list of all files as a list and groups the directories first.</li>
-<li>_mkdir new_folder<em>name</em> is used to make a directory.</li>
-<li><em>ps auxw | grep <program name></em> to get a list of the process ids (pid) associated with a running program.</li>
-<li><em>pwd</em> prints the current working directory.</li>
-<li>_rmdir folder<em>name</em> is used to remove a folder, recursively deleteing the files in the folder.  If you get an error that the folder is not empty (which I always do), add the &lsquo;-r&rsquo; option after &lsquo;rmdir&rsquo;, but make sure you don&rsquo;t want the files because there is no recycle bin in linux.</li>
-<li><em>rm -r <mydir></em> will delete a folder even if it is not empty.</li>
-<li><em>rm -rf <mydir></em> will delete a folder even if it is not empty without any prompts.</li>
+<li><code>getent passwd</code> shows a list of all the users on the server.</li>
+<li><code>sudo passwd &lt;username&gt;</code> allows a sudoer to change the password of a user.</li>
+<li><code>groups</code> shows a list of all the groups in use.</li>
+<li><code>groups &lt;username&gt;</code> shows which groups <code>&lt;username&gt;</code> is a member of.</li>
+<li><code>sudo /usr/sbin/usermod -aG &lt;groupname&gt; &lt;username&gt;</code> adds <code>&lt;username&gt;</code> to group <code>&lt;username&gt;</code> (<code>/usr/sbin/</code> only necessary if <code>usermod</code> command is not found).</li>
+<li><code>id -Gn</code> shows which groups you belong to.</li>
+</ul>
+
+<h4 id="files">Files</h4>
+
+<ul>
+<li><code>df</code> shows the amount of free space on your drive.</li>
+<li><code>free</code> shows the amount of free memory on your machine.</li>
+<li><code>ls</code> lists the files in the current folder.  <code>ls -l</code> is helpful because it shows the owner of each folder and file permissions.  Permission denied problems can be very confusing to fix in linux.  <code>ls -alg</code> is very comprehensive and shows the list of all files as a list and groups the directories first.</li>
+<li><code>mkdir new_folder_name</code> is used to make a directory.</li>
+<li><code>pwd</code> prints the current working directory.</li>
+<li><code>rmdir folder_name</code> is used to remove a folder, recursively deleteing the files in the folder.  If you get an error that the folder is not empty (which I always do), add the <code>-r</code> option after &lsquo;rmdir&rsquo;, but make sure you don&rsquo;t want the files because there is no recycle bin in linux.</li>
+<li><code>rm -r &lt;mydir&gt;</code> will delete a folder even if it is not empty.</li>
+<li><code>rm -rf &lt;mydir&gt;</code> will delete a folder even if it is not empty without any prompts.</li>
+</ul>
+
+<h4 id="other">Other</h4>
+
+<ul>
+<li><code>history</code> shows a list of previous commands.  What&rsquo;s nice is that you can re-run any command by using the bang operator and the line number (i.e. !5).  You can clear the history using <code>history -c</code>.</li>
+<li><code>ps auxw | grep &lt;program name&gt;</code> to get a list of the process ids (pid) associated with a running program.</li>
+<li><code>lscpu</code> shows CPU information.</li>
 </ul>
 
 <h4 id="permissions">Permissions</h4>
@@ -329,7 +347,7 @@ adb install -r &lt;apk-file-name&gt;
             <div class="container">
                 <div class="site-title-wrapper">
                     <h1 class="site-title">
-                        <a title="Roger J. Bos, CFA" href="/">Roger J. Bos, CFA</a>
+                        <a title="Roger J. Bos, CFA" href="https://rogerjbos.com/">Roger J. Bos, CFA</a>
                     </h1>
                     <a class="button-square button-jump-top js-jump-top" href="#">
                         <i class="fa fa-angle-up"></i>
@@ -346,14 +364,14 @@ adb install -r &lt;apk-file-name&gt;
             </div>
         </footer>
 
-        <script src="/js/jquery-1.11.3.min.js"></script>
-        <script src="/js/jquery.fitvids.js"></script>
+        <script src="https://rogerjbos.com/js/jquery-1.11.3.min.js"></script>
+        <script src="https://rogerjbos.com/js/jquery.fitvids.js"></script>
         
         
             <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         
         
-        <script src="/js/scripts.js"></script>
+        <script src="https://rogerjbos.com/js/scripts.js"></script>
     </body>
 </html>
 
