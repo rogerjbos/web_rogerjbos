@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Diy on Roger J. Bos, CFA</title>
-    <link>/tags/diy/</link>
+    <link>https://rogerjbos.com/tags/diy/</link>
     <description>Recent content in Diy on Roger J. Bos, CFA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 22 Dec 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/diy/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://rogerjbos.com/tags/diy/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>DIY</title>
-      <link>/diy/</link>
+      <link>https://rogerjbos.com/diy/</link>
       <pubDate>Sat, 22 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/diy/</guid>
+      <guid>https://rogerjbos.com/diy/</guid>
       <description>This is a collection of some of my adventures (and misadventures) in home ownership and repair. This page will also act as an instruction manual should I ever try to sell my house. I would always recommend someone hire a professional if they feel uncomfortable doing a repair on their house. I do many of these repairs myself because it affords me an opportunity to learn more about how all these systems work and, often times, make improvements that otherwise probably would not happen.</description>
     </item>
     

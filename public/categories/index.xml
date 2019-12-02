@@ -2,56 +2,56 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Roger J. Bos, CFA</title>
-    <link>/categories/</link>
+    <link>https://rogerjbos.com/categories/</link>
     <description>Recent content in Categories on Roger J. Bos, CFA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://rogerjbos.com/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Diy</title>
-      <link>/categories/diy/</link>
+      <link>https://rogerjbos.com/categories/diy/</link>
       <pubDate>Sat, 22 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/categories/diy/</guid>
+      <guid>https://rogerjbos.com/categories/diy/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Investing</title>
-      <link>/categories/investing/</link>
+      <link>https://rogerjbos.com/categories/investing/</link>
       <pubDate>Sun, 23 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/categories/investing/</guid>
+      <guid>https://rogerjbos.com/categories/investing/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Linux</title>
-      <link>/categories/linux/</link>
+      <link>https://rogerjbos.com/categories/linux/</link>
       <pubDate>Mon, 08 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/categories/linux/</guid>
+      <guid>https://rogerjbos.com/categories/linux/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Shiny</title>
-      <link>/categories/shiny/</link>
+      <link>https://rogerjbos.com/categories/shiny/</link>
       <pubDate>Tue, 09 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/categories/shiny/</guid>
+      <guid>https://rogerjbos.com/categories/shiny/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Voip</title>
-      <link>/categories/voip/</link>
+      <link>https://rogerjbos.com/categories/voip/</link>
       <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/categories/voip/</guid>
+      <guid>https://rogerjbos.com/categories/voip/</guid>
       <description></description>
     </item>
     
