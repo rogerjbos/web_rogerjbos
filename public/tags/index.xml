@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Roger J. Bos, CFA</title>
-    <link>https://rogerjbos.com/tags/</link>
-    <description>Recent content in Tags on Roger J. Bos, CFA</description>
+    <title>Tags on Roger J. Bos Personal Website</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on Roger J. Bos Personal Website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 22 Dec 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://rogerjbos.com/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Diy</title>
-      <link>https://rogerjbos.com/tags/diy/</link>
+      <link>/tags/diy/</link>
       <pubDate>Sat, 22 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://rogerjbos.com/tags/diy/</guid>
+      <guid>/tags/diy/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Investing</title>
-      <link>https://rogerjbos.com/tags/investing/</link>
-      <pubDate>Sun, 23 Dec 2018 00:00:00 +0000</pubDate>
+      <link>/tags/investing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://rogerjbos.com/tags/investing/</guid>
+      <guid>/tags/investing/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Linux</title>
-      <link>https://rogerjbos.com/tags/linux/</link>
+      <link>/tags/linux/</link>
       <pubDate>Mon, 08 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://rogerjbos.com/tags/linux/</guid>
+      <guid>/tags/linux/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Shiny</title>
-      <link>https://rogerjbos.com/tags/shiny/</link>
+      <link>/tags/shiny/</link>
       <pubDate>Tue, 09 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://rogerjbos.com/tags/shiny/</guid>
+      <guid>/tags/shiny/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Voip</title>
-      <link>https://rogerjbos.com/tags/voip/</link>
+      <link>/tags/voip/</link>
       <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://rogerjbos.com/tags/voip/</guid>
+      <guid>/tags/voip/</guid>
       <description></description>
     </item>
     

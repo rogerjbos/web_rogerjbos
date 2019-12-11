@@ -1,7 +1,6 @@
 ---
 title: Investing
-author: 'Roger J. Bos'
-date: '2018-12-23'
+author: 'Roger J. Bos, CFA'
 slug: investing
 categories:
   - investing
@@ -9,4 +8,4 @@ tags:
   - investing
 ---
 
-TO DO
+[Fama-French Factor Returns](https://www.rogerjbos.com/FF5_decile.html)
