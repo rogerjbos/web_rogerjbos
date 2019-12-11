@@ -9,3 +9,4 @@ tags:
 ---
 
 [Fama-French Factor Returns](https://www.rogerjbos.com/investing/FF5_decile.html)
+

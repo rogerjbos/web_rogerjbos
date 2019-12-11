@@ -33,7 +33,7 @@
   </url>
   
   <url>
-    <loc>/investing/ff5_decile/</loc>
+    <loc>/investing/</loc>
   </url>
   
   <url>
@@ -76,8 +76,7 @@
   </url>
   
   <url>
-    <loc>/investing/</loc>
-    <priority>0</priority>
+    <loc>/investing/investing/</loc>
   </url>
   
   <url>
