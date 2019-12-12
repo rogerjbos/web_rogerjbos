@@ -3,9 +3,9 @@ title: Investing
 author: 'Roger J. Bos, CFA'
 slug: investing
 categories:
-  - investing
+  - investing 
 tags:
-  - investing
+  - investing 
 ---
 
 [Recession Forecasting using SVM](https://www.rogerjbos.com/investing/Recession.html)
