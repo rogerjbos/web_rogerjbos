@@ -33,15 +33,15 @@
   </url>
   
   <url>
-    <loc>/investing/ff5_decile/</loc>
-  </url>
-  
-  <url>
-    <loc>/investing/recession/</loc>
-  </url>
-  
-  <url>
     <loc>/</loc>
+  </url>
+  
+  <url>
+    <loc>/reports/ff5_decile/</loc>
+  </url>
+  
+  <url>
+    <loc>/reports/recession/</loc>
   </url>
   
   <url>
@@ -64,15 +64,6 @@
   </url>
   
   <url>
-    <loc>/investing/investing/</loc>
-  </url>
-  
-  <url>
-    <loc>/investing/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/tags/linux/</loc>
     <lastmod>2019-04-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -81,6 +72,11 @@
   <url>
     <loc>/post/</loc>
     <lastmod>2019-04-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/reports/</loc>
     <priority>0</priority>
   </url>
   

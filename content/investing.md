@@ -8,7 +8,7 @@ tags:
   - investing 
 ---
 
-[Recession Forecasting using SVM](https://www.rogerjbos.com/investing/Recession.html)
+[Recession Forecasting using SVM](https://www.rogerjbos.com/reports/Recession.html)
 
-[Fama-French Factor Returns](/investing/FF5_decile.html)
+[Fama-French Factor Returns](/reports/FF5_decile.html)
 
