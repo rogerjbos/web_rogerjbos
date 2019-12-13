@@ -17,7 +17,7 @@ If you just want to use Google Voice as your home phone, you don't need to read 
 
 ### PBX
 
-PBX stands for Private Branch eXchange.  You phone number is part of the public telephone network because anyone can call you.  A set of extensions within a company is private in that the public cannot call an extension directly, they need to call a main number and connects to the PBX, which will route the call to the appropriate extension.  This is similar to how a router bridge the public internet (the WAN) with the private computers behind the router (the LAN).  PBX used to consist of expensive hardware that was hard to program, now a PBX is mostly software based and a easier (but still tricky) to prgram.  Whereas Google Voice uses proprietary connections, a PBX uese standardized SIP (and IAX) connections.  As I mentioned above, the Obi110 still works fine with standardized SIP.
+PBX stands for Private Branch eXchange.  You phone number is part of the public telephone network because anyone can call you.  A set of extensions within a company is private in that the public cannot call an extension directly, they need to call a main number that connects to the PBX, which will route the call to the appropriate extension.  This is similar to how a router bridges the public internet (the WAN) with the private computers behind the router (the LAN).  A PBX system used to consist of expensive hardware that was hard to program, but now a days a PBX is mostly software based and a easier (but still tricky) to program.  Whereas Google Voice uses proprietary connections, a PBX uses standardized SIP (and IAX) connections.  As I mentioned above, the Obi110 still works fine with standardized SIP.
 
 So for a time the answer was to use free/low cost [PBXes](www.pbxes.com) account as a SIP server and NAF's GVSIP as the new method to make Google Voice a trunk.  This setup too worked really well, until Google Voice changed their servers again to prevent GVSIP connections.  According to Google's terms of service only Obi2xx devices (and certain other Polycom devices) can connect to the Google Voice service.
 
@@ -32,14 +32,14 @@ Each Obi device has a unique ID, which can be used to call from one Obi to anoth
 * SP3 is GV3 (extra) phone line routed thru pbxes.com
 * SP4 is SIP registered to pbxes.org
 
-The summary of what is happening is that the Obi202 will be registered with 3 Google Voice accounts and PBXes.com will register to SP4 of the Obi202 and the Obi110 will be registered as an extension on PBXes.com.  *Remember, this is the hard way, primarily for people who want to learn more about VoIP.  There is an easier way, jut buy an Obi212.*  You can change the setup to suit you, but you just need to make all the appropiate changes.  I will attempt to explain the settings below.
+The summary of what is happening is that the Obi202 will be registered with 3 Google Voice accounts and PBXes.com will register to SP4 of the Obi202 and the Obi110 will be registered as an extension on PBXes.com.  *Remember, this is the hard way, primarily for people who want to learn more about VoIP.  There is an easier way, jut buy an Obi212.*  You can change the setup to suit you, but you just need to make all the appropriate changes.  I will attempt to explain the settings below.
 
 ### Obi202 SIP service - SP1
 ```
 Voice Services > SP1 Service > X_InboundCallRoute                  {ph} (optionally {(200800100):aa},{ph})
 
 ```
-X_InboundCallRoute is the dialplan for the inbound calls that show up to the Obi from service provider 1.  All we need here is the regular setting of {ph} which will ring line 1.  Dialplans can get complicated fast, if you are using an Obi202 with two phone lines and wanted both to ring when you got a call on SP1, then you would change the X_InboundCallRoute to {ph1},{ph2}.  If you wanted the auto attendant to answer if the caller was the Obi110, you would add {(2000800100):aa} to the front of the dialplan.  This uses the obi device id as caller id and if it matches it routes the call to the auto attendant, otherwise it will ring the phone.  I was going to use the Auto Attendant as an easy way for the Obi110 to make outgoing calls, but I figured out a better way, which I describe below.
+X_InboundCallRoute is the dialplan for the inbound calls that show up to the Obi from service provider 1.  All we need here is the regular setting of {ph} which will ring line 1.  Dial plans can get complicated fast, if you are using an Obi202 with two phone lines and wanted both to ring when you got a call on SP1, then you would change the X_InboundCallRoute to {ph1},{ph2}.  If you wanted the auto attendant to answer if the caller was the Obi110, you would add {(2000800100):aa} to the front of the dialplan.  This uses the obi device id as caller id and if it matches it routes the call to the auto attendant, otherwise it will ring the phone.  I was going to use the Auto Attendant as an easy way for the Obi110 to make outgoing calls, but I figured out a better way, which I describe below.
 
 ### Obi SIP service - SP2
 ```
