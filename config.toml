@@ -5,9 +5,54 @@ theme = "ghostwriter"
 googleAnalytics = ""
 disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+copyright = "Roger J. Bos, CFA"
+
+[Privacy]
+
+[Privacy.disqus]
+    disable = true
+
+[Privacy.googleAnalytics]
+    anonymizeIP = true
+    respectDoNotTrack = true
+    useSessionStorage = false
+
+[Author]
+    name = "Roger J. Bos, CFA"
+    profile = ""
+
+[Taxonomies]
+    tag = "tags"
+
+[Params]
+    mainSections = ["post"]
+    intro = true
+    headline = ""
+    description = ""
+    github = "https://github.com/rogerjbos"
+    gitlab = ""
+    linkedin = "https://linkedin.com/in/rogerjbos/"
+    twitter = "https://twitter.com/rogerjbos1"
+    stackoverflow = "https://stackoverflow.com/users/7351478"
+    facebook = "https://www.facebook.com/rogerjbos"
+    email = "roger.bos@gmail.com"
+    opengraph = true
+    shareTwitter = true
+    shareFacebook = true
+    shareGooglePlus = false
+    shareLinkedIn = true
+    dateFormat = "Mon, Jan 2, 2006"
+    highlightJsUrl = ""
+    highlightJsLocalUrl = ""
+    exponeaJsUrl = ""
+    exponeaTarget = ""
+    exponeaToken = ""
+    exponeaTrackVisits = false
+    readingTime = true
+    readingTimeText = "Estimated reading time:"
 
 [permalinks]
-    post = "/:year/:month/:day/:slug/"
+    post = "/:slug/"
 
 [[menu.main]]
     name = "About"
@@ -29,10 +74,6 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     name = "DIY"
     url = "/diy/"
     weight = 5
-[[menu.main]]
-    name = "GitHub"
-    url = "https://github.com/rogerjbos"
-    weight = 6
 
 [params]
     description = "A quant finance professional in NYC."
@@ -53,4 +94,3 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     width = 50
     height = 50
     alt = "Logo"
-
