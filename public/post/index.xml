@@ -1,61 +1,61 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Roger J. Bos Personal Website</title>
-    <link>https://rogerjbos.com/post/</link>
-    <description>Recent content in Posts on Roger J. Bos Personal Website</description>
+    <title>Posts on Roger J. Bos, CFA</title>
+    <link>/post/</link>
+    <description>Recent content in Posts on Roger J. Bos, CFA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Roger J. Bos, CFA</copyright>
     <lastBuildDate>Tue, 09 Apr 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://rogerjbos.com/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>R Shiny / Rstudio Server on CentOS Install Notes</title>
-      <link>https://rogerjbos.com/shiny/</link>
+      <link>/shiny/</link>
       <pubDate>Tue, 09 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://rogerjbos.com/shiny/</guid>
+      <guid>/shiny/</guid>
       <description>Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly. Rstudio&amp;rsquo;s @winston and @jcheng came to my rescue and determined that it was a problem with my nginx proxy settings. That prompted me to write up these notes so next time I have to set up a server, I won&amp;rsquo;t be starting from scratch.
 Install and configure Nginx Here is the Rstudio article. Here is my corrected nginx.</description>
     </item>
     
     <item>
       <title>Obi202 as ITSP</title>
-      <link>https://rogerjbos.com/voip/</link>
+      <link>/voip/</link>
       <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://rogerjbos.com/voip/</guid>
+      <guid>/voip/</guid>
       <description>I have been using Google Voice since it started as Grand Central, before Google bought it. Google Voice became even better when Obihai came out with an analog telephone adapter (ATA) that would connect directly to it. To be able to make free calls to relatives, I installed an Obi110 device at their house as well. Learning VoIP has been a long and confusing journey, but it has also been a good learning experience.</description>
     </item>
     
     <item>
       <title>SQLAlchemy ORM versus Raw SQL</title>
-      <link>https://rogerjbos.com/python-sqlalchemy/</link>
+      <link>/python-sqlalchemy/</link>
       <pubDate>Mon, 25 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://rogerjbos.com/python-sqlalchemy/</guid>
+      <guid>/python-sqlalchemy/</guid>
       <description>Python: SQLAlchemy ORM versus Raw SQL I was reading this blog post [https://auth0.com/blog/sqlalchemy-orm-tutorial-for-python-developers/] about SQLAlchemy and how to run queries using its Object Relational Mapper (ORM). It is a very good intruduction to the pythonic ORM way of talking to databases, but I think I still prefer using raw SQL. In this post I will show you some reasons why I prefer raw SQL. I will use the same database and tables used in the original tutorial for these examples.</description>
     </item>
     
     <item>
       <title>Optimization Examples in R</title>
-      <link>https://rogerjbos.com/optimization-examples-in-r/</link>
+      <link>/optimization-examples-in-r/</link>
       <pubDate>Wed, 16 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://rogerjbos.com/optimization-examples-in-r/</guid>
+      <guid>/optimization-examples-in-r/</guid>
       <description>Prerequisites Before we get to the optimization examples, we will download the price history for a small number of ETFs and show how to calculate the returns, standard deviations, variance matrix and other inputs that we will need for the optimizer.
 Prices For these examples, we will download the daily prices for a handful of ETFs from Yahoo Finance, starting in 2003. Once the daily data is downloaded, we use the to.</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://rogerjbos.com/</link>
+      <link>/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://rogerjbos.com/</guid>
+      <guid>/</guid>
       <description>Obi202 as ITSP /*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */ !function(a,b){&#34;object&#34;==typeof module&amp;&amp;&#34;object&#34;==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error(&#34;jQuery requires a window with a document&#34;);return b(a)}:b(a)}(&#34;undefined&#34;!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l=&#34;1.11.3&#34;,m=function(a,b){return new m.fn.init(a,b)},n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,o=/^-ms-/,p=/-([\da-z])/gi,q=function(a,b){return b.toUpperCase()};m.fn=m.prototype={jquery:l,constructor:m,selector:&#34;&#34;,length:0,toArray:function(){return d.call(this)},get:function(a){return null!=a?0a?this[a+this.length]:this[a]:d.call(this)},pushStack:function(a){var b=m.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return m.each(this,a,b)},map:function(a){return this.pushStack(m.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(d.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0a?b:0);return this.pushStack(c=0&amp;&amp;bc?[this[c]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:f,sort:c.sort,splice:c.splice},m.extend=m.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for(&#34;boolean&#34;==typeof g&amp;&amp;(j=g,g=arguments[h]||{},h++),&#34;object&#34;==typeof g||m.isFunction(g)||(g={}),h===i&amp;&amp;(g=this,h--);ih;h++)if(null!=(e=arguments[h]))for(d in e)a=g[d],c=e[d],g!==c&amp;&amp;(j&amp;&amp;c&amp;&amp;(m.isPlainObject(c)||(b=m.isArray(c)))?(b?(b=!1,f=a&amp;&amp;m.isArray(a)?a:[]):f=a&amp;&amp;m.isPlainObject(a)?a:{},g[d]=m.extend(j,f,c)):void 0!==c&amp;&amp;(g[d]=c));return g},m.extend({expando:&#34;jQuery&#34;+(l+Math.random()).replace(/\D/g,&#34;&#34;),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return&#34;function&#34;===m.type(a)},isArray:Array.isArray||function(a){return&#34;array&#34;===m.type(a)},isWindow:function(a){return null!=a&amp;&amp;a==a.window},isNumeric:function(a){return!m.isArray(a)&amp;&amp;a-parseFloat(a)+1=0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},isPlainObject:function(a){var b;if(!a||&#34;object&#34;!==m.type(a)||a.nodeType||m.isWindow(a))return!1;try{if(a.constructor&amp;&amp;!j.call(a,&#34;constructor&#34;)&amp;&amp;!j.call(a.constructor.prototype,&#34;isPrototypeOf&#34;))return!1}catch(c){return!1}if(k.ownLast)for(b in a)return j.call(a,b);for(b in a);return void 0===b||j.call(a,b)},type:function(a){return null==a?a+&#34;&#34;:&#34;object&#34;==typeof a||&#34;function&#34;==typeof a?</description>
     </item>
     

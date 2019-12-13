@@ -1,6 +1,6 @@
 baseurl = "https://rogerjbos.com/"
 languageCode = "en-us"
-title = "Roger J. Bos Personal Website"
+title = "Roger J. Bos, CFA"
 theme = "ghostwriter"
 googleAnalytics = ""
 disqusShortname = ""
@@ -25,8 +25,8 @@ copyright = "Roger J. Bos, CFA"
     tag = "tags"
 
 [Params]
-    mainSections = ["post"]
-    intro = true
+    mainSections = ["Investing"]
+    intro = false
     headline = ""
     description = ""
     github = "https://github.com/rogerjbos"
