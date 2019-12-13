@@ -33,6 +33,14 @@
   </url>
   
   <url>
+    <loc>/investing/ff5_decile/</loc>
+  </url>
+  
+  <url>
+    <loc>/investing/recession/</loc>
+  </url>
+  
+  <url>
     <loc>/</loc>
   </url>
   
@@ -52,7 +60,16 @@
   </url>
   
   <url>
+    <loc>/investing/</loc>
+  </url>
+  
+  <url>
     <loc>/investing/investing/</loc>
+  </url>
+  
+  <url>
+    <loc>/investing/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
