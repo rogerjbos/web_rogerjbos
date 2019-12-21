@@ -1,0 +1,204 @@
+---
+title: 'Information Coefficients and Linear Regression'
+author: 'Roger J Bos, CFA'
+date: '2019-12-20'
+slug: IC_and_LM
+description: 'Information Coefficients and Linear Regression'
+output: 
+  html_document:
+    number_sections: TRUE
+---
+
+### Motivation
+
+In this paper we use Monte Carlo simulation to show the relationship between the Information Coefficient (IC), correlation, decile returns, and linear regression.^[This paper was motivated by a short paper and slides by Oliver Buckley at Invesco which can be found here(https://www.northinfo.com/documents/88.pdf).]  We can also gain insight into investment related questions, such as
+
+* What level of IC is considered good?
+* What effect does volatility have on the spread?
+* What effect does universe size have on the hit rate?
+
+We will start off by defining some terms so we are all on the same page.
+
+* The *Spread* is the difference between the average top decile return and the average bottom decile return.
+* The *IC* is the correlation between two series, here the return series and the exposure series.  The regular Pearson correlation can be used here, but most times Spearman's Rank correlation is used because it is less effected by outliers.
+* A *linear model* is the regression of one series versus another resulting in an intercept and a coefficients which describes the relationship between the two variables.
+* *R-squared* measures the goodness of fit of the linear model.  It is also referred to as the coefficient of determination.
+
+### Simulation Process
+
+We proceed by assuming asset returns are normally distributed and we generate two random series from a bivariate normal distribution with given mean and correlation.  We will call the first random series the *returns* and call the second random series the *exposures*.  The *exposures* represent the factor, which could be momentum, book to price, or any other factor.
+
+As defined above, the correlation between the two random series is the IC.  Here is how each simulation is performed
+
+* Divide into deciles based on exposures
+* Calculate spread between top decile and bottom decile
+* Calculate the IC
+* Run a linear regression
+
+### Base case 
+
+To run the simulation we use the R programming language's multivariate random number generator function *mvrnorm* from the MASS package to generate two series for each simulation.  Both series have zero mean.  They only thing they have in common is a correlation, which we vary from zero to twenty percent.  Before going further into the details, let's have a look at some simulations so we can describe how everything relates.
+
+```{r echo=FALSE, messages=FALSE, warnings=FALSE, cache=TRUE}
+library(MASS)
+icsim <- function(trials=3000, assets=1000, rho=.08, mu1=0, mu2=0, s1=.08, s2=.08) {
+
+  terciles <- 10
+  Sigma <- matrix(c(s1^2, s1*s2*rho, s1*s2*rho, s2^2),2,2)
+  
+  spread <- rep(0, assets)
+  long.spread <- rep(0, assets)
+  short.spread <- rep(0, assets)
+  ic.spearman <- rep(0, assets)
+  ic.pearson <- rep(0, assets)
+  rsq <- rep(0, assets)
+  r <- rep(0, assets)
+  coef <- rep(0, assets)
+  coef_test <- rep(0, assets)
+
+  for (i in 1:trials) {
+    
+    # from MASS package
+    sims <- mvrnorm(n = assets, mu = c(mu1, mu2), Sigma = Sigma) 
+    colnames(sims) <- c("returns","exposures")
+    sims <- as.data.table(sims)
+    sims[, Rank := ntile(exposures, n=terciles)]
+    decile <- sims[, mean(returns, na.rm=TRUE), by=Rank][order(Rank),]
+    univ <- mean(decile$V1)
+    spread[i] <- decile[Rank==terciles]$V1 - decile[Rank==1]$V1
+    long.spread[i] <- decile[Rank==terciles]$V1 - univ
+    short.spread[i] <- univ - decile[Rank==1]$V1
+    ic.spearman[i] <- cor(sims$returns, sims$exposures, method="spearman")
+    ic.pearson[i] <- cor(sims$returns, sims$exposures, method="pearson")
+    mod <- summary(lm(returns ~ exposures, data=sims))
+    rsq[i] <- mod$r.squared
+    r[i] <- sqrt(mod$r.squared)
+    coef[i] <- mod$coef[2]
+    coef_test[i] <- sd(sims$returns)/sd(sims$exposures) * ic.spearman[i]
+  
+  }
+  
+  out <- data.frame(#Trials = trials, 
+                    #ssets = assets, 
+                    Correlation = rho, 
+                    #mu = mu1, 
+                    Return.Vol = s1,
+                    Exposure.Vol = s2,
+                    Spread = g(mean(spread)*10000,3), 
+                    #Long.Spread = g(mean(long.spread)*10000,1),
+                    #Short.Spread = g(mean(short.spread)*10000,1),
+                    Pct.Positive = g(sum(spread > 0)/trials,3), 
+                    IC = g(mean(ic.spearman),3), 
+                    #pearsonIC = g(mean(ic.pearson),3), 
+                    R.squared = g(mean(rsq),3), 
+                    R = g(mean(r),3), 
+                    Coef = g(mean(coef),3), 
+                    Scaled.IC = g(mean(coef_test),3))
+  out
+}
+
+trials <- 3000
+assets <- 1000
+rhos <- c(0, .01, .02, .03, .04, .05, .06, .07, .1, .2)
+
+tt <- 1
+d <- list()
+for (i in 1:length(rhos)) d[[i]] <- icsim(trials=trials, assets=assets, rho=rhos[i], mu1=0, mu2=0, s1=.08, s2=.08)
+assign("tbl" %+% tt, rbindlist(d))
+caption <- "Table - " %+% tt %+% " Assets: " %+% assets %+% " Simulations: " %+% trials
+knitr::kable(get("tbl" %+% tt,), row.names=FALSE, digits=3, caption=caption)
+
+```
+
+You can see from the title of Table `r tt` that we run `r trials` simulations, each with `r assets` assets. By assets we mean how long each random series is and by simulations we mean how many random samples we draw.  The values shown in the table are averages of all the simulations.  The first column shows the correlation, which represents the *information*.  The next two columns show the volatility of the *Returns* series and the *Exposures* series, which we have set to 8% for now, but will very later.  The Spread shows one measure of the performance of the *factor*.  The *Exposures* series is our *factor* and we create deciles based on that series.  Once we have the deciles, we average the *Returns* for each decile.  The spread is the difference between the top decile average return and the bottom decile average return.  The percent positive column shows what proportion of the spreads are positive.  Each simulation produces one spread, so since we have `r trials` simulations, we have `r trials` spreads.  The average of these spreads is the spread column and the proportion positive is the percent positive column.  The IC is the average correlation between the *exposures* and *returns* series and is another standard measure of the performance of a *factor*.  Measuring the correlation between two factors is a quick and easy way to see how closely they are related, and how powerful the *exposures* may be in predicting *returns*.   Another way to do so is to run a regression of the *exposures* on the *returns*.  The regression function provides three main outputs, the y-intercept, the coefficient, and the R-squared measure.  The R-squared is a measure of the goodness of fit of the regression equation.  The square root of the R-squared statistic returns the IC (to a close approximation).  In this simple one-variable linear regression framework the coefficient is equivalent to the correlation that was introduced to the two random series.  Lastly, the coefficient can be approximated by the scaled IC as defined in the formula below:
+
+$$ Scaled.IC = \frac{\sigma_{returns}}{\sigma_{exposures}} * IC $$
+
+In this table both the *returns* and *exposures* have the same standard deviation, so the volatility ratio is one, so it doesn't seem very informative, but in the next table we will run simulations with a higher *returns* volatility and you will see the formula holds.
+
+Remember that these are random series with zero mean, so the only information content is the correlation.  By running enough simulations we can reliably approximate the true correlation by both the IC and the R (the square root of the regression R-squared statistic).  We can also approximate the coefficient by calculating the scaled IC.
+
+
+### Correlation, IC, and hit rate
+
+As you can see from the base case simulation run, the correlation and the IC are closely linked.  In these simulations the correlation is the given relationship between *returns* and *exposures* and the IC is a measurement of how well our signal (or rank in this case) works.^[Since this is a simple one-factor (*exposure*) model, the IC matches the correlation very close (we are able to capture the full signal).  In a multi-factor context the IC will usually be lower than the correlation because the factors will not be perfectly uncorrelated.]  
+
+The percent positive (Pct.Positive) column shows the number of simulation runs (out of `r trials`) that the spread was positive.  This number is often called the hit rate.  If the factor has a zero correlation we would expect a hit rate of 0.5 (or 50%).  A correlation of one percent bumps the hit rate up to almost 60% and two percent gets us to 68%.  Usually ICs in the range of 5% to 10% are considered very good.  The hit rate in that case would be between 89% and 99%, which is very good indeed.  Note that this is on a large universe of 1000 assets.  We will see later that the hit rate declines rapidly as the number of assets falls.
+
+### Higher Return Volatility
+
+In the next set of simulations we increase the return volatility from 8% to 16%.
+
+```{r echo=FALSE, messages=FALSE, warnings=FALSE, cache=TRUE}
+tt <- tt + 1
+d <- list()
+for (i in 1:length(rhos)) d[[i]] <- icsim(trials=trials, assets=assets, rho=rhos[i], mu1=0, mu2=0, s1=.16, s2=.08)
+assign("tbl" %+% tt, rbindlist(d))
+caption <- "Table - " %+% tt %+% " Assets: " %+% assets %+% " Simulations: " %+% trials
+knitr::kable(get("tbl" %+% tt,), row.names=FALSE, digits=3, caption=caption)
+```
+
+Doubling the *returns* volatility basically doubles the spread.  The IC and the regression R (the square root of R-squared) still match the actual correlation between the two random series, but the coefficient is twice as large as in the previous table.  This is because the *returns* volatility is now twice as high as the *exposures* volatility.  The regression coefficient is accurately estimated by the scaled IC measure.
+
+### Lower Volatility
+
+In the next table we simulate both series with only 2% volatility (for both *returns* and *exposures*).  For a given correlation, the percent positive, IC, and coefficients are all comparable to the base case, but the spread is much lower.  The *returns* volatility is what creates the opportunity to profit and if the correlation is high enough the investor can capitalize on the hit rate (percent positive).
+
+```{r echo=FALSE, messages=FALSE, warnings=FALSE, cache=TRUE}
+tt <- tt + 1
+d <- list()
+for (i in 1:length(rhos)) d[[i]] <- icsim(trials=trials, assets=assets, rho=rhos[i], mu1=0, mu2=0, s1=.02, s2=.02)
+assign("tbl" %+% tt, rbindlist(d))
+caption <- "Table - " %+% tt %+% " Assets: " %+% assets %+% " Simulations: " %+% trials
+knitr::kable(get("tbl" %+% tt,), row.names=FALSE, digits=3, caption=caption)
+```
+
+All the usual relationships hold.  The only difference is that the spread is much lower due to the lower volatility of the *returns* series.
+
+### Higher Exposure Volatility
+
+```{r echo=FALSE, messages=FALSE, warnings=FALSE, cache=TRUE}
+tt <- tt + 1
+d <- list()
+for (i in 1:length(rhos)) d[[i]] <- icsim(trials=trials, assets=assets, rho=rhos[i], mu1=0, mu2=0, s1=.08, s2=.16)
+assign("tbl" %+% tt, rbindlist(d))
+caption <- "Table - " %+% tt %+% " Assets: " %+% assets %+% " Simulations: " %+% trials
+knitr::kable(get("tbl" %+% tt,), row.names=FALSE, digits=3, caption=caption)
+```
+
+When the *exposures* volatility is twice as high as the *returns* volatility the spread remains comparable to the base case, but the scaled IC drops in half, as does the regression coefficient.  Clearly, we want the volatility to be on the *returns* and not on the *exposures*.
+
+### Non-zero Mean
+
+```{r echo=FALSE, messages=FALSE, warnings=FALSE, cache=TRUE}
+tt <- tt + 1
+d <- list()
+for (i in 1:length(rhos)) d[[i]] <- icsim(trials=trials, assets=assets, rho=rhos[i], mu1=.1, mu2=0, s1=.08, s2=.08)
+assign("tbl" %+% tt, rbindlist(d))
+caption <- "Table - " %+% tt %+% " Assets: " %+% assets %+% " Simulations: " %+% trials
+knitr::kable(get("tbl" %+% tt,), row.names=FALSE, digits=3, caption=caption)
+```
+
+While generally a higher return is better, in this case we are measuring the spread, which is the difference between the average return in the top decile minus the average return in the bottom decile.  So a higher return just increases the average return, but does not (necessarily) benefit the top decile more than the bottom decile, leaving the spread pretty much the same.  As you can see, all the other metrics are comparable as well.  The correlation and volatility are the two driving forces of factor performance.
+
+### Small Number of Assets
+
+```{r echo=FALSE, messages=FALSE, warnings=FALSE, cache=TRUE}
+assets = 80
+tt <- tt + 1
+d <- list()
+for (i in 1:length(rhos)) d[[i]] <- icsim(trials=trials, assets=assets, rho=rhos[i], mu1=0, mu2=0, s1=.08, s2=.08)
+assign("tbl" %+% tt, rbindlist(d))
+caption <- "Table - " %+% tt %+% " Assets: " %+% assets %+% " Simulations: " %+% trials
+knitr::kable(get("tbl" %+% tt,), row.names=FALSE, digits=3, caption=caption)
+```
+
+
+As mentioned earlier, when we lower the number of assets to `r assets` the hit rate (Pct.Positive) falls substantially.  The rest of the metrics are similar to the base case.  Quantitative investing is a numbers game, where is pays to have as much breadth as possible.  With 5% correlation and 1000 assets the simulated hit rate was 89%.  With only 80 assets the simulated hit rate falls to around 63%.  63% is not bad for a hit rate, but you have to make numerous "bets" to get that advertised number.  If you are only investing in a small number of assets, you could get a resulting hit rate that is much worse (or better) than the advertised hit rate.
+
+### Conclusion and Shiny App
+
+This paper has explained the relationship between the Information Coefficient (IC) and linear regression model output.  These simulations should help you understand the important of correlation in factor investing and what level of IC and/or correlation will yield acceptable results.  We have shown that the larger the universe the better the expected hit rate (for a given correlation).  We have shown that *returns* volatility is good and the *exposures* volatility is (relatively) bad.  Average returns are not as important as the spread between the top and bottom deciles.  
+
+If you would like to change the parameters and run your own simulations, please visit this [Shiny App link]( https://sagepoint.shinyapps.io/IC_and_LM/).
+
