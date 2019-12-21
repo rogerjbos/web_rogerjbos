@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Roger J. Bos, CFA</title>
@@ -18,7 +18,7 @@
       <pubDate>Tue, 09 Apr 2019 00:00:00 +0000</pubDate>
       
       <guid>/shiny/</guid>
-      <description>Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly. Rstudio&amp;rsquo;s @winston and @jcheng came to my rescue and determined that it was a problem with my nginx proxy settings. That prompted me to write up these notes so next time I have to set up a server, I won&amp;rsquo;t be starting from scratch.
+      <description>Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly. Rstudio&#39;s @winston and @jcheng came to my rescue and determined that it was a problem with my nginx proxy settings. That prompted me to write up these notes so next time I have to set up a server, I won&#39;t be starting from scratch.
 Install and configure Nginx Here is the Rstudio article. Here is my corrected nginx.</description>
     </item>
     
@@ -48,6 +48,15 @@ Install and configure Nginx Here is the Rstudio article. Here is my corrected ng
       <guid>/optimization-examples-in-r/</guid>
       <description>Prerequisites Before we get to the optimization examples, we will download the price history for a small number of ETFs and show how to calculate the returns, standard deviations, variance matrix and other inputs that we will need for the optimizer.
 Prices For these examples, we will download the daily prices for a handful of ETFs from Yahoo Finance, starting in 2003. Once the daily data is downloaded, we use the to.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/</guid>
+      <description>Information Coefficients and Linear Regression       code{white-space: pre;} pre:not([class]) { background-color: white; }  if (window.hljs) { hljs.configure({languages: []}); hljs.initHighlightingOnLoad(); if (document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); } }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
     </item>
     
   </channel>

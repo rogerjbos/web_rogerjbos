@@ -1,10 +1,35 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/post/</loc>
+    <lastmod>2019-04-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/shiny/</loc>
     <lastmod>2019-04-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2019-04-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/shiny/</loc>
+    <lastmod>2019-04-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2019-04-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/linux/</loc>
+    <lastmod>2019-04-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -14,6 +39,11 @@
   
   <url>
     <loc>/voip/</loc>
+    <lastmod>2019-04-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/voip/</loc>
     <lastmod>2019-04-05T00:00:00+00:00</lastmod>
   </url>
   
@@ -33,11 +63,23 @@
   </url>
   
   <url>
+    <loc>/tags/diy/</loc>
+    <lastmod>2018-12-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/reports/ff5_decile/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
     <loc>/reports/recession/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -45,59 +87,15 @@
   </url>
   
   <url>
-    <loc>/tags/diy/</loc>
-    <lastmod>2018-12-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/investing/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/investing/</loc>
   </url>
   
   <url>
-    <loc>/tags/linux/</loc>
-    <lastmod>2019-04-08T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2019-04-09T00:00:00+00:00</lastmod>
-    <priority>0</priority>
+    <loc>/tags/investing/</loc>
   </url>
   
   <url>
     <loc>/reports/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2019-04-09T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/shiny/</loc>
-    <lastmod>2019-04-09T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2018-12-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/voip/</loc>
-    <lastmod>2019-04-05T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
 </urlset>

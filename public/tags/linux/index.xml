@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Linux on Roger J. Bos, CFA</title>
+    <title>linux on Roger J. Bos, CFA</title>
     <link>/tags/linux/</link>
-    <description>Recent content in Linux on Roger J. Bos, CFA</description>
+    <description>Recent content in linux on Roger J. Bos, CFA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Roger J. Bos, CFA</copyright>
@@ -18,7 +18,7 @@
       <pubDate>Mon, 08 Apr 2019 00:00:00 +0000</pubDate>
       
       <guid>/linux/</guid>
-      <description>I am a big fan of linux. I enjoy ssh-ing into servers and using the command line, but since I don&amp;rsquo;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.
+      <description>I am a big fan of linux. I enjoy ssh-ing into servers and using the command line, but since I don&#39;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.
 Linux Commands Users and Groups  getent passwd shows a list of all the users on the server. sudo passwd &amp;lt;username&amp;gt; allows a sudoer to change the password of a user.</description>
     </item>
     
