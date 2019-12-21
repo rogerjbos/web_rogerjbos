@@ -2,61 +2,62 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Roger J. Bos, CFA</title>
-    <link>/post/</link>
+    <link>https://rogerjbos.com/post/</link>
     <description>Recent content in Posts on Roger J. Bos, CFA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Roger J. Bos, CFA</copyright>
-    <lastBuildDate>Tue, 09 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Dec 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://rogerjbos.com/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Information Coefficients and Linear Regression</title>
+      <link>https://rogerjbos.com/ic_and_lm/</link>
+      <pubDate>Fri, 20 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://rogerjbos.com/ic_and_lm/</guid>
+      <description>Motivation In this paper we use Monte Carlo simulation to show the relationship between the Information Coefficient (IC), correlation, decile returns, and linear regression.1 We can also gain insight into investment related questions, such as
+ What level of IC is considered good? What effect does volatility have on the spread? What effect does universe size have on the hit rate?  We will start off by defining some terms so we are all on the same page.</description>
+    </item>
+    
+    <item>
       <title>R Shiny / Rstudio Server on CentOS Install Notes</title>
-      <link>/shiny/</link>
+      <link>https://rogerjbos.com/shiny/</link>
       <pubDate>Tue, 09 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/shiny/</guid>
+      <guid>https://rogerjbos.com/shiny/</guid>
       <description>Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly. Rstudio&#39;s @winston and @jcheng came to my rescue and determined that it was a problem with my nginx proxy settings. That prompted me to write up these notes so next time I have to set up a server, I won&#39;t be starting from scratch.
 Install and configure Nginx Here is the Rstudio article. Here is my corrected nginx.</description>
     </item>
     
     <item>
       <title>Obi202 as ITSP</title>
-      <link>/voip/</link>
+      <link>https://rogerjbos.com/voip/</link>
       <pubDate>Fri, 05 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/voip/</guid>
+      <guid>https://rogerjbos.com/voip/</guid>
       <description>I have been using Google Voice since it started as Grand Central, before Google bought it. Google Voice became even better when Obihai came out with an analog telephone adapter (ATA) that would connect directly to it. To be able to make free calls to relatives, I installed an Obi110 device at their house as well. Learning VoIP has been a long and confusing journey, but it has also been a good learning experience.</description>
     </item>
     
     <item>
       <title>SQLAlchemy ORM versus Raw SQL</title>
-      <link>/python-sqlalchemy/</link>
+      <link>https://rogerjbos.com/python-sqlalchemy/</link>
       <pubDate>Mon, 25 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/python-sqlalchemy/</guid>
+      <guid>https://rogerjbos.com/python-sqlalchemy/</guid>
       <description>Python: SQLAlchemy ORM versus Raw SQL I was reading this blog post [https://auth0.com/blog/sqlalchemy-orm-tutorial-for-python-developers/] about SQLAlchemy and how to run queries using its Object Relational Mapper (ORM). It is a very good intruduction to the pythonic ORM way of talking to databases, but I think I still prefer using raw SQL. In this post I will show you some reasons why I prefer raw SQL. I will use the same database and tables used in the original tutorial for these examples.</description>
     </item>
     
     <item>
       <title>Optimization Examples in R</title>
-      <link>/optimization-examples-in-r/</link>
+      <link>https://rogerjbos.com/optimization-examples-in-r/</link>
       <pubDate>Wed, 16 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>/optimization-examples-in-r/</guid>
+      <guid>https://rogerjbos.com/optimization-examples-in-r/</guid>
       <description>Prerequisites Before we get to the optimization examples, we will download the price history for a small number of ETFs and show how to calculate the returns, standard deviations, variance matrix and other inputs that we will need for the optimizer.
 Prices For these examples, we will download the daily prices for a handful of ETFs from Yahoo Finance, starting in 2003. Once the daily data is downloaded, we use the to.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/</guid>
-      <description>Information Coefficients and Linear Regression       code{white-space: pre;} pre:not([class]) { background-color: white; }  if (window.hljs) { hljs.configure({languages: []}); hljs.initHighlightingOnLoad(); if (document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); } }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
     </item>
     
   </channel>

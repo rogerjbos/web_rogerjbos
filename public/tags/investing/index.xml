@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>investing on Roger J. Bos, CFA</title>
-    <link>/tags/investing/</link>
+    <link>https://rogerjbos.com/tags/investing/</link>
     <description>Recent content in investing on Roger J. Bos, CFA</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Roger J. Bos, CFA</copyright>
     
-	<atom:link href="/tags/investing/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://rogerjbos.com/tags/investing/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Investing</title>
-      <link>/investing/</link>
+      <link>https://rogerjbos.com/investing/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/investing/</guid>
+      <guid>https://rogerjbos.com/investing/</guid>
       <description>Recession Forecasting using SVM
 Fama-French Factor Returns
 Information Coefficients and Linear Models whitepaper and accompanying Shiny App</description>

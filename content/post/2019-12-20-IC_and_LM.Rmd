@@ -6,7 +6,7 @@ slug: IC_and_LM
 description: 'Information Coefficients and Linear Regression'
 output: 
   html_document:
-    number_sections: TRUE
+    number_sections: FALSE
 ---
 
 ### Motivation

@@ -1,14 +1,129 @@
----
-title: 'Information Coefficients and Linear Regression'
-author: 'Roger J Bos, CFA'
-date: '2019-12-20'
-slug: IC_and_LM
-description: 'Information Coefficients and Linear Regression'
-output: 
-  html_document:
-    number_sections: FALSE
----
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Information Coefficients and Linear Regression &middot; Roger J. Bos, CFA</title>
+        <meta name="description" content="Information Coefficients and Linear Regression">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.61.0" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="Information Coefficients and Linear Regression">
+<meta property="og:description" content="Information Coefficients and Linear Regression">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://rogerjbos.com/ic_and_lm/">
+        <link rel="stylesheet" href="https://rogerjbos.com/dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+        
+        
+    </head>
+    <body>
+        
 
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    <div class="site-title-wrapper">
+                        
+                            <h1 class="site-title">
+                                <a title="Roger J. Bos, CFA" href="https://rogerjbos.com/">Roger J. Bos, CFA</a>
+                            </h1>
+                        
+                        <a class="button-square" href="https://rogerjbos.com/index.xml"><i class="fa fa-rss"></i></a>
+                        
+                            <a class="button-square button-social hint--top" data-hint="Twitter" title="Twitter" href="https://twitter.com/rogerjbos1" rel="me">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Facebook" title="Facebook" href="https://www.facebook.com/rogerjbos" rel="me">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                        
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Github" title="Github" href="https://github.com/rogerjbos" rel="me">
+                                <i class="fa fa-github-alt"></i>
+                            </a>
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Stack Overflow" title="Stack Overflow" href="https://stackoverflow.com/users/7351478" rel="me">
+                                <i class="fa fa-stack-overflow"></i>
+                            </a>
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="LinkedIn" title="LinkedIn" href="https://linkedin.com/in/rogerjbos/" rel="me">
+                                <i class="fa fa-linkedin"></i>
+                            </a>
+                        
+                        
+                        
+                            <a class="button-square button-social hint--top" data-hint="Email" title="Email" href="mailto:roger.bos@gmail.com">
+                                <i class="fa fa-envelope"></i>
+                            </a>
+                        
+                    </div>
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="About" href="/about/">About</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Blog" href="/post/">Blog</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Investing" href="/investing/">Investing</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Linux" href="/linux/">Linux</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="DIY" href="/diy/">DIY</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Information Coefficients and Linear Regression</h1>
+    
+        <p class="post-description" itemprop="description">Information Coefficients and Linear Regression</p>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2019-12-20" itemprop="datePublished">Fri, Dec 20, 2019</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="#" itemprop="url" rel="author">Roger J Bos, CFA</a>
+            </span>
+        </span>
+    </p>
+    
+        <p class="post-reading post-line">
+            <span>Estimated reading time: 11 min</span>
+        </p>
+    
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    
 
 
 <div id="motivation" class="section level3">
@@ -919,3 +1034,76 @@ output:
 <li id="fn2"><p>Since this is a simple one-factor (<em>exposure</em>) model, the IC matches the correlation very close (we are able to capture the full signal). In a multi-factor context the IC will usually be lower than the correlation because the factors will not be perfectly uncorrelated.<a href="#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=Information%20Coefficients%20and%20Linear%20Regression&url=https%3a%2f%2frogerjbos.com%2fic_and_lm%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2frogerjbos.com%2fic_and_lm%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+        
+            <a class="icon-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&title=Information%20Coefficients%20and%20Linear%20Regression&url=https%3a%2f%2frogerjbos.com%2fic_and_lm%2f&summary=Information%20Coefficients%20and%20Linear%20Regression"
+               onclick="window.open(this.href, 'linkedin-share', 'width=554,height=481');return false;">
+               <i class="fa fa-linkedin"></i>
+               <span class="hidden">LinkedIn</span>
+            </a>
+        
+    </div>
+</footer>
+
+        
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="Roger J. Bos, CFA" href="https://rogerjbos.com/">Roger J. Bos, CFA</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2019 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="https://rogerjbos.com/js/jquery-1.11.3.min.js"></script>
+        <script src="https://rogerjbos.com/js/jquery.fitvids.js"></script>
+        
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        
+        
+        <script src="https://rogerjbos.com/js/scripts.js"></script>
+    </body>
+</html>
+

@@ -3,99 +3,99 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/post/</loc>
+    <loc>https://rogerjbos.com/ic_and_lm/</loc>
+    <lastmod>2019-12-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rogerjbos.com/post/</loc>
+    <lastmod>2019-12-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rogerjbos.com/</loc>
+    <lastmod>2019-12-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rogerjbos.com/shiny/</loc>
     <lastmod>2019-04-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/shiny/</loc>
+    <loc>https://rogerjbos.com/tags/shiny/</loc>
     <lastmod>2019-04-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>https://rogerjbos.com/tags/</loc>
     <lastmod>2019-04-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/shiny/</loc>
-    <lastmod>2019-04-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2019-04-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/linux/</loc>
+    <loc>https://rogerjbos.com/tags/linux/</loc>
     <lastmod>2019-04-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/linux/</loc>
+    <loc>https://rogerjbos.com/linux/</loc>
     <lastmod>2019-04-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/voip/</loc>
+    <loc>https://rogerjbos.com/voip/</loc>
     <lastmod>2019-04-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/voip/</loc>
+    <loc>https://rogerjbos.com/tags/voip/</loc>
     <lastmod>2019-04-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/python-sqlalchemy/</loc>
+    <loc>https://rogerjbos.com/python-sqlalchemy/</loc>
     <lastmod>2019-02-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/optimization-examples-in-r/</loc>
+    <loc>https://rogerjbos.com/optimization-examples-in-r/</loc>
     <lastmod>2019-01-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/diy/</loc>
+    <loc>https://rogerjbos.com/diy/</loc>
     <lastmod>2018-12-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/diy/</loc>
+    <loc>https://rogerjbos.com/tags/diy/</loc>
     <lastmod>2018-12-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>https://rogerjbos.com/reports/ff5_decile/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/reports/ff5_decile/</loc>
+    <loc>https://rogerjbos.com/reports/recession/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/reports/recession/</loc>
-    <priority>0</priority>
+    <loc>https://rogerjbos.com/about/</loc>
   </url>
   
   <url>
-    <loc>/about/</loc>
+    <loc>https://rogerjbos.com/investing/</loc>
   </url>
   
   <url>
-    <loc>/investing/</loc>
+    <loc>https://rogerjbos.com/tags/investing/</loc>
   </url>
   
   <url>
-    <loc>/tags/investing/</loc>
-  </url>
-  
-  <url>
-    <loc>/reports/</loc>
+    <loc>https://rogerjbos.com/reports/</loc>
   </url>
   
 </urlset>
