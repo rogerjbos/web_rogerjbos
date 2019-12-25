@@ -19,7 +19,7 @@
       
       <guid>https://rogerjbos.com/linux/</guid>
       <description>I am a big fan of linux. I enjoy ssh-ing into servers and using the command line, but since I don&#39;t necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.
-Linux Commands Users and Groups  getent passwd shows a list of all the users on the server. sudo passwd &amp;lt;username&amp;gt; allows a sudoer to change the password of a user.</description>
+Linux commands and other command line tools Users and Groups  getent passwd shows a list of all the users on the server. sudo passwd &amp;lt;username&amp;gt; allows a sudoer to change the password of a user.</description>
     </item>
     
   </channel>
