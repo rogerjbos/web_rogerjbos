@@ -11,7 +11,7 @@ tags:
 
 I am a big fan of linux.  I enjoy ssh-ing into servers and using the command line, but since I don't necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.
 
-### Linux Commands
+### Linux commands and other command line tools
 
 #### Users and Groups
 * ```getent passwd``` shows a list of all the users on the server.
@@ -57,17 +57,49 @@ systemctl restart nginx
 ### Git Commands / Notes
 
 ```
-git init
-git add .
-git commit -m "msg"
+#### Initialization
+git init # used to start a new repository
+git status # see the current branches and HEAD
+git config --global --list # shows all the commands in the config file
+
+#### Commits
+git add . # stage all files in current directory (not in top level directory)
+git reset # unstage all of the changes
+git commit -m "msg" # commit changes with a message
+git log # see a list of previous commits and their hash
+git checkout "branch-name" # checkout a branch to work on
+git checkout -- . # 
+git reset --soft <hash> # reset the HEAD to hash
+git reset <hash> # reset the HEAD to hash
+git reset --hard <hash> # reset the HEAD to hash and remove all later commits
+git diff # show changes
+git clean # removes all unmonitored files
+
+#### Add
+git add -A # stage all files - both current directory and top level (default, new to version 2)
+git add --no-all # stages all files except deleted ones
+git add -u # stages deleted and modified files, but not unmodified files
+git add * # do not use this command - '*' is a shell command, not a git command
+
+# Branches
 git branch # view branches and see current one
 git checkout -b "new branch name" # add a branch
+git merge <hash> # merge the branch <hash> into the current branch
+git branch -D <hash> # delete a branch 
+
+#### Stash
+git stash save "msg" # saves changes 
+git stash list # shows all the stashs that have been saved
+git stash apply # apply the changes in the stash to the current branch (does not drop stash)
+git stash pop # grabs the first stash and applies the changes, and drops the stash
+git stash drop stash(<num>) # removes a stash from the list 
+git stash clear # removes all stashes (be careful doing this)
+
+#### Remotes
 git remote add origin "https://github.com/rogerjbos/<newrepo>.git" # define origin
 git push -u origin master # push local code to remote repo
 git push origin my_new_branch # push new branch to the remove repo
 git pull origin master # get new version of code onto local computer
-git log
-git status
 ```
 
 ### Misc Notes

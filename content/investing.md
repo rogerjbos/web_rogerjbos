@@ -12,4 +12,4 @@ tags:
 
 [Fama-French Factor Returns](/reports/FF5_decile.html)
 
-[Information Coefficients and Linear Models](/posts/IC_and_LM.html) whitepaper and accompanying [Shiny App]( https://sagepoint.shinyapps.io/IC_and_LM/)
+[Information Coefficients and Linear Models](/IC_and_LM/) whitepaper and accompanying [Shiny App]( https://sagepoint.shinyapps.io/IC_and_LM/)
