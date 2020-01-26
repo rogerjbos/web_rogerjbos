@@ -9,7 +9,7 @@ tags:
   - linux
 ---
 
-I am a big fan of linux.  I enjoy ssh-ing into servers and using the command line, but since I don't necessarily use linux every day, I sometimes forget some of the commands, so I keep this reference for myself.
+I am a big fan of Linux.  I enjoy ssh-ing into servers and using the command line, but since I don't necessarily use Linux every day, I sometimes forget some of the commands, so I keep this reference for myself.
 
 ### Linux commands and other command line tools
 
@@ -25,7 +25,7 @@ I am a big fan of linux.  I enjoy ssh-ing into servers and using the command lin
 * `pwd` **P**rints the current **W**orking **D**irectory.
 * `cd <path/to/new/dir>` **C**hange **D**irectory to specified path.  ``cd ..`` moves up one level to the parent directory.
 * `ls` lists the files in the current folder.  ` ls ..` can be used to list the files in the parent directory.
-* `ls -l` is helpful because it shows the owner of each folder and file permissions.  Permission denied problems can be very confusing to fix in linux.  
+* `ls -l` is helpful because it shows the owner of each folder and file permissions.  Permission denied problems can be very confusing to fix in Linux.  
 * `ls -alg` is very comprehensive and shows the list of all files as a list and groups the directories first.  The first column shows something like `drwxrwxrwx` where the first character indicates if it is a directory (`d`) or a file (`-`) and the next three sets of `rwx` specify the permissions for the _owner_, _group_, and _world_.  Please read `man ls` for more info.
 * `chmod 777 test_file.txt` will change the permissions for the test_file.txt file to the most permissive.  It is tempting to do this to solve permission errors, but is a bad idea for security reasons.  This chart will show all the possible values:
 
@@ -41,11 +41,11 @@ I am a big fan of linux.  I enjoy ssh-ing into servers and using the command lin
 |7|111|rwx|
 
 * `mkdir new_folder_name` is used to **M**a**K**e a **DIR**ectory.
-* `rmdir folder_name` is used to **r**e**m**ove a **dir**ectory, recursively deleteing the files in the folder.  If you get an error that the folder is not empty, you can add the `-r` option after 'rmdir', but **make sure** you don't want the files because there is no recycle bin in linux.
+* `rmdir folder_name` is used to **R**e**M**ove a **DIR**ectory, recursively deleting the files in the folder.  If you get an error that the folder is not empty, you can add the `-r` option after 'rmdir', but **make sure** you don't want the files because there is no recycle bin in Linux.
 * `rm -r <mydir>` will delete a folder even if it is not empty.
 * `rm -rf <mydir>` will delete a folder even if it is not empty without any prompts.
 * `find . -name <some file or directory>` will search the working directory for the specified file or directory.
-* `grep -rn "some text"` will seach for any file containing "some text".  The `-rn`` flags specify recursive search of subdirectories and to show the line numbers of the text found.
+* `grep -rn "some text"` will search for any file containing "some text".  The `-rn`` flags specify recursive search of subdirectories and to show the line numbers of the text found.
 * `df -ah` shows the amount of **D**isk **F**ree space on your drive, **A**ll file systems, **H**uman readable.
 * `du -sh <folder>` shows the amount of **D**isk space **U**sed by a folder.
 * `free` shows the amount of free memory on your machine.
@@ -73,9 +73,9 @@ I am a big fan of linux.  I enjoy ssh-ing into servers and using the command lin
 #### Getting help with Linux commands
 * `man <command>` will show you the help files with examples.
 
-#### Run commands automatically at login
+#### Run commands automatically at log in
 
-`sudo nano ~/.bash_profile` will open a file where you can add commands that you want to run automatically at login, or aliases.  After you edit the file, use `source ~/.bash_profile` to reload it into memory.  A shortcut for source is `. ~/.bash_profile`, or maybe even `. !$` if it was the last file you edited.
+`sudo nano ~/.bash_profile` will open a file where you can add commands that you want to run automatically at log in, or aliases.  After you edit the file, use `source ~/.bash_profile` to reload it into memory.  A shortcut for source is `. ~/.bash_profile`, or maybe even `. !$` if it was the last file you edited.
 
 #### Permissions
 
@@ -98,7 +98,7 @@ Using the newer systemd method, you can stop, start, or restart a service with _
 
 #### Commits
 * `git add .` stages all files in current directory (not in top level directory).
-* `git reset` unstage all of the changes without commiting them.
+* `git reset` unstage all of the changes without committing them.
 * `git commit -m "msg"` commit changes with a message.
 * `git log` shows a list of previous commits and their hash.
 * `git checkout "branch-name"` is used to checkout a branch to work on.
@@ -123,7 +123,7 @@ Using the newer systemd method, you can stop, start, or restart a service with _
 
 #### Stash
 * `git stash save "msg"` saves changes.
-* `git stash list` shows all the stashs that have been saved.
+* `git stash list` shows all the stashes that have been saved.
 * `git stash apply` applies the changes in the stash to the current branch, but does not drop stash.
 * `git stash pop` grabs the first stash and applies the changes, and drops the stash.
 * `git stash drop stash(<num>)` removes a stash from the list.
@@ -137,12 +137,12 @@ Using the newer systemd method, you can stop, start, or restart a service with _
 
 ### Misc Notes
 
-#### Updating a linux server
+#### Updating a Linux server
 For Ubuntu, Debian, Rasbian:
 * `sudo apt-get update`
 * `sudo apt-get upgrade`
 
-For Redhat, CentOS, and Fedora:
+For Red hat, CentOS, and Fedora:
 * `sudo yum update`
 * `sudo yum upgrade`
 
@@ -151,7 +151,7 @@ Specifically to update the version of R on CentOS:
 * `yum update R`
 
 #### Create Symbolic (soft) link
-My use case is that I cannot write to my linux drive from Windows (though I can write it my Windows drive from linux), so I write to a windows drive and create a symbolic link on my linux server so I can serve the file via the web server.
+My use case is that I cannot write to my Linux drive from Windows (though I can write it my Windows drive from Linux), so I write to a windows drive and create a symbolic link on my Linux server so I can serve the file via the web server.
 
 * `ln -s file1 link1`
 * `ln -s //media/research/R_HOME/linux/reports/LC.html //data/shiny/doc/LC.html`
