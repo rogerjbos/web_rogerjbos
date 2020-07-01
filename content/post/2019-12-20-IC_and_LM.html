@@ -11,6 +11,7 @@ output:
   
 ---
 
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <div id="motivation" class="section level3">
@@ -44,7 +45,7 @@ output:
 <h3>Base case</h3>
 <p>To run the simulation we use the R programming language’s multivariate random number generator function <em>mvrnorm</em> from the MASS package to generate two series for each simulation. Both series have zero mean. They only thing they have in common is a correlation, which we vary from zero to twenty percent. Before going further into the details, let’s have a look at some simulations so we can describe how everything relates.</p>
 <table>
-<caption>Table - 1 Assets: 1000 Simulations: 3000</caption>
+<caption><span id="tab:unnamed-chunk-1">Table 1: </span>Table - 1 Assets: 1000 Simulations: 3000</caption>
 <thead>
 <tr class="header">
 <th align="right">Correlation</th>
@@ -64,23 +65,23 @@ output:
 <td align="right">0.00</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">-3.602</td>
-<td align="right">0.481</td>
-<td align="right">-0.001</td>
+<td align="right">-0.638</td>
+<td align="right">0.500</td>
+<td align="right">0.000</td>
 <td align="right">0.001</td>
 <td align="right">0.025</td>
-<td align="right">-0.001</td>
-<td align="right">-0.001</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
 </tr>
 <tr class="even">
 <td align="right">0.01</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">28.432</td>
-<td align="right">0.604</td>
+<td align="right">28.493</td>
+<td align="right">0.597</td>
 <td align="right">0.010</td>
 <td align="right">0.001</td>
-<td align="right">0.026</td>
+<td align="right">0.027</td>
 <td align="right">0.010</td>
 <td align="right">0.010</td>
 </tr>
@@ -88,8 +89,8 @@ output:
 <td align="right">0.02</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">55.937</td>
-<td align="right">0.691</td>
+<td align="right">58.468</td>
+<td align="right">0.692</td>
 <td align="right">0.019</td>
 <td align="right">0.001</td>
 <td align="right">0.031</td>
@@ -100,44 +101,44 @@ output:
 <td align="right">0.03</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">85.344</td>
-<td align="right">0.775</td>
-<td align="right">0.030</td>
+<td align="right">83.163</td>
+<td align="right">0.762</td>
+<td align="right">0.028</td>
 <td align="right">0.002</td>
-<td align="right">0.037</td>
-<td align="right">0.031</td>
+<td align="right">0.035</td>
 <td align="right">0.030</td>
+<td align="right">0.028</td>
 </tr>
 <tr class="odd">
 <td align="right">0.04</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">111.117</td>
-<td align="right">0.832</td>
-<td align="right">0.037</td>
+<td align="right">112.369</td>
+<td align="right">0.846</td>
+<td align="right">0.038</td>
 <td align="right">0.003</td>
-<td align="right">0.042</td>
-<td align="right">0.039</td>
-<td align="right">0.037</td>
+<td align="right">0.043</td>
+<td align="right">0.040</td>
+<td align="right">0.038</td>
 </tr>
 <tr class="even">
 <td align="right">0.05</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">139.557</td>
-<td align="right">0.897</td>
+<td align="right">142.996</td>
+<td align="right">0.895</td>
 <td align="right">0.048</td>
-<td align="right">0.003</td>
+<td align="right">0.004</td>
+<td align="right">0.052</td>
 <td align="right">0.051</td>
-<td align="right">0.050</td>
 <td align="right">0.048</td>
 </tr>
 <tr class="odd">
 <td align="right">0.06</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">169.638</td>
-<td align="right">0.927</td>
+<td align="right">169.838</td>
+<td align="right">0.937</td>
 <td align="right">0.058</td>
 <td align="right">0.005</td>
 <td align="right">0.061</td>
@@ -148,36 +149,36 @@ output:
 <td align="right">0.07</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">195.786</td>
-<td align="right">0.967</td>
+<td align="right">198.313</td>
+<td align="right">0.956</td>
 <td align="right">0.067</td>
 <td align="right">0.006</td>
-<td align="right">0.070</td>
-<td align="right">0.070</td>
+<td align="right">0.071</td>
+<td align="right">0.071</td>
 <td align="right">0.067</td>
 </tr>
 <tr class="odd">
 <td align="right">0.10</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">278.362</td>
-<td align="right">0.996</td>
-<td align="right">0.095</td>
+<td align="right">286.839</td>
+<td align="right">0.993</td>
+<td align="right">0.097</td>
 <td align="right">0.011</td>
-<td align="right">0.100</td>
-<td align="right">0.100</td>
-<td align="right">0.095</td>
+<td align="right">0.101</td>
+<td align="right">0.101</td>
+<td align="right">0.097</td>
 </tr>
 <tr class="even">
 <td align="right">0.20</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">561.558</td>
+<td align="right">562.637</td>
 <td align="right">1.000</td>
 <td align="right">0.192</td>
 <td align="right">0.041</td>
-<td align="right">0.200</td>
-<td align="right">0.200</td>
+<td align="right">0.201</td>
+<td align="right">0.201</td>
 <td align="right">0.192</td>
 </tr>
 </tbody>
@@ -196,7 +197,7 @@ output:
 <h3>Higher Return Volatility</h3>
 <p>In the next set of simulations we increase the return volatility from 8% to 16%.</p>
 <table>
-<caption>Table - 2 Assets: 1000 Simulations: 3000</caption>
+<caption><span id="tab:unnamed-chunk-2">Table 2: </span>Table - 2 Assets: 1000 Simulations: 3000</caption>
 <thead>
 <tr class="header">
 <th align="right">Correlation</th>
@@ -216,67 +217,67 @@ output:
 <td align="right">0.00</td>
 <td align="right">0.16</td>
 <td align="right">0.08</td>
-<td align="right">2.493</td>
-<td align="right">0.497</td>
-<td align="right">0.000</td>
-<td align="right">0.001</td>
-<td align="right">0.026</td>
+<td align="right">4.706</td>
+<td align="right">0.519</td>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
+<td align="right">0.025</td>
+<td align="right">0.002</td>
+<td align="right">0.002</td>
 </tr>
 <tr class="even">
 <td align="right">0.01</td>
 <td align="right">0.16</td>
 <td align="right">0.08</td>
-<td align="right">52.148</td>
-<td align="right">0.588</td>
+<td align="right">57.221</td>
+<td align="right">0.610</td>
 <td align="right">0.009</td>
 <td align="right">0.001</td>
-<td align="right">0.026</td>
+<td align="right">0.027</td>
+<td align="right">0.020</td>
 <td align="right">0.019</td>
-<td align="right">0.018</td>
 </tr>
 <tr class="odd">
 <td align="right">0.02</td>
 <td align="right">0.16</td>
 <td align="right">0.08</td>
-<td align="right">105.172</td>
-<td align="right">0.688</td>
-<td align="right">0.017</td>
+<td align="right">110.529</td>
+<td align="right">0.689</td>
+<td align="right">0.019</td>
 <td align="right">0.001</td>
-<td align="right">0.029</td>
-<td align="right">0.037</td>
-<td align="right">0.035</td>
+<td align="right">0.030</td>
+<td align="right">0.040</td>
+<td align="right">0.039</td>
 </tr>
 <tr class="even">
 <td align="right">0.03</td>
 <td align="right">0.16</td>
 <td align="right">0.08</td>
-<td align="right">167.679</td>
-<td align="right">0.764</td>
-<td align="right">0.028</td>
+<td align="right">173.812</td>
+<td align="right">0.781</td>
+<td align="right">0.029</td>
 <td align="right">0.002</td>
 <td align="right">0.036</td>
+<td align="right">0.062</td>
 <td align="right">0.059</td>
-<td align="right">0.057</td>
 </tr>
 <tr class="odd">
 <td align="right">0.04</td>
 <td align="right">0.16</td>
 <td align="right">0.08</td>
-<td align="right">217.495</td>
-<td align="right">0.833</td>
+<td align="right">228.217</td>
+<td align="right">0.842</td>
 <td align="right">0.038</td>
 <td align="right">0.003</td>
 <td align="right">0.043</td>
-<td align="right">0.079</td>
+<td align="right">0.080</td>
 <td align="right">0.076</td>
 </tr>
 <tr class="even">
 <td align="right">0.05</td>
 <td align="right">0.16</td>
 <td align="right">0.08</td>
-<td align="right">278.395</td>
+<td align="right">277.866</td>
 <td align="right">0.893</td>
 <td align="right">0.048</td>
 <td align="right">0.003</td>
@@ -288,20 +289,20 @@ output:
 <td align="right">0.06</td>
 <td align="right">0.16</td>
 <td align="right">0.08</td>
-<td align="right">341.000</td>
-<td align="right">0.931</td>
+<td align="right">340.273</td>
+<td align="right">0.930</td>
 <td align="right">0.058</td>
 <td align="right">0.005</td>
 <td align="right">0.061</td>
 <td align="right">0.121</td>
-<td align="right">0.116</td>
+<td align="right">0.115</td>
 </tr>
 <tr class="even">
 <td align="right">0.07</td>
 <td align="right">0.16</td>
 <td align="right">0.08</td>
-<td align="right">389.511</td>
-<td align="right">0.959</td>
+<td align="right">388.867</td>
+<td align="right">0.957</td>
 <td align="right">0.066</td>
 <td align="right">0.006</td>
 <td align="right">0.070</td>
@@ -312,25 +313,25 @@ output:
 <td align="right">0.10</td>
 <td align="right">0.16</td>
 <td align="right">0.08</td>
-<td align="right">566.551</td>
-<td align="right">0.995</td>
+<td align="right">566.175</td>
+<td align="right">0.996</td>
 <td align="right">0.096</td>
 <td align="right">0.011</td>
-<td align="right">0.100</td>
-<td align="right">0.201</td>
+<td align="right">0.101</td>
+<td align="right">0.202</td>
 <td align="right">0.192</td>
 </tr>
 <tr class="even">
 <td align="right">0.20</td>
 <td align="right">0.16</td>
 <td align="right">0.08</td>
-<td align="right">1124.047</td>
+<td align="right">1123.468</td>
 <td align="right">1.000</td>
 <td align="right">0.192</td>
 <td align="right">0.041</td>
-<td align="right">0.200</td>
-<td align="right">0.401</td>
-<td align="right">0.383</td>
+<td align="right">0.201</td>
+<td align="right">0.402</td>
+<td align="right">0.384</td>
 </tr>
 </tbody>
 </table>
@@ -340,7 +341,7 @@ output:
 <h3>Lower Volatility</h3>
 <p>In the next table we simulate both series with only 2% volatility (for both <em>returns</em> and <em>exposures</em>). For a given correlation, the percent positive, IC, and coefficients are all comparable to the base case, but the spread is much lower. The <em>returns</em> volatility is what creates the opportunity to profit and if the correlation is high enough the investor can capitalize on the hit rate (percent positive).</p>
 <table>
-<caption>Table - 3 Assets: 1000 Simulations: 3000</caption>
+<caption><span id="tab:unnamed-chunk-3">Table 3: </span>Table - 3 Assets: 1000 Simulations: 3000</caption>
 <thead>
 <tr class="header">
 <th align="right">Correlation</th>
@@ -360,44 +361,44 @@ output:
 <td align="right">0.00</td>
 <td align="right">0.02</td>
 <td align="right">0.02</td>
-<td align="right">-0.799</td>
-<td align="right">0.487</td>
-<td align="right">-0.001</td>
+<td align="right">-0.288</td>
+<td align="right">0.507</td>
+<td align="right">0.000</td>
 <td align="right">0.001</td>
-<td align="right">0.026</td>
-<td align="right">-0.001</td>
-<td align="right">-0.001</td>
+<td align="right">0.025</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
 </tr>
 <tr class="even">
 <td align="right">0.01</td>
 <td align="right">0.02</td>
 <td align="right">0.02</td>
-<td align="right">8.352</td>
-<td align="right">0.618</td>
-<td align="right">0.011</td>
+<td align="right">5.851</td>
+<td align="right">0.582</td>
+<td align="right">0.009</td>
 <td align="right">0.001</td>
-<td align="right">0.027</td>
-<td align="right">0.011</td>
-<td align="right">0.011</td>
+<td align="right">0.026</td>
+<td align="right">0.009</td>
+<td align="right">0.009</td>
 </tr>
 <tr class="odd">
 <td align="right">0.02</td>
 <td align="right">0.02</td>
 <td align="right">0.02</td>
-<td align="right">14.668</td>
-<td align="right">0.688</td>
-<td align="right">0.020</td>
+<td align="right">14.205</td>
+<td align="right">0.691</td>
+<td align="right">0.019</td>
 <td align="right">0.001</td>
 <td align="right">0.031</td>
-<td align="right">0.021</td>
 <td align="right">0.020</td>
+<td align="right">0.019</td>
 </tr>
 <tr class="even">
 <td align="right">0.03</td>
 <td align="right">0.02</td>
 <td align="right">0.02</td>
-<td align="right">21.622</td>
-<td align="right">0.773</td>
+<td align="right">21.133</td>
+<td align="right">0.765</td>
 <td align="right">0.029</td>
 <td align="right">0.002</td>
 <td align="right">0.036</td>
@@ -408,47 +409,47 @@ output:
 <td align="right">0.04</td>
 <td align="right">0.02</td>
 <td align="right">0.02</td>
-<td align="right">27.764</td>
-<td align="right">0.838</td>
-<td align="right">0.038</td>
+<td align="right">29.135</td>
+<td align="right">0.853</td>
+<td align="right">0.039</td>
 <td align="right">0.003</td>
-<td align="right">0.042</td>
-<td align="right">0.040</td>
-<td align="right">0.038</td>
+<td align="right">0.044</td>
+<td align="right">0.041</td>
+<td align="right">0.039</td>
 </tr>
 <tr class="even">
 <td align="right">0.05</td>
 <td align="right">0.02</td>
 <td align="right">0.02</td>
-<td align="right">35.557</td>
-<td align="right">0.900</td>
-<td align="right">0.049</td>
-<td align="right">0.004</td>
-<td align="right">0.052</td>
+<td align="right">35.756</td>
+<td align="right">0.897</td>
+<td align="right">0.048</td>
+<td align="right">0.003</td>
 <td align="right">0.051</td>
-<td align="right">0.049</td>
+<td align="right">0.050</td>
+<td align="right">0.048</td>
 </tr>
 <tr class="odd">
 <td align="right">0.06</td>
 <td align="right">0.02</td>
 <td align="right">0.02</td>
-<td align="right">41.850</td>
-<td align="right">0.935</td>
-<td align="right">0.057</td>
-<td align="right">0.005</td>
+<td align="right">41.340</td>
+<td align="right">0.926</td>
+<td align="right">0.056</td>
+<td align="right">0.004</td>
 <td align="right">0.060</td>
 <td align="right">0.059</td>
-<td align="right">0.057</td>
+<td align="right">0.056</td>
 </tr>
 <tr class="even">
 <td align="right">0.07</td>
 <td align="right">0.02</td>
 <td align="right">0.02</td>
-<td align="right">48.828</td>
-<td align="right">0.958</td>
+<td align="right">48.874</td>
+<td align="right">0.957</td>
 <td align="right">0.067</td>
 <td align="right">0.006</td>
-<td align="right">0.071</td>
+<td align="right">0.070</td>
 <td align="right">0.070</td>
 <td align="right">0.067</td>
 </tr>
@@ -456,25 +457,25 @@ output:
 <td align="right">0.10</td>
 <td align="right">0.02</td>
 <td align="right">0.02</td>
-<td align="right">68.160</td>
-<td align="right">0.992</td>
-<td align="right">0.095</td>
+<td align="right">70.852</td>
+<td align="right">0.991</td>
+<td align="right">0.096</td>
 <td align="right">0.011</td>
-<td align="right">0.099</td>
-<td align="right">0.099</td>
-<td align="right">0.095</td>
+<td align="right">0.101</td>
+<td align="right">0.101</td>
+<td align="right">0.096</td>
 </tr>
 <tr class="even">
 <td align="right">0.20</td>
 <td align="right">0.02</td>
 <td align="right">0.02</td>
-<td align="right">140.598</td>
+<td align="right">139.786</td>
 <td align="right">1.000</td>
 <td align="right">0.191</td>
 <td align="right">0.041</td>
 <td align="right">0.200</td>
-<td align="right">0.201</td>
-<td align="right">0.192</td>
+<td align="right">0.200</td>
+<td align="right">0.191</td>
 </tr>
 </tbody>
 </table>
@@ -483,7 +484,7 @@ output:
 <div id="higher-exposure-volatility" class="section level3">
 <h3>Higher Exposure Volatility</h3>
 <table>
-<caption>Table - 4 Assets: 1000 Simulations: 3000</caption>
+<caption><span id="tab:unnamed-chunk-4">Table 4: </span>Table - 4 Assets: 1000 Simulations: 3000</caption>
 <thead>
 <tr class="header">
 <th align="right">Correlation</th>
@@ -503,8 +504,8 @@ output:
 <td align="right">0.00</td>
 <td align="right">0.08</td>
 <td align="right">0.16</td>
-<td align="right">1.992</td>
-<td align="right">0.507</td>
+<td align="right">-4.077</td>
+<td align="right">0.479</td>
 <td align="right">0.000</td>
 <td align="right">0.001</td>
 <td align="right">0.025</td>
@@ -515,9 +516,9 @@ output:
 <td align="right">0.01</td>
 <td align="right">0.08</td>
 <td align="right">0.16</td>
-<td align="right">24.810</td>
-<td align="right">0.593</td>
-<td align="right">0.010</td>
+<td align="right">26.704</td>
+<td align="right">0.595</td>
+<td align="right">0.009</td>
 <td align="right">0.001</td>
 <td align="right">0.026</td>
 <td align="right">0.005</td>
@@ -527,8 +528,8 @@ output:
 <td align="right">0.02</td>
 <td align="right">0.08</td>
 <td align="right">0.16</td>
-<td align="right">55.793</td>
-<td align="right">0.689</td>
+<td align="right">54.774</td>
+<td align="right">0.684</td>
 <td align="right">0.019</td>
 <td align="right">0.001</td>
 <td align="right">0.030</td>
@@ -539,8 +540,8 @@ output:
 <td align="right">0.03</td>
 <td align="right">0.08</td>
 <td align="right">0.16</td>
-<td align="right">83.876</td>
-<td align="right">0.777</td>
+<td align="right">87.609</td>
+<td align="right">0.774</td>
 <td align="right">0.029</td>
 <td align="right">0.002</td>
 <td align="right">0.036</td>
@@ -551,8 +552,8 @@ output:
 <td align="right">0.04</td>
 <td align="right">0.08</td>
 <td align="right">0.16</td>
-<td align="right">112.334</td>
-<td align="right">0.845</td>
+<td align="right">112.298</td>
+<td align="right">0.827</td>
 <td align="right">0.038</td>
 <td align="right">0.003</td>
 <td align="right">0.043</td>
@@ -563,32 +564,32 @@ output:
 <td align="right">0.05</td>
 <td align="right">0.08</td>
 <td align="right">0.16</td>
-<td align="right">140.015</td>
+<td align="right">142.001</td>
 <td align="right">0.890</td>
-<td align="right">0.047</td>
-<td align="right">0.003</td>
-<td align="right">0.051</td>
+<td align="right">0.048</td>
+<td align="right">0.004</td>
+<td align="right">0.052</td>
 <td align="right">0.025</td>
-<td align="right">0.023</td>
+<td align="right">0.024</td>
 </tr>
 <tr class="odd">
 <td align="right">0.06</td>
 <td align="right">0.08</td>
 <td align="right">0.16</td>
-<td align="right">172.254</td>
-<td align="right">0.933</td>
+<td align="right">169.091</td>
+<td align="right">0.940</td>
 <td align="right">0.058</td>
 <td align="right">0.005</td>
-<td align="right">0.062</td>
-<td align="right">0.031</td>
+<td align="right">0.061</td>
+<td align="right">0.030</td>
 <td align="right">0.029</td>
 </tr>
 <tr class="even">
 <td align="right">0.07</td>
 <td align="right">0.08</td>
 <td align="right">0.16</td>
-<td align="right">197.061</td>
-<td align="right">0.964</td>
+<td align="right">196.384</td>
+<td align="right">0.958</td>
 <td align="right">0.066</td>
 <td align="right">0.006</td>
 <td align="right">0.070</td>
@@ -599,11 +600,11 @@ output:
 <td align="right">0.10</td>
 <td align="right">0.08</td>
 <td align="right">0.16</td>
-<td align="right">282.661</td>
-<td align="right">0.994</td>
+<td align="right">282.522</td>
+<td align="right">0.995</td>
 <td align="right">0.096</td>
 <td align="right">0.011</td>
-<td align="right">0.100</td>
+<td align="right">0.101</td>
 <td align="right">0.050</td>
 <td align="right">0.048</td>
 </tr>
@@ -611,11 +612,11 @@ output:
 <td align="right">0.20</td>
 <td align="right">0.08</td>
 <td align="right">0.16</td>
-<td align="right">562.552</td>
+<td align="right">560.802</td>
 <td align="right">1.000</td>
 <td align="right">0.192</td>
 <td align="right">0.041</td>
-<td align="right">0.201</td>
+<td align="right">0.200</td>
 <td align="right">0.100</td>
 <td align="right">0.096</td>
 </tr>
@@ -626,7 +627,7 @@ output:
 <div id="non-zero-mean" class="section level3">
 <h3>Non-zero Mean</h3>
 <table>
-<caption>Table - 5 Assets: 1000 Simulations: 3000</caption>
+<caption><span id="tab:unnamed-chunk-5">Table 5: </span>Table - 5 Assets: 1000 Simulations: 3000</caption>
 <thead>
 <tr class="header">
 <th align="right">Correlation</th>
@@ -646,20 +647,20 @@ output:
 <td align="right">0.00</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">1.944</td>
-<td align="right">0.515</td>
-<td align="right">0.002</td>
+<td align="right">-0.432</td>
+<td align="right">0.503</td>
+<td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.025</td>
+<td align="right">0.000</td>
 <td align="right">0.001</td>
-<td align="right">0.002</td>
 </tr>
 <tr class="even">
 <td align="right">0.01</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">28.674</td>
-<td align="right">0.601</td>
+<td align="right">30.924</td>
+<td align="right">0.617</td>
 <td align="right">0.010</td>
 <td align="right">0.001</td>
 <td align="right">0.026</td>
@@ -670,20 +671,20 @@ output:
 <td align="right">0.02</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">53.470</td>
-<td align="right">0.676</td>
-<td align="right">0.018</td>
+<td align="right">56.714</td>
+<td align="right">0.695</td>
+<td align="right">0.020</td>
 <td align="right">0.001</td>
 <td align="right">0.030</td>
-<td align="right">0.019</td>
-<td align="right">0.018</td>
+<td align="right">0.021</td>
+<td align="right">0.020</td>
 </tr>
 <tr class="even">
 <td align="right">0.03</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">80.222</td>
-<td align="right">0.760</td>
+<td align="right">80.701</td>
+<td align="right">0.766</td>
 <td align="right">0.028</td>
 <td align="right">0.002</td>
 <td align="right">0.035</td>
@@ -694,71 +695,71 @@ output:
 <td align="right">0.04</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">117.386</td>
-<td align="right">0.844</td>
-<td align="right">0.039</td>
+<td align="right">112.547</td>
+<td align="right">0.839</td>
+<td align="right">0.038</td>
 <td align="right">0.003</td>
-<td align="right">0.044</td>
-<td align="right">0.041</td>
+<td align="right">0.043</td>
+<td align="right">0.040</td>
 <td align="right">0.039</td>
 </tr>
 <tr class="even">
 <td align="right">0.05</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">142.425</td>
-<td align="right">0.897</td>
-<td align="right">0.048</td>
-<td align="right">0.004</td>
-<td align="right">0.052</td>
+<td align="right">140.570</td>
+<td align="right">0.890</td>
+<td align="right">0.047</td>
+<td align="right">0.003</td>
 <td align="right">0.051</td>
-<td align="right">0.048</td>
+<td align="right">0.050</td>
+<td align="right">0.047</td>
 </tr>
 <tr class="odd">
 <td align="right">0.06</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">171.230</td>
-<td align="right">0.935</td>
-<td align="right">0.057</td>
+<td align="right">169.998</td>
+<td align="right">0.941</td>
+<td align="right">0.058</td>
 <td align="right">0.005</td>
 <td align="right">0.061</td>
-<td align="right">0.060</td>
-<td align="right">0.057</td>
+<td align="right">0.061</td>
+<td align="right">0.058</td>
 </tr>
 <tr class="even">
 <td align="right">0.07</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">196.997</td>
-<td align="right">0.956</td>
-<td align="right">0.066</td>
+<td align="right">198.745</td>
+<td align="right">0.961</td>
+<td align="right">0.067</td>
 <td align="right">0.006</td>
 <td align="right">0.070</td>
-<td align="right">0.069</td>
-<td align="right">0.066</td>
+<td align="right">0.070</td>
+<td align="right">0.067</td>
 </tr>
 <tr class="odd">
 <td align="right">0.10</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">280.055</td>
+<td align="right">280.764</td>
 <td align="right">0.992</td>
-<td align="right">0.096</td>
+<td align="right">0.095</td>
 <td align="right">0.011</td>
 <td align="right">0.100</td>
 <td align="right">0.100</td>
-<td align="right">0.096</td>
+<td align="right">0.095</td>
 </tr>
 <tr class="even">
 <td align="right">0.20</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">556.470</td>
+<td align="right">557.761</td>
 <td align="right">1.000</td>
 <td align="right">0.190</td>
-<td align="right">0.040</td>
-<td align="right">0.198</td>
+<td align="right">0.041</td>
+<td align="right">0.199</td>
 <td align="right">0.199</td>
 <td align="right">0.190</td>
 </tr>
@@ -769,7 +770,7 @@ output:
 <div id="small-number-of-assets" class="section level3">
 <h3>Small Number of Assets</h3>
 <table>
-<caption>Table - 6 Assets: 80 Simulations: 3000</caption>
+<caption><span id="tab:unnamed-chunk-6">Table 6: </span>Table - 6 Assets: 80 Simulations: 3000</caption>
 <thead>
 <tr class="header">
 <th align="right">Correlation</th>
@@ -789,121 +790,121 @@ output:
 <td align="right">0.00</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">-3.410</td>
-<td align="right">0.504</td>
-<td align="right">-0.001</td>
+<td align="right">2.743</td>
+<td align="right">0.500</td>
+<td align="right">0.000</td>
 <td align="right">0.013</td>
-<td align="right">0.091</td>
-<td align="right">-0.001</td>
-<td align="right">-0.001</td>
+<td align="right">0.092</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
 </tr>
 <tr class="even">
 <td align="right">0.01</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">31.407</td>
-<td align="right">0.534</td>
-<td align="right">0.009</td>
-<td align="right">0.012</td>
+<td align="right">41.387</td>
+<td align="right">0.533</td>
+<td align="right">0.013</td>
+<td align="right">0.013</td>
 <td align="right">0.090</td>
-<td align="right">0.010</td>
-<td align="right">0.009</td>
+<td align="right">0.013</td>
+<td align="right">0.013</td>
 </tr>
 <tr class="odd">
 <td align="right">0.02</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">53.209</td>
-<td align="right">0.558</td>
+<td align="right">51.954</td>
+<td align="right">0.550</td>
 <td align="right">0.019</td>
 <td align="right">0.013</td>
-<td align="right">0.091</td>
-<td align="right">0.021</td>
+<td align="right">0.090</td>
+<td align="right">0.020</td>
 <td align="right">0.019</td>
 </tr>
 <tr class="even">
 <td align="right">0.03</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">80.859</td>
-<td align="right">0.575</td>
-<td align="right">0.027</td>
-<td align="right">0.014</td>
-<td align="right">0.094</td>
-<td align="right">0.029</td>
+<td align="right">82.952</td>
+<td align="right">0.586</td>
+<td align="right">0.026</td>
+<td align="right">0.013</td>
+<td align="right">0.093</td>
 <td align="right">0.028</td>
+<td align="right">0.026</td>
 </tr>
 <tr class="odd">
 <td align="right">0.04</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">118.916</td>
-<td align="right">0.618</td>
-<td align="right">0.037</td>
+<td align="right">119.440</td>
+<td align="right">0.627</td>
+<td align="right">0.038</td>
 <td align="right">0.014</td>
-<td align="right">0.096</td>
+<td align="right">0.095</td>
 <td align="right">0.040</td>
-<td align="right">0.037</td>
+<td align="right">0.038</td>
 </tr>
 <tr class="even">
 <td align="right">0.05</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">144.229</td>
-<td align="right">0.640</td>
-<td align="right">0.047</td>
+<td align="right">146.190</td>
+<td align="right">0.645</td>
+<td align="right">0.046</td>
 <td align="right">0.015</td>
-<td align="right">0.100</td>
-<td align="right">0.051</td>
-<td align="right">0.048</td>
+<td align="right">0.099</td>
+<td align="right">0.049</td>
+<td align="right">0.046</td>
 </tr>
 <tr class="odd">
 <td align="right">0.06</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">158.161</td>
-<td align="right">0.662</td>
-<td align="right">0.056</td>
+<td align="right">157.657</td>
+<td align="right">0.655</td>
+<td align="right">0.054</td>
 <td align="right">0.016</td>
-<td align="right">0.102</td>
-<td align="right">0.059</td>
-<td align="right">0.056</td>
+<td align="right">0.103</td>
+<td align="right">0.058</td>
+<td align="right">0.054</td>
 </tr>
 <tr class="even">
 <td align="right">0.07</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">201.076</td>
-<td align="right">0.703</td>
-<td align="right">0.067</td>
-<td align="right">0.017</td>
-<td align="right">0.107</td>
-<td align="right">0.072</td>
+<td align="right">189.840</td>
+<td align="right">0.679</td>
+<td align="right">0.068</td>
+<td align="right">0.018</td>
+<td align="right">0.108</td>
+<td align="right">0.071</td>
 <td align="right">0.068</td>
 </tr>
 <tr class="odd">
 <td align="right">0.10</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">257.235</td>
-<td align="right">0.732</td>
-<td align="right">0.091</td>
-<td align="right">0.022</td>
-<td align="right">0.121</td>
+<td align="right">284.893</td>
+<td align="right">0.757</td>
 <td align="right">0.095</td>
-<td align="right">0.091</td>
+<td align="right">0.023</td>
+<td align="right">0.124</td>
+<td align="right">0.100</td>
+<td align="right">0.096</td>
 </tr>
 <tr class="even">
 <td align="right">0.20</td>
 <td align="right">0.08</td>
 <td align="right">0.08</td>
-<td align="right">537.909</td>
-<td align="right">0.908</td>
-<td align="right">0.185</td>
-<td align="right">0.050</td>
-<td align="right">0.198</td>
-<td align="right">0.195</td>
+<td align="right">537.482</td>
+<td align="right">0.917</td>
 <td align="right">0.186</td>
+<td align="right">0.050</td>
+<td align="right">0.199</td>
+<td align="right">0.197</td>
+<td align="right">0.187</td>
 </tr>
 </tbody>
 </table>
@@ -917,7 +918,7 @@ output:
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>This paper was motivated by a short paper and slides by Oliver Buckley at Invesco which can be found here(<a href="https://www.northinfo.com/documents/88.pdf" class="uri">https://www.northinfo.com/documents/88.pdf</a>).<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>Since this is a simple one-factor (<em>exposure</em>) model, the IC matches the correlation very close (we are able to capture the full signal). In a multi-factor context the IC will usually be lower than the correlation because the factors will not be perfectly uncorrelated.<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p>This paper was motivated by a short paper and slides by Oliver Buckley at Invesco which can be found here(<a href="https://www.northinfo.com/documents/88.pdf" class="uri">https://www.northinfo.com/documents/88.pdf</a>).<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Since this is a simple one-factor (<em>exposure</em>) model, the IC matches the correlation very close (we are able to capture the full signal). In a multi-factor context the IC will usually be lower than the correlation because the factors will not be perfectly uncorrelated.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
