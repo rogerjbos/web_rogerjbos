@@ -10,6 +10,8 @@ tags:
 
 [Recession Forecasting using SVM](https://www.rogerjbos.com/reports/Recession.html)
 
+[Style and Size Spreads](/reports/GVspread.html)
+
 [Fama-French Factor Returns](/reports/FF5_decile.html)
 
 [Information Coefficients and Linear Models](/IC_and_LM/) whitepaper and accompanying [Shiny App]( https://sagepoint.shinyapps.io/IC_and_LM/)
