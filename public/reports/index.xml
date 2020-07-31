@@ -22,6 +22,15 @@
     
     <item>
       <title></title>
+      <link>https://rogerjbos.com/reports/gvspread/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://rogerjbos.com/reports/gvspread/</guid>
+      <description>Style and Size Monthly Performance // Pandoc 2.9 adds attributes on both header and div. We remove the former (to // be compatible with the behavior of Pandoc :first-child&#34;); var i, h, a; for (i = 0; i 0) h.removeAttribute(a[0].name); } });  /*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */ !function(a,b){&#34;object&#34;==typeof module&amp;&amp;&#34;object&#34;==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error(&#34;jQuery requires a window with a document&#34;);return b(a)}:b(a)}(&#34;undefined&#34;!=typeof window?</description>
+    </item>
+    
+    <item>
+      <title></title>
       <link>https://rogerjbos.com/reports/recession/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
