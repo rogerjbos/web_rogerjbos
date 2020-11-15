@@ -58,6 +58,11 @@ I am a big fan of Linux.  I enjoy ssh-ing into servers and using the command lin
 * `tar czf <tarred name.tar.gz> *.txt` would tar and gzip and all the .txt files in the working directory into a tar.gz file.
 * `tar xzf <tarred name.tar.gz>` would decompress the .tar.gz file.
 
+#### Formatting & Mounting
+* `ls -l /dev/disk/by-uuid/` will show all the disks with their respective unique id.  A usb drive will usually show up as /dev/sda1.
+* `sudo umount` will unmount it (if it is already mounted)
+* `sudo mkfs.ext4 /dev/sda1` will format the usb drive at `/dev/sda1`.  `mkfs.ext4` is for linux format and `mkfs.vfat` would be for windows format.
+
 #### Other / Misc
 * `history` shows a list of previous commands.  What's nice is that you can re-run any command by using the bang operator and the line number (i.e. `!5`).  You can clear the history using `history -c`.
 * `ps aux | grep <program name>` to get a list of the **P**rocess **S**tate and ids (pid) for **A**ll **U**ser e**X**ecutables.
@@ -99,7 +104,8 @@ Description=Job that runs the geth (Go Ethereum) node as a service
 StandardOutput=syslog
 StandardError=syslog
 User=root
-ExecStart=nohup geth --syncmode "light" --cache 64 --maxpeers 12&
+ExecStart=nohup geth -mine --etherbase "0x2395114cdEb90542e5915A838f18108E2dcF8e4e"
+ --cache 64 --maxpeers 12
 Restart=always
 
 [Install]
@@ -125,9 +131,29 @@ To see a list of all the installed services you can run the following command:
 
 * `systemctl --all -t service`
 
-#### Further testing
+
+#### Mining Ethereum
 Once you have it all set up, you can reboot your linux server and check to see that the geth service started and you are able to connect to the Java console as follows:
-* `geth attach ipc:/root/.ethereum/geth.ipc`
+* `geth attach ipc:/media/usb/geth.ipc`
+
+Check your balance from within the geth console:
+* `web3.fromWei(eth.getBalance(eth.coinbase), "ether")`
+
+List all accounts:
+* `eth.accounts`
+
+List all peers:
+* `admin.peers`
+
+List the latest synced block:
+* `eth.getBlockNumber (console.log)`
+
+#### Using a USB flash drive in linux
+
+* `sudo mkdir /media/usb`
+* `sudo chown -R ubuntu:ubuntu /media/usb`
+* `sudo mount /dev/sda1 /media/usb -o uid=ubuntu,gid=ubuntu`
+
 
 ### Git Commands and Notes
 
@@ -233,7 +259,7 @@ To verify new soft link run:
 * something like socket://192.168.86.2:9100
 * Select PPD File: For Brother 2230 select 2170
 
-#### Misc libraries that need to be installed for R
+#### Misc libraries that need to be installed for R / R Shiny Server
 
 * `sudo apt-get install r-cran-rodbc`
 * `sudo apt-get install r-cran-xml`
