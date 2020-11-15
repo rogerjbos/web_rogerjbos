@@ -89,14 +89,56 @@ Using the newer systemd method, you can stop, start, or restart a service with _
 * `systemctl start nginx`
 * `systemctl restart nginx`
 
+Create the following file in `/lib/systemd/system/geth.service`:
+
+```
+[Unit]
+Description=Job that runs the geth (Go Ethereum) node as a service
+
+[Service]
+StandardOutput=syslog
+StandardError=syslog
+User=root
+ExecStart=nohup geth --syncmode "light" --cache 64 --maxpeers 12&
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+```
+You will then need to run this command to load the new service.
+
+* `systemctl daemon-reload`
+
+Then you can run any of these commands.
+
+* `systemctl stop geth`
+* `systemctl start geth`
+* `systemctl restart geth`
+* `systemctl status geth`
+
+Finally you will want to run this command so the service will start automatically after every reboot:
+
+* `systemctl enable`
+
+To see a list of all the installed services you can run the following command:
+
+* `systemctl --all -t service`
+
+#### Further testing
+Once you have it all set up, you can reboot your linux server and check to see that the geth service started and you are able to connect to the Java console as follows:
+* `geth attach ipc:/root/.ethereum/geth.ipc`
+
 ### Git Commands and Notes
 
 #### Initialization
+
 * `git init` is used to start a new repository.
 * `git status` shows the current branches and HEAD.
 * `git config --global --list` shows all the commands in the config file.
 
 #### Commits
+
 * `git add .` stages all files in current directory (not in top level directory).
 * `git reset` unstage all of the changes without committing them.
 * `git commit -m "msg"` commit changes with a message.
@@ -110,18 +152,21 @@ Using the newer systemd method, you can stop, start, or restart a service with _
 * `git clean` removes all unmonitored files.
 
 #### Add
+
 * `git add -A` stage all files - both current directory and top level (default, new to version 2).
 * `git add --no-all` stages all files except deleted ones.
 * `git add -u` stages deleted and modified files, but not unmodified files.
 * `git add *` is sometimes used to add all files, but you should not use this command because `*` is a shell command, not a git command.
 
 #### Branches
+
 * `git branch` shows all the branches and indicates the current one.
 * `git checkout -b "new branch name"` add a branch.
 * `git merge <hash>` merge the branch <hash> into the current branch.
 * `git branch -D <hash>` delete a branch.
 
 #### Stash
+
 * `git stash save "msg"` saves changes.
 * `git stash list` shows all the stashes that have been saved.
 * `git stash apply` applies the changes in the stash to the current branch, but does not drop stash.
@@ -130,6 +175,7 @@ Using the newer systemd method, you can stop, start, or restart a service with _
 * `git stash clear` removes all stashes (be careful doing this).
 
 #### Remotes
+
 * `git remote add origin "https://github.com/rogerjbos/<newrepo>.git"` defines the origin of the remote repository.
 * `git push -u origin master` pushes local code to remote repository.
 * `git push origin my_new_branch` pushes the new branch to the remote repository.
@@ -162,6 +208,7 @@ To verify new soft link run:
 * `ls -l`
 
 #### Flask app with yagmail and cifs functionality, install these necessary modules:
+
 * `apt-get install cifs-utils`
 * `apt-get install python-dev`
 * `apt-get install python-twisted`
@@ -172,89 +219,22 @@ To verify new soft link run:
 * `pip install yagmail`
 * `pip install Flask`
 * `pip install flask_login`
-d* `pkg-reconfigure tzdata`
+* `pkg-reconfigure tzdata`
 
 #### Map network drives using /etc/fstab entry
-* `//192.168.1.1/bosdrive /mnt/bosdrive cifs rw,guest,iocharset=utf8,file_mode=0777,dir_mode=0777,noperm,users 0 0`
 
-#### Create a service for HoneyAlarmServer in a file called /etc/init.d/HoneyAlarmServer
-
-```
-#!/bin/sh
-#
-# /etc/init.d/HoneyAlarmServer
-
-RETVAL=0
-prog="Honey"
-
-start() {
-        echo -n $"Starting $prog:"
-        RETVAL=$?
-        [ "$RETVAL" = 0 ] && touch /var/lock/subsys/$prog
-        cd /home/rjbos/HoneyAlarmServer
-        sudo python /home/rjbos/HoneyAlarmServer/alarmserver.py&
-        echo
-}
-
-stop() {
-        echo -n $"Stopping $prog:"
-        killproc $prog -TERM
-        RETVAL=$?
-        [ "$RETVAL" = 0 ] && rm -f /var/lock/subsys/$prog
-        echo
-}
-
-reload() {
-        echo -n $"Reloading $prog:"
-        killproc $prog -HUP
-        RETVAL=$?
-        echo
-}
-
-case "$1" in
-        start)
-                start
-                ;;
-        stop)
-                stop
-                ;;
-        restart)
-                stop
-                start
-                ;;
-        reload)
-                reload
-                ;;
-        condrestart)
-                if [ -f /var/lock/subsys/$prog ] ; then
-                        stop
-                        # avoid race
-                        sleep 3
-                        start
-                fi
-                ;;
-        status)
-                status $prog
-                RETVAL=$?
-                ;;
-        *)
-                echo $"Usage: $0 {start|stop|restart|reload|condrestart|status}"
-                RETVAL=1
-esac
-exit $RETVAL
-```
-
+* `//192.168.86.2/bosdrive /mnt/bosdrive cifs rw,guest,iocharset=utf8,file_mode=0777,dir_mode=0777,noperm,users 0 0`
 
 #### Configuring CUPS for network printing
 
 * `http://localhost:631/`
 * Administrator > Add Printer
 * select Internet Printing Protocol
-* something like socket://192.168.1.3:9100
+* something like socket://192.168.86.2:9100
 * Select PPD File: For Brother 2230 select 2170
 
-
 #### Misc libraries that need to be installed for R
+
 * `sudo apt-get install r-cran-rodbc`
 * `sudo apt-get install r-cran-xml`
 * `sudo apt-get install libcurl4-gnutls-dev` 
@@ -267,12 +247,10 @@ exit $RETVAL
 current_repo <- getOption("repos")
 current_repo["CRAN"] <- "http://lib.stat.cmu.edu/R/CRAN/"
 options(repos = current_repo)
-roger_env <- new.env()
-# If you don't want to clutter this file, leave functions elsewhere.
-sys.source(".my_custom_functions.r", envir = roger_env)
-attach(roger_env)
 ```
 
 Handy: Configure R to use more than one core when compiling source code.
 Add following line to `~/.Renviron or /usr/lib64/R/etc/Renviron.site`
+
 * `MAKEFLAGS=-j4`
+
