@@ -65,6 +65,7 @@ I am a big fan of Linux.  I enjoy ssh-ing into servers and using the command lin
 
 #### Other / Misc
 * `history` shows a list of previous commands.  What's nice is that you can re-run any command by using the bang operator and the line number (i.e. `!5`).  You can clear the history using `history -c`.
+* `timedatectl set-timezone America/New_York` sets the timezone to New York.
 * `ps aux | grep <program name>` to get a list of the **P**rocess **S**tate and ids (pid) for **A**ll **U**ser e**X**ecutables.
 * `kill -9 <pid>` kills (immediately) the process identified by <pid>.  You can use `ps aux` to identify the pid you want to kill.  Killing a process immediately should not need to be done very often and should be used sparingly.
 * `lscpu` **L**i**S**ts **CPU** information.
@@ -94,7 +95,7 @@ Using the newer systemd method, you can stop, start, or restart a service with _
 * `systemctl start nginx`
 * `systemctl restart nginx`
 
-Create the following file in `/lib/systemd/system/geth.service`:
+Example of creating a service.  Create the following file in `/lib/systemd/system/geth.service`:
 
 ```
 [Unit]
@@ -133,7 +134,7 @@ To see a list of all the installed services you can run the following command:
 
 
 #### Mining Ethereum
-Once you have it all set up, you can reboot your linux server and check to see that the geth service started and you are able to connect to the Java console as follows:
+Once you have the geth serve set up and the geth service created and enabled, you can reboot your linux server and check to see that the geth service started and you are able to connect to the Java console as follows:
 * `geth attach ipc:/media/usb/geth.ipc`
 
 Check your balance from within the geth console:
