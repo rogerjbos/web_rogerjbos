@@ -126,7 +126,7 @@ Then you can run any of these commands.
 
 Finally you will want to run this command so the service will start automatically after every reboot:
 
-* `systemctl enable`
+* `systemctl enable geth`
 
 To see a list of all the installed services you can run the following command:
 
