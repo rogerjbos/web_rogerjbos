@@ -14,6 +14,8 @@ I am a big fan of Linux.  I enjoy ssh-ing into servers and using the command lin
 ### Linux commands and other command line tools
 
 #### Users and Groups
+* `useradd myname` add a new user with the name myname.
+* `userdel ubuntu` delete the username _ubuntu_.  For example, after creating your own username, you may want to remove the default ubuntu username to make the server more secure.
 * `getent passwd` shows a list of all the users on the server.
 * `sudo passwd <username>` allows a sudoer to change the password of a user.
 * `groups` shows a list of all the groups in use.
