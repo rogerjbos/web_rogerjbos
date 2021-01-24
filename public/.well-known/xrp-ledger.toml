@@ -1,0 +1,14 @@
+# Example xrp-ledger.toml file. These contents should not be considered
+# authoritative for any real entity or business.
+# Note: all fields and all sections are optional.
+
+[METADATA]
+modified = 2019-01-23T00:00:00.000Z
+expires = 2050-03-01T00:00:00.000Z
+
+[[ACCOUNTS]]
+address = "rJvxcXvkcfck6jcCQg5Vh42bN9bNAjMp4Q"
+desc = "My XRPL address"
+# Note: This doesn't prove ownership of an account unless the
+#   "Domain" field of the account in the XRP Ledger matches the
+#   domain this file was served from.
