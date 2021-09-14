@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Roger J. Bos, CFA</copyright>
-    <lastBuildDate>Fri, 20 Dec 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://rogerjbos.com/post/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Fri, 20 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://rogerjbos.com/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Information Coefficients and Linear Regression</title>
       <link>https://rogerjbos.com/ic_and_lm/</link>
@@ -28,7 +24,7 @@
       <pubDate>Tue, 09 Apr 2019 00:00:00 +0000</pubDate>
       
       <guid>https://rogerjbos.com/shiny/</guid>
-      <description>Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly. Rstudio&#39;s @winston and @jcheng came to my rescue and determined that it was a problem with my nginx proxy settings. That prompted me to write up these notes so next time I have to set up a server, I won&#39;t be starting from scratch.
+      <description>Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly. Rstudio&amp;rsquo;s @winston and @jcheng came to my rescue and determined that it was a problem with my nginx proxy settings. That prompted me to write up these notes so next time I have to set up a server, I won&amp;rsquo;t be starting from scratch.
 Install and configure Nginx Here is the Rstudio article. Here is my corrected nginx.</description>
     </item>
     

@@ -1,0 +1,81 @@
+---
+output: 
+  pdf_document:
+    latex_engine: pdflatex
+    template: ~/R_HOME/svm-r-markdown-templates/svm-latex-cv.tex
+geometry: margin=1in
+
+title: "CV"
+author: Roger J. Bos, CFA
+
+# jobtitle: "Director of Quantitative Reserach"
+address: "175 Newtown Tpke, Weston CT  06883"
+fontawesome: yes
+email: roger.bos@gmail.com
+github: rogerjbos
+phone: "203 572 1267"
+web: rogerjbos.com
+# updated: no
+
+keywords: Factor Investing, Portfolio Construction, Backtesting, R, Shiny, Python
+
+fontfamily: mathpazo
+fontfamilyoptions: sc, osf
+fontsize: 11pt
+linkcolor: blue
+urlcolor: blue
+---
+
+# Employment
+
+*Rothschild & Co. Asset Management US*, Director of Quantitative Research (New York) \hfill 2004-Present
+
+Research and develop stock ranking systems used to manage $10 billion in equities.    
+
+Detailed achievements:  
+
+ * Efficiently extract S&P Snapshot (Xpressfeed) data via R & SQL
+
+ * Create and maintain a factor library of hundreds of factors
+
+ * Write R code to backtest factors and stock ranking systems
+ 
+ * Microcap Portfolio Manager with double-digit outperformance over the benchmark
+
+ * Developed R Shiny apps to make my analytics available to PMs
+
+ * Produce daily ranks and feed data to FactSet, Bloomberg, Portia, & Charles River
+
+*Standard & Poor's Corp.*, Various quantitative roles, New York \hfill 1998-2004
+
+* Modified S&P Fair Value model for new data source
+
+* Developed S&P International Quality Ranking System based on the domestic version
+
+* Backtested unit investment trust strategies using Research Insight data.
+
+* Conducted research on the S&P indices while a member of the Index Committee.
+   
+*Value Line Corp.*, Fundamental Equity Analyst, New York \hfill 1996-1998
+
+# Education
+
+*Carngie Mellon University*, Tepper School of Business, M.S. in Computational Finance \hfill 1999
+
+*University of the West Indiex*, Cave Hill Campus, Barbados, M.Phil. in Economics \hfill 1996
+
+*Rockhust University*, Kansas City, MO, BSBA in Finance Economics \hfill 1994
+
+# Publications
+
+* R packages on Github, such as for risk models and SVM recession prediction.
+
+*Index Caclulation Primer*, Standard & Poors, July 2000
+
+*General Criteria for S&P U.S. Index Membership*, Standard & Poors, September 2000
+
+*Event Study:	Quantifying the Effect of Being Added to an S&P Index*, Standard & Poors, January 2001
+
+# Interests
+
+Investing in equities, crypto, and real-estate.  Home automation using Python and Rasberry Pi.  All things do-it-yourself.

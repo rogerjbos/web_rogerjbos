@@ -73,26 +73,6 @@
   </url>
   
   <url>
-    <loc>https://rogerjbos.com/linux/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://rogerjbos.com/reports/ff5_decile/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://rogerjbos.com/reports/gvspread/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://rogerjbos.com/reports/recession/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://rogerjbos.com/about/</loc>
   </url>
   
@@ -102,10 +82,6 @@
   
   <url>
     <loc>https://rogerjbos.com/tags/investing/</loc>
-  </url>
-  
-  <url>
-    <loc>https://rogerjbos.com/reports/</loc>
   </url>
   
 </urlset>

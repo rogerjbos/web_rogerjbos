@@ -4,15 +4,15 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>R Shiny / Rstudio Server on CentOS Install Notes &middot; Roger J. Bos, CFA</title>
-        <meta name="description" content="Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly. Rstudio&#39;s @winston and @jcheng came to my rescue and determined that it was a problem with my nginx proxy settings. That prompted me to write up these notes so next time I have to set up a server, I won&#39;t be starting from scratch.
+        <meta name="description" content="Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly. Rstudio&rsquo;s @winston and @jcheng came to my rescue and determined that it was a problem with my nginx proxy settings. That prompted me to write up these notes so next time I have to set up a server, I won&rsquo;t be starting from scratch.
 Install and configure Nginx Here is the Rstudio article. Here is my corrected nginx.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
-        <meta name="generator" content="Hugo 0.61.0" />
+        <meta name="generator" content="Hugo 0.80.0" />
         <meta name="robots" content="index,follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="og:title" content="R Shiny / Rstudio Server on CentOS Install Notes">
-<meta property="og:description" content="Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly. Rstudio&#39;s @winston and @jcheng came to my rescue and determined that it was a problem with my nginx proxy settings. That prompted me to write up these notes so next time I have to set up a server, I won&#39;t be starting from scratch.
+<meta property="og:description" content="Today I upgraded to Shiny 1.3.0 and my Shiny server stopped rendering my apps correctly. Rstudio&rsquo;s @winston and @jcheng came to my rescue and determined that it was a problem with my nginx proxy settings. That prompted me to write up these notes so next time I have to set up a server, I won&rsquo;t be starting from scratch.
 Install and configure Nginx Here is the Rstudio article. Here is my corrected nginx.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://rogerjbos.com/shiny/">
@@ -55,7 +55,7 @@ if (!doNotTrack) {
                         
                         
                         
-                            <a class="button-square button-social hint--top" data-hint="Twitter" aria-label="Twitter" href="https://twitter.com/rogerjbos1" rel="me" >
+                            <a class="button-square button-social hint--top" data-hint="Twitter" aria-label="Twitter" href="https://twitter.com/rogerjbos" rel="me" >
                                 <i class="fa fa-twitter" aria-hidden="true"></i>
                             </a>
                         
@@ -81,7 +81,7 @@ if (!doNotTrack) {
                             </a>
                         
                         
-                            <a class="button-square button-social hint--top" data-hint="Email" aria-label="Send an Email" href="mailto:roger.bos@gmail.com">
+                            <a class="button-square button-social hint--top" data-hint="Email" aria-label="Send an Email" href="mailto:me@rogerjbos.com">
                                 <i class="fa fa-envelope" aria-hidden="true"></i>
                             </a>
                         
@@ -141,7 +141,7 @@ if (!doNotTrack) {
         <div class="post-content clearfix" itemprop="articleBody">
     
 
-    <p>Today I upgraded to <a href="https://community.rstudio.com/t/having-problems-with-shiny-v1-3-0-and-nginx/28180">Shiny 1.3.0</a> and my Shiny server stopped rendering my apps correctly.  Rstudio's @winston and @jcheng came to my rescue and determined that it was a problem with my nginx proxy settings.  That prompted me to write up these notes so next time I have to set up a server, I won't be starting from scratch.</p>
+    <p>Today I upgraded to <a href="https://community.rstudio.com/t/having-problems-with-shiny-v1-3-0-and-nginx/28180">Shiny 1.3.0</a> and my Shiny server stopped rendering my apps correctly.  Rstudio&rsquo;s @winston and @jcheng came to my rescue and determined that it was a problem with my nginx proxy settings.  That prompted me to write up these notes so next time I have to set up a server, I won&rsquo;t be starting from scratch.</p>
 <h3 id="install-and-configure-nginx">Install and configure Nginx</h3>
 <p>Here is the <a href="https://support.rstudio.com/hc/en-us/articles/213733868-Running-Shiny-Server-with-a-Proxy">Rstudio article</a>.  Here is my corrected nginx.conf file:</p>
 <h4 id="etcnginxnginxconf">/etc/nginx/nginx.conf</h4>
@@ -287,7 +287,7 @@ sudo chmod g+s .
 chown -v bosr:shiny-apps /usr/lib64/R/library
 </code></pre><p>You can verify the changes by typing <code>ls -l /usr/lib64/R/library</code>.</p>
 <p>To speed up package installs, configure R to use more than one core when compile source code.</p>
-<h4 id="usrlib64retcrenvironsite-create-the-file-if-it-doesnt-already-exist">/usr/lib64/R/etc/Renviron.site (create the file if it doesn't already exist)</h4>
+<h4 id="usrlib64retcrenvironsite-create-the-file-if-it-doesnt-already-exist">/usr/lib64/R/etc/Renviron.site (create the file if it doesn&rsquo;t already exist)</h4>
 <pre><code>MAKEFLAGS=-j4
 </code></pre><h3 id="set-up-automatic-drive-mappings-as-needed">Set up automatic drive mappings as needed</h3>
 <h4 id="etcfstab">/etc/fstab</h4>
