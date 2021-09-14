@@ -2,7 +2,7 @@
 title: "About"
 ---
 
-I am a quant finance professional working in NYC.  I have spent my entire career working in the equity markets.  My main programming languages are R and SQL, with over 17 years of experience.  I also know Python, Bash, and VBA.  The first two programming languages I learned were C++ and Java, but I haven't used them in a long time.  I am currently learning Go, Haskell, and Typescript and [Exercism](https://exercism.org/).
+I am a quant finance professional working in NYC.  I have spent my entire career working in the equity markets.  My main programming languages are R and SQL, with over 17 years of experience.  I also know Python, Bash, and VBA.  The first two programming languages I learned were C++ and Java, but I haven't used them in a long time.  I am currently learning Go, Haskell, and Typescript on [Exercism](https://exercism.org/).
 
 I have a deep love of learning and enjoy figuring out how things work, be it the stock market, plumbing systems, electrical systems, or cars.  I enjoy using my Raspberry Pi for home automation projects.
 
