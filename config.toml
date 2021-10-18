@@ -63,20 +63,24 @@ copyright = "Roger J. Bos, CFA"
     url = "/post/"
     weight = 2
 [[menu.main]]
-    name = "Investing"
-    url = "/investing/"
+    name = "Crypto Adventures"
+    url = "/post_cyrpto/"
     weight = 3
+[[menu.main]]
+    name = "Equity Investing"
+    url = "/investing/"
+    weight = 4
 [[menu.main]]
     name = "Linux"
     url = "/linux/"
-    weight = 4
+    weight = 5
 [[menu.main]]
     name = "DIY"
     url = "/diy/"
-    weight = 5
+    weight = 6
 
 [params]
-    description = "A quant finance professional in NYC."
+    description = "An equity, cyrpto, and real estate investor in Connecticut with a quant focus."
     # <script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script> 
     # <div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="horizontal" data-theme="light" data-vanity="rogerjboscfa"><a class="LI-simple-link" href='https://www.linkedin.com/in/rogerjboscfa?trk=profile-badge'>Roger J. Bos, CFA</a></div>
 
