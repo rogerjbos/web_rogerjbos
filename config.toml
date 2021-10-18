@@ -64,7 +64,7 @@ copyright = "Roger J. Bos, CFA"
     weight = 2
 [[menu.main]]
     name = "Crypto Adventures"
-    url = "/post_cyrpto/"
+    url = "/post_cyrpo"
     weight = 3
 [[menu.main]]
     name = "Equity Investing"
