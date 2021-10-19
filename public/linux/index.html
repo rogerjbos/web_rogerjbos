@@ -8,7 +8,7 @@
 Linux commands and other command line tools Users and Groups  useradd myname add a new user with the name myname. userdel ubuntu delete the username ubuntu. For example, after creating your own username, you may want to remove the default ubuntu username to make the server more secure.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
-        <meta name="generator" content="Hugo 0.80.0" />
+        <meta name="generator" content="Hugo 0.88.1" />
         <meta name="robots" content="index,follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="og:title" content="Linux Notes">
@@ -42,7 +42,6 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
-
 
         <div id="wrapper">
             <header class="site-header">
@@ -94,11 +93,7 @@ if (!doNotTrack) {
     </li>
 
     <li class="site-nav-item">
-        <a href="/post/">Blog</a>
-    </li>
-
-    <li class="site-nav-item">
-        <a href="/post_cyrpo">Crypto Adventures</a>
+        <a href="/">Blog</a>
     </li>
 
     <li class="site-nav-item">
@@ -263,7 +258,7 @@ if (!doNotTrack) {
 <li><code>systemctl restart nginx</code></li>
 </ul>
 <p>Example of creating a service.  Create the following file in <code>/lib/systemd/system/geth.service</code>:</p>
-<pre><code>[Unit]
+<pre tabindex="0"><code>[Unit]
 Description=Job that runs the geth (Go Ethereum) node as a service
 
 [Service]
@@ -437,7 +432,7 @@ WantedBy=multi-user.target
 <li><code>sudo apt-get install texinfo</code></li>
 </ul>
 <h4 id="modifications-to-the-etcrrprofile-file">Modifications to the <code>/etc/R/Rprofile</code> file</h4>
-<pre><code># Get your current repo name
+<pre tabindex="0"><code># Get your current repo name
 current_repo &lt;- getOption(&quot;repos&quot;)
 current_repo[&quot;CRAN&quot;] &lt;- &quot;http://lib.stat.cmu.edu/R/CRAN/&quot;
 options(repos = current_repo)

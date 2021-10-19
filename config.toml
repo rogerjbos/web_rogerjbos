@@ -25,10 +25,10 @@ copyright = "Roger J. Bos, CFA"
     tag = "tags"
 
 [Params]
-    mainSections = ["Investing"]
-    intro = false
-    headline = ""
-    description = ""
+    mainSections = "post"
+    intro = true
+    headline = "Equities, cyrpto, and real estate"
+    description = "An equity, cyrpto, and real estate investor in Connecticut with a quant focus."
     github = "https://github.com/rogerjbos"
     gitlab = ""
     linkedin = "https://linkedin.com/in/rogerjbos/"
@@ -60,24 +60,20 @@ copyright = "Roger J. Bos, CFA"
     weight = 1
 [[menu.main]]
     name = "Blog"
-    url = "/post/"
+    url = "/"
     weight = 2
-[[menu.main]]
-    name = "Crypto Adventures"
-    url = "/post_cyrpo/"
-    weight = 3
 [[menu.main]]
     name = "Equity Investing"
     url = "/investing/"
-    weight = 4
+    weight = 3
 [[menu.main]]
     name = "Linux"
     url = "/linux/"
-    weight = 5
+    weight = 4
 [[menu.main]]
     name = "DIY"
     url = "/diy/"
-    weight = 6
+    weight = 5
 
 [params]
     description = "An equity, cyrpto, and real estate investor in Connecticut with a quant focus."

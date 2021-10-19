@@ -8,7 +8,7 @@
 Install and configure Nginx Here is the Rstudio article. Here is my corrected nginx.">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
-        <meta name="generator" content="Hugo 0.80.0" />
+        <meta name="generator" content="Hugo 0.88.1" />
         <meta name="robots" content="index,follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="og:title" content="R Shiny / Rstudio Server on CentOS Install Notes">
@@ -42,7 +42,6 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
-
 
         <div id="wrapper">
             <header class="site-header">
@@ -94,11 +93,7 @@ if (!doNotTrack) {
     </li>
 
     <li class="site-nav-item">
-        <a href="/post/">Blog</a>
-    </li>
-
-    <li class="site-nav-item">
-        <a href="/post_cyrpo">Crypto Adventures</a>
+        <a href="/">Blog</a>
     </li>
 
     <li class="site-nav-item">
@@ -149,7 +144,7 @@ if (!doNotTrack) {
 <h3 id="install-and-configure-nginx">Install and configure Nginx</h3>
 <p>Here is the <a href="https://support.rstudio.com/hc/en-us/articles/213733868-Running-Shiny-Server-with-a-Proxy">Rstudio article</a>.  Here is my corrected nginx.conf file:</p>
 <h4 id="etcnginxnginxconf">/etc/nginx/nginx.conf</h4>
-<pre><code>#user nobody;
+<pre tabindex="0"><code>#user nobody;
 worker_processes  1;
 error_log  /data/log/nginx_error.log  debug;
 pid        /var/run/nginx.pid;
@@ -243,12 +238,12 @@ http {
 <h3 id="rstudio-server-configuration">Rstudio server configuration</h3>
 <p>The only change I made here was to run it under my username:</p>
 <h4 id="etcrstudiorserverconf">/etc/rstudio/rserver.conf</h4>
-<pre><code># Server Configuration File
+<pre tabindex="0"><code># Server Configuration File
 server-user=bosr
 </code></pre><h3 id="shiny-server-configuration">Shiny server configuration</h3>
 <p>Shiny runs as user shiny.  You can also set where to want your log files:</p>
 <h4 id="etcshiny-servershiny-serverconf">/etc/shiny-server/shiny-server.conf</h4>
-<pre><code># Instruct Shiny Server to run applications as the user &quot;shiny&quot;
+<pre tabindex="0"><code># Instruct Shiny Server to run applications as the user &quot;shiny&quot;
 run_as shiny;
 
 access_log /data/log/shiny-access.log combined;
@@ -278,7 +273,7 @@ server {
 
 </code></pre><h3 id="permissions">Permissions</h3>
 <p>My shiny apps are located in /data/shiny, so I want both users (bosr and shiny) to have access to that location.  This is done by creating a shiny-apps group and making both users a member of that group.  That way I can use Rstudio server to develope apps (as user bosr) and users can run them on Shiny (as user shiny).</p>
-<pre><code>sudo groupadd shiny-apps
+<pre tabindex="0"><code>sudo groupadd shiny-apps
 sudo usermod -aG shiny-apps bosr
 sudo usermod -aG shiny-apps shiny
 cd /data/shiny
@@ -287,15 +282,15 @@ sudo chmod g+w .
 sudo chmod g+s .
 
 </code></pre><p>I also want to use the Rstudio Server IDE to install packages into the default library folder, so I need to change the ownership and permissions of that folder.  Here it is based on my centOS server:</p>
-<pre><code>chmod 755 /usr/lib64/R/library
+<pre tabindex="0"><code>chmod 755 /usr/lib64/R/library
 chown -v bosr:shiny-apps /usr/lib64/R/library
 </code></pre><p>You can verify the changes by typing <code>ls -l /usr/lib64/R/library</code>.</p>
 <p>To speed up package installs, configure R to use more than one core when compile source code.</p>
 <h4 id="usrlib64retcrenvironsite-create-the-file-if-it-doesnt-already-exist">/usr/lib64/R/etc/Renviron.site (create the file if it doesn&rsquo;t already exist)</h4>
-<pre><code>MAKEFLAGS=-j4
+<pre tabindex="0"><code>MAKEFLAGS=-j4
 </code></pre><h3 id="set-up-automatic-drive-mappings-as-needed">Set up automatic drive mappings as needed</h3>
 <h4 id="etcfstab">/etc/fstab</h4>
-<pre><code># /etc/fstab
+<pre tabindex="0"><code># /etc/fstab
 # Created by anaconda on Thu Feb  1 07:41:28 2018
 #
 # Accessible filesystems, by reference, are maintained under '/dev/disk'
@@ -313,17 +308,17 @@ UUID=ba660186-313b-4482-82aa-23ce7ef7727b /boot                   xfs     defaul
 //(server name)/research                            /media/research cifs credentials=/etc/fstab.cred,fil$
 </code></pre><h4 id="etcfstabcred">/etc/fstab.cred</h4>
 <p>Instead of putting your password in the fstab file, put it in a separate credential file with the proper premissions.  They you only have to change the password in one place every time to change it.</p>
-<pre><code>username=bosr
+<pre tabindex="0"><code>username=bosr
 password=(secret)
 domain=(domain)
 
 </code></pre><h3 id="troubleshooting">Troubleshooting</h3>
 <p>If you want to downgrade to an older version of a package, here is any easy way to do so:</p>
-<pre><code>library(devtools)
+<pre tabindex="0"><code>library(devtools)
 install_version(&quot;shiny&quot;, version = &quot;1.2.0&quot;, repos = &quot;http://cran.us.r-project.org&quot;)
 
 </code></pre><p>If you want to start R without any automatic loading of packages:</p>
-<pre><code>R -vanilla
+<pre tabindex="0"><code>R -vanilla
 </code></pre>
 </div>
 

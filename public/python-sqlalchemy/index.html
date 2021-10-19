@@ -7,7 +7,7 @@
         <meta name="description" content="SQLAlchemy ORM versus Raw SQL">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
-        <meta name="generator" content="Hugo 0.80.0" />
+        <meta name="generator" content="Hugo 0.88.1" />
         <meta name="robots" content="index,follow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta property="og:title" content="SQLAlchemy ORM versus Raw SQL">
@@ -40,7 +40,6 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
-
 
         <div id="wrapper">
             <header class="site-header">
@@ -92,11 +91,7 @@ if (!doNotTrack) {
     </li>
 
     <li class="site-nav-item">
-        <a href="/post/">Blog</a>
-    </li>
-
-    <li class="site-nav-item">
-        <a href="/post_cyrpo">Crypto Adventures</a>
+        <a href="/">Blog</a>
     </li>
 
     <li class="site-nav-item">
@@ -148,15 +143,15 @@ if (!doNotTrack) {
     <h2 id="python-sqlalchemy-orm-versus-raw-sql">Python: SQLAlchemy ORM versus Raw SQL</h2>
 <p>I was reading this blog post [https://auth0.com/blog/sqlalchemy-orm-tutorial-for-python-developers/] about SQLAlchemy and how to run queries using its Object Relational Mapper (ORM).  It is a very good intruduction to the pythonic ORM way of talking to databases, but I think I still prefer using raw SQL.  In this post I will show you some reasons why I prefer raw SQL.  I will use the same database and tables used in the original tutorial for these examples.</p>
 <p>We will import sqlalchemy to connect to the Postgres database and pandas to execute the raw SQL statements.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> sqlalchemy <span style="color:#f92672">as</span> sqla
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> sqlalchemy <span style="color:#66d9ef">as</span> sqla
 <span style="color:#f92672">from</span> sqlalchemy.orm <span style="color:#f92672">import</span> sessionmaker
-<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
 <span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> date
 
 </code></pre></div><p>If you get any errors, please see the original blog post above for the requirements that need to be installed, such as sqlalchemy.  I am using pandas later on in this blog, so you would need to have that installed too.  The &lsquo;psycopg2&rsquo; module is also used, and has been renamed, so I would recommend something like the following to install it:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># pip install psycopg2-binary</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># pip install psycopg2-binary</span>
 </code></pre></div><p>Again, the original blog post above creates the classes and data for the example tables.  Once they are created, here is the code to import them.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
 <span style="color:#f92672">from</span> base <span style="color:#f92672">import</span> Session
 <span style="color:#f92672">from</span> actor <span style="color:#f92672">import</span> Actor
 <span style="color:#f92672">from</span> contact_details <span style="color:#f92672">import</span> ContactDetails
@@ -166,26 +161,26 @@ if (!doNotTrack) {
   &quot;&quot;&quot;)
 </code></pre>
 <p>The code below shows the connection string for a postgres database named roger with username &lsquo;usr&rsquo; and password &lsquo;pass&rsquo; running on 127.0.0.1 (also knwon as localhost) port 5432 (the default port).</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">xf <span style="color:#f92672">=</span> sqla<span style="color:#f92672">.</span>create_engine(<span style="color:#e6db74">&#39;postgresql://usr:pass@localhost:5432/roger&#39;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">xf <span style="color:#f92672">=</span> sqla<span style="color:#f92672">.</span>create_engine(<span style="color:#e6db74">&#39;postgresql://usr:pass@localhost:5432/roger&#39;</span>)
 Session <span style="color:#f92672">=</span> sessionmaker(bind<span style="color:#f92672">=</span>xf)
 session <span style="color:#f92672">=</span> Session()
 </code></pre></div><p>Finally, we are able to run our first query.  We are going to query all the movies defined by the Movie class and stored in the movies table.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">movies <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>query(Movie)<span style="color:#f92672">.</span>all()
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">movies <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>query(Movie)<span style="color:#f92672">.</span>all()
 </code></pre></div><p>The movies object is a class, so you can&rsquo;t just its contents directly.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">movies
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">movies
 </code></pre></div><pre><code>[&lt;movie.Movie at 0x1177f5be0&gt;,
  &lt;movie.Movie at 0x1177f5c88&gt;,
  &lt;movie.Movie at 0x1177f5908&gt;]
 </code></pre>
 <p>Instead you have to use a for loop to print out each row of data.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> movie <span style="color:#f92672">in</span> movies:
-     <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;{movie.title} was released on {movie.release_date}&#39;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> movie <span style="color:#f92672">in</span> movies:
+     print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>movie<span style="color:#f92672">.</span>title<span style="color:#e6db74">}</span><span style="color:#e6db74"> was released on </span><span style="color:#e6db74">{</span>movie<span style="color:#f92672">.</span>release_date<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
 </code></pre></div><pre><code>The Bourne Identity was released on 2002-10-11
 Furious 7 was released on 2015-04-02
 Pain &amp; Gain was released on 2013-08-23
 </code></pre>
 <p>Whereas using the read_sql_query function from pandas with raw SQL gives use hte returned rows in a nice format that prints easily.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#39;select * from movies&#39;</span>, xf)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#39;select * from movies&#39;</span>, xf)
 </code></pre></div><!-- raw HTML omitted -->
 <pre><code>.dataframe tbody tr th {
     vertical-align: top;
@@ -198,7 +193,7 @@ Pain &amp; Gain was released on 2013-08-23
 <p><!-- raw HTML omitted --></p>
 <!-- raw HTML omitted -->
 <p>Using raw SQL is a quick way to remind yourself of the column names of each table you are using without having to refer back to the class object.  These tables are very small, but with bigger tables you would want to limit the number of rows returned.  For many databases you use the word &lsquo;top&rsquo; to do so, but for Postgres (and MySQL) you use &lsquo;limit&rsquo;, as is done in the next few queries.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#39;select * from actors limit 3&#39;</span>, xf)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#39;select * from actors limit 3&#39;</span>, xf)
 
 </code></pre></div><!-- raw HTML omitted -->
 <pre><code>.dataframe tbody tr th {
@@ -211,7 +206,7 @@ Pain &amp; Gain was released on 2013-08-23
 </code></pre>
 <p><!-- raw HTML omitted --></p>
 <!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#39;select * from movies_actors limit 4&#39;</span>, xf)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#39;select * from movies_actors limit 4&#39;</span>, xf)
 </code></pre></div><!-- raw HTML omitted -->
 <pre><code>.dataframe tbody tr th {
     vertical-align: top;
@@ -223,7 +218,7 @@ Pain &amp; Gain was released on 2013-08-23
 </code></pre>
 <p><!-- raw HTML omitted --></p>
 <!-- raw HTML omitted -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
 pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#39;select * from contact_details limit 4&#39;</span>, xf)
 </code></pre></div><!-- raw HTML omitted -->
 <pre><code>.dataframe tbody tr th {
@@ -237,23 +232,23 @@ pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74"
 <p><!-- raw HTML omitted --></p>
 <!-- raw HTML omitted -->
 <p>SQLAlchemy also has an inspect method to list the names of all the tables in a database.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">inspector <span style="color:#f92672">=</span> sqla<span style="color:#f92672">.</span>inspect(xf)
-<span style="color:#66d9ef">print</span>(inspector<span style="color:#f92672">.</span>get_table_names())
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">inspector <span style="color:#f92672">=</span> sqla<span style="color:#f92672">.</span>inspect(xf)
+print(inspector<span style="color:#f92672">.</span>get_table_names())
 </code></pre></div><pre><code>['returns', 'actors', 'contact_details', 'movies', 'movies_actors', 'stuntmen']
 </code></pre>
 <p>Now we will look at how to run some more complex queries.  Say we want to find all the movies that have been released since 2015.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># get movies after 15-01-01</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># get movies after 15-01-01</span>
 movies <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>query(Movie) \
      <span style="color:#f92672">.</span>filter(Movie<span style="color:#f92672">.</span>release_date <span style="color:#f92672">&gt;=</span> date(<span style="color:#ae81ff">2015</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)) \
      <span style="color:#f92672">.</span>all()
 
 <span style="color:#66d9ef">for</span> movie <span style="color:#f92672">in</span> movies:
-     <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;{movie.title} was released since 2015&#39;</span>)
+     print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>movie<span style="color:#f92672">.</span>title<span style="color:#e6db74">}</span><span style="color:#e6db74"> was released since 2015&#39;</span>)
 
 </code></pre></div><pre><code>Furious 7 was released since 2015
 </code></pre>
 <p>This can be accomplished in raw SQL as follows</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select * from movies </span><span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select * from movies </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">where release_date &gt;= &#39;1/1/2015&#39;&#34;</span>, xf)
 </code></pre></div><!-- raw HTML omitted -->
 <pre><code>.dataframe tbody tr th {
@@ -267,19 +262,19 @@ movies <span style="color:#f92672">=</span> session<span style="color:#f92672">.
 <p><!-- raw HTML omitted --></p>
 <!-- raw HTML omitted -->
 <p>Continuing with the examples, we can find all the movies featuring &lsquo;Dwayne Johnson&rsquo;</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">the_rock_movies <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>query(Movie) \
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">the_rock_movies <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>query(Movie) \
     <span style="color:#f92672">.</span>join(Actor, Movie<span style="color:#f92672">.</span>actors) \
     <span style="color:#f92672">.</span>filter(Actor<span style="color:#f92672">.</span>name <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;Dwayne Johnson&#39;</span>) \
     <span style="color:#f92672">.</span>all()
 
 <span style="color:#66d9ef">for</span> movie <span style="color:#f92672">in</span> the_rock_movies:
-    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;The Rock starred in {movie.title}&#39;</span>)
+    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;The Rock starred in </span><span style="color:#e6db74">{</span>movie<span style="color:#f92672">.</span>title<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
 
 </code></pre></div><pre><code>The Rock starred in Pain &amp; Gain
 The Rock starred in Furious 7
 </code></pre>
 <p>In the raw SQL version we have to use the movies_actors table to join the ids from the movies and actors tables.  There is more than one way to do this join, but here is an easy and straightforward method.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select m.title as Movie, a.name as Actor, m.release_date as Released </span><span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select m.title as Movie, a.name as Actor, m.release_date as Released </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">                  from movies m, actors a, movies_actors ma </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">                  where m.id=movie_id and a.id=actor_id and a.name = &#39;Dwayne Johnson&#39;&#34;</span>, xf)
 </code></pre></div><!-- raw HTML omitted -->
@@ -294,18 +289,18 @@ The Rock starred in Furious 7
 <p><!-- raw HTML omitted --></p>
 <!-- raw HTML omitted -->
 <p>As another example of joining and filtering, we can also find all the actors that live in Glendale. SQL uses the &lsquo;%&rsquo; sign to indicate a wildcard, so there can be any number of characters before and after &lsquo;glendale&rsquo; and the &lsquo;like&rsquo; parameter will find a match.  If you knew all the addresses started (or ended) with &lsquo;glendale&rsquo;, you could use &lsquo;%glendale&rsquo; (or &lsquo;glendale%').</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">glendale_stars <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>query(Actor) \
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">glendale_stars <span style="color:#f92672">=</span> session<span style="color:#f92672">.</span>query(Actor) \
     <span style="color:#f92672">.</span>join(ContactDetails) \
     <span style="color:#f92672">.</span>filter(ContactDetails<span style="color:#f92672">.</span>address<span style="color:#f92672">.</span>ilike(<span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%g</span><span style="color:#e6db74">lendale%&#39;</span>)) \
     <span style="color:#f92672">.</span>all()
 
 <span style="color:#66d9ef">for</span> actor <span style="color:#f92672">in</span> glendale_stars:
-    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;{actor.name} has a house in Glendale&#39;</span>)
+    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{</span>actor<span style="color:#f92672">.</span>name<span style="color:#e6db74">}</span><span style="color:#e6db74"> has a house in Glendale&#39;</span>)
 </code></pre></div><pre><code>Dwayne Johnson has a house in Glendale
 Mark Wahlberg has a house in Glendale
 </code></pre>
 <p>The following raw SQL query does not work.  Can you spot the problem?  (hint: There are actually two problems.)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select a.name </span><span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select a.name </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">                  from actors a, contact_details c </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">                  where a.id=c.actor_id and c.address like &#39;</span><span style="color:#e6db74">%g</span><span style="color:#e6db74">lendale%&#39;&#34;</span>, xf)
 
@@ -410,7 +405,7 @@ TypeError                                 Traceback (most recent call last)
 TypeError: 'dict' object does not support indexing
 </code></pre>
 <p>The interpreter throws a really long error with absolutely no clue as to the actual problem, which is that Python treats &lsquo;%&rsquo; as a special character.  So if you want to use the &lsquo;%&rsquo; character in a string, you need to double it, like so&hellip;</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select a.name </span><span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select a.name </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">                  from actors a, contact_details c </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">                  where a.id=c.actor_id and c.address like &#39;</span><span style="color:#e6db74">%%</span><span style="color:#e6db74">glendale</span><span style="color:#e6db74">%%</span><span style="color:#e6db74">&#39;&#34;</span>, xf)
 
@@ -427,7 +422,7 @@ NameError                                 Traceback (most recent call last)
 NameError: name 'pd' is not defined
 </code></pre>
 <p>Now the query runs without error, but it does not return us the two rows we are expecting.  That leads us to the second problem, which is that &lsquo;like&rsquo; is case sensitive.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select a.name </span><span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select a.name </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">                  from actors a, contact_details c </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">                  where a.id=c.actor_id and c.address like &#39;</span><span style="color:#e6db74">%%</span><span style="color:#e6db74">Glendale</span><span style="color:#e6db74">%%</span><span style="color:#e6db74">&#39;&#34;</span>, xf)
 </code></pre></div><pre><code>---------------------------------------------------------------------------
@@ -443,7 +438,7 @@ NameError                                 Traceback (most recent call last)
 NameError: name 'pd' is not defined
 </code></pre>
 <p>The problem now is that if some of the city names were capitalized and some were not, the query would not be accurate.  A better fix is to use ilike which is not case sensitive.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select a.name </span><span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select a.name </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">                  from actors a, contact_details c </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">                  where a.id=c.actor_id and c.address ilike &#39;</span><span style="color:#e6db74">%%</span><span style="color:#e6db74">glendale</span><span style="color:#e6db74">%%</span><span style="color:#e6db74">&#39;&#34;</span>, xf)
 </code></pre></div><pre><code>---------------------------------------------------------------------------
@@ -462,41 +457,41 @@ NameError: name 'pd' is not defined
 <p>To show some more examples of raw SQL, we will build a small table of stock prices for stock symbol GE.</p>
 <h2 id="a-stock-example">A Stock Example</h2>
 <p>The pandas module has a nice function to read in stock prices from Yahoo!</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pandas_datareader <span style="color:#f92672">import</span> data <span style="color:#66d9ef">as</span> wb  
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pandas_datareader <span style="color:#f92672">import</span> data <span style="color:#66d9ef">as</span> wb  
 ticker <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;GE&#39;</span> 
 GE <span style="color:#f92672">=</span> wb<span style="color:#f92672">.</span>DataReader(ticker, data_source<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;yahoo&#39;</span>, start<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;2007-1-1&#39;</span>)[<span style="color:#e6db74">&#39;Adj Close&#39;</span>]
 ret <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data <span style="color:#f92672">=</span> GE)
 ret<span style="color:#f92672">.</span>tail()
 </code></pre></div><p>Lets say we wanted to save this price history into a database.  Using the ORM method, we would have to create a class for the table, but using pandas and raw SQL we can just save the DataFrame to a table and use it right away.  In the first line I drop the table in case it already exists and in the second line the DataFrame &lsquo;ret&rsquo; is saved to a table named &lsquo;returns&rsquo; in the &lsquo;xf&rsquo; database.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">xf<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;drop table returns&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">xf<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;drop table returns&#34;</span>)
 ret<span style="color:#f92672">.</span>to_sql(<span style="color:#e6db74">&#39;returns&#39;</span>, xf)
 </code></pre></div><p>To see if the save worked, we can query the table, as we do below.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select * from returns limit 4&#34;</span>, xf)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select * from returns limit 4&#34;</span>, xf)
 </code></pre></div><p>You can see the table output and everything looks fine.  If I ended the post here everything would seem pretty simple and straightforward, but there are many problems which would make it hard for someone new to Python and SQL to work with this table.</p>
 <p>In the above query everything worked smoothly because I used the &lsquo;*&rsquo; wildcard and didn&rsquo;t specify the column names.  What problems would I encounter if I tried to use the actual column names?  I can predict that Adj Close will be a problem because of the space, so I will quote it.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select Date, &#39;Adj Close&#39; from returns limit 4&#34;</span>, xf)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select Date, &#39;Adj Close&#39; from returns limit 4&#34;</span>, xf)
 </code></pre></div><p>Python doesn&rsquo;t like the column &ldquo;Date&rdquo; either.  It turns out that Postgres SQL doesn&rsquo;t like any column names that are capitalized.  Maybe that&rsquo;s one reason to use ORM, but a simple fix is just to adjust the column names before you save the table.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ret <span style="color:#f92672">=</span> ret<span style="color:#f92672">.</span>rename(index<span style="color:#f92672">=</span>str, columns<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;Adj Close&#34;</span>: <span style="color:#e6db74">&#34;adj_close&#34;</span>})
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ret <span style="color:#f92672">=</span> ret<span style="color:#f92672">.</span>rename(index<span style="color:#f92672">=</span>str, columns<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;Adj Close&#34;</span>: <span style="color:#e6db74">&#34;adj_close&#34;</span>})
 ret<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;date&#34;</span>
 ret<span style="color:#f92672">.</span>tail()
 </code></pre></div><p>The above code shows two different methods for modifying column names.  For regular columns you just use the rename function in pandas.  For the index of the dataframe, you have to do something different.  &lsquo;Date&rsquo; is an index rather than a column, so we had to use the &lsquo;name&rsquo; function change its name.  Now both column are lower case and do not contain spaces.  We are making everyone happy.  Now lets add a column with the return.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ret[<span style="color:#e6db74">&#39;return&#39;</span>] <span style="color:#f92672">=</span> ret[<span style="color:#e6db74">&#39;adj_close&#39;</span>]<span style="color:#f92672">.</span>pct_change()
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ret[<span style="color:#e6db74">&#39;return&#39;</span>] <span style="color:#f92672">=</span> ret[<span style="color:#e6db74">&#39;adj_close&#39;</span>]<span style="color:#f92672">.</span>pct_change()
 ret<span style="color:#f92672">.</span>tail()
 </code></pre></div><p>The DataFrame looks good now.  Lets save this new DataFrame to a table so I can show you what I really want to show you.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">xf<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;drop table returns&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">xf<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;drop table returns&#34;</span>)
 ret<span style="color:#f92672">.</span>to_sql(<span style="color:#e6db74">&#39;returns&#39;</span>, xf)
 </code></pre></div><p>Then test out the save and make sure it worked.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">out <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select * from returns limit 10&#34;</span>, xf)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">out <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select * from returns limit 10&#34;</span>, xf)
 out<span style="color:#f92672">.</span>head()
 </code></pre></div><p>Just to verify, we can now specify the column names without a problem.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select date, adj_close, return from returns limit 10&#34;</span>, xf)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select date, adj_close, return from returns limit 10&#34;</span>, xf)
 </code></pre></div><p>We can condition on date to get the daily returns for January.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select date, returns from returns </span><span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select date, returns from returns </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">                  where date between &#39;2019-01-01&#39; and &#39;2019-02-01&#39;&#34;</span>, xf)
 
 
 </code></pre></div><p>Now I can finally show you a good example of something you can do in raw SQL.  If you have a table of daily returns, you can calculate cumulative returns for any time period within SQL.  SQL does not have a product function, but you can sum the log returns and then exponentiate them to accomplish the same thing.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select EXP(SUM(LOG(1+return))) - 1 as cumret from returns </span><span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select EXP(SUM(LOG(1+return))) - 1 as cumret from returns </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">                  where date between &#39;2019-01-01&#39; and &#39;2019-02-01&#39;&#34;</span>, xf)
 
 </code></pre></div><!-- raw HTML omitted -->
@@ -511,7 +506,7 @@ out<span style="color:#f92672">.</span>head()
 <p><!-- raw HTML omitted --></p>
 <!-- raw HTML omitted -->
 <p>We can also calculate the standard deviation of daily returns in the same query as below. Let&rsquo;s expand the window to six months.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select EXP(SUM(LOG(1 + return))) - 1 as cumret, </span><span style="color:#ae81ff">\
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_sql_query(<span style="color:#e6db74">&#34;select EXP(SUM(LOG(1 + return))) - 1 as cumret, </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">                  SQRT(21 * SUM(return * return) / 126) as volatility </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">                  from returns </span><span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span><span style="color:#e6db74">                  where date between &#39;2018-06-30&#39; and &#39;2018-12-31&#39;&#34;</span>, xf)
