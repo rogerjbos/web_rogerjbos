@@ -27,7 +27,7 @@ copyright = "Roger J. Bos, CFA"
 [Params]
     mainSections = "post"
     intro = true
-    headline = "Equities, cyrpto, and real estate"
+    headline = ""
     description = "An equity, cyrpto, and real estate investor in Connecticut with a quant focus."
     github = "https://github.com/rogerjbos"
     gitlab = ""
