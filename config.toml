@@ -35,7 +35,7 @@ copyright = "Roger J. Bos, CFA"
     twitter = "https://twitter.com/rogerjbos"
     stackoverflow = "https://stackoverflow.com/users/7351478"
     facebook = "https://www.facebook.com/rogerjbos"
-    email = "me@rogerjbos.com"
+    email = "roger.john.bos@gmail.com"
     opengraph = true
     shareTwitter = true
     shareFacebook = true
@@ -67,13 +67,17 @@ copyright = "Roger J. Bos, CFA"
     url = "/investing/"
     weight = 3
 [[menu.main]]
+    name = "Crypto"
+    url = "https://crypto.rogerjbos.com/"
+    weight = 4
+[[menu.main]]
     name = "Linux"
     url = "/linux/"
-    weight = 4
+    weight = 5
 [[menu.main]]
     name = "DIY"
     url = "/diy/"
-    weight = 5
+    weight = 6
 
 [params]
     description = "An equity, cyrpto, and real estate investor in Connecticut with a quant focus."

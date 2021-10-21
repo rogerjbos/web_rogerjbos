@@ -60,21 +60,24 @@ Detailed achievements:
 
 # Education
 
-*Carngie Mellon University*, Tepper School of Business, M.S. in Computational Finance \hfill 1999
+*Carnegie Mellon University*, Tepper School of Business, M.S. in Computational Finance \hfill 1999
+Multidiscipliary degree in mathematics, statistics, finance, and computer science focused on derivative pricing models.
 
-*University of the West Indiex*, Cave Hill Campus, Barbados, M.Phil. in Economics \hfill 1996
+*University of the West Indies*, Cave Hill Campus, Barbados, M.Phil. in Economics \hfill 1996
+Studied economics and wrote a master's thesis on exchange rate effects in small open economies.
 
-*Rockhust University*, Kansas City, MO, BSBA in Finance Economics \hfill 1994
+*Rockhurst University*, Kansas City, MO, B.S.B.A. in Finance Economics \hfill 1994
+Dual degree in finance economics and global studies.
 
 # Publications
 
 * R packages on Github, such as for risk models and SVM recession prediction.
 
-*Index Caclulation Primer*, Standard & Poors, July 2000
+*Index Calculation Primer*, Standard & Poor's, July 2000
 
-*General Criteria for S&P U.S. Index Membership*, Standard & Poors, September 2000
+*General Criteria for S&P U.S. Index Membership*, Standard & Poor's, September 2000
 
-*Event Study:	Quantifying the Effect of Being Added to an S&P Index*, Standard & Poors, January 2001
+*Event Study:	Quantifying the Effect of Being Added to an S&P Index*, Standard & Poor's, January 2001
 
 # Interests
 
