@@ -17,20 +17,19 @@ For more information read the official [setup guide](//gohugo.io/overview/instal
 ## Development
 
 After installing the theme you need to install javascript dependencies. You can use 
-`npm` or `yarn` to install them from `package.json`. We are using `webpack` to build
-and package styles. In order to develop with realtime reloading in the browser you can 
-use this powerful combo:
+`npm` to install them from `package.json`. We are using `webpack` to build and package 
+styles. In order to develop with realtime reloading in the browser you can use this powerful combo:
 
 ```bash
 hugo server
-yarn run watch
+npm run watch
 ```
 
 To update theme styles edit the `styles/style.scss` file. You can then either use the `watch` command
 or run `build` to compile the styles:
 
 ```bash
-yarn run build
+npm run build
 ```
 
 ## Example config.yml

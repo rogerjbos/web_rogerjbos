@@ -1,9 +1,7 @@
 const path = require('path');
-const perfectionist = require('perfectionist');
-const discardComments = require('postcss-discard-comments');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -24,18 +22,13 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css'
     }),
-    new OptimizeCssAssetsPlugin({
-      cssProcessor: discardComments,
-      canPrint: false
-    }),
-    new OptimizeCssAssetsPlugin({
-      cssProcessor: perfectionist,
-      cssProcessorOptions: {
-        format: 'compact'
-      },
-      canPrint: false
-    })
   ],
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new CssMinimizerPlugin(),
+    ],
+  },
   module: {
     rules: [
       {
