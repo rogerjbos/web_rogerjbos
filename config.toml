@@ -78,6 +78,10 @@ copyright = "Roger J. Bos, CFA"
     name = "DIY"
     url = "/diy/"
     weight = 6
+[[menu.main]]
+    name = "ART"
+    url = "/art/"
+    weight = 7
 
 [params]
     description = "An equity, crypto, and real estate investor in Connecticut with a quant focus."

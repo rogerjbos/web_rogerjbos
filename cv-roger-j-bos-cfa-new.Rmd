@@ -1,8 +1,5 @@
 ---
-output: 
-  pdf_document:
-    latex_engine: pdflatex
-    template: ~/R_HOME/svm-r-markdown-templates/svm-latex-cv.tex
+output: stevetemplates::cv
 geometry: margin=1in
 
 title: "CV"
@@ -17,7 +14,7 @@ phone: "203 572 1267"
 web: rogerjbos.com
 # updated: no
 
-keywords: Factor Investing, Portfolio Construction, Backtesting, R, Shiny, Python
+keywords: Factor Investing, Portfolio Construction, Backtesting, R, Shiny, Python, TypeScript
 
 fontfamily: mathpazo
 fontfamilyoptions: sc, osf
@@ -28,21 +25,25 @@ urlcolor: blue
 
 # Employment
 
+
 *Acala Network*, Data Analytics Engineer (Remote) \hfill 2022-Present
 
-Gather and analyze blockchain data using TypeScript and GraphQL.    
+_Gather and analyze blockchain data using TypeScript, R, and GraphQL._    
+
+* Created a swap performance report to track the activity of each swap pair on the exchange.
+
+* Created a liquidation report to track the frequency of liquidation events and the average slippage.
+
 
 *Rothschild & Co. Asset Management US*, Director of Quantitative Research (New York) \hfill 2004-2021
 
-Research and develop stock ranking systems used to manage $10 billion in equities.    
+_Research and develop stock ranking systems used to manage $10 billion in equities._    
 
-Detailed achievements:  
+ * Efficiently extracted S&P Snapshot (Xpressfeed) data via R & SQL
 
- * Efficiently extract S&P Snapshot (Xpressfeed) data via R & SQL
+ * Created and maintained a factor library of hundreds of factors
 
- * Create and maintain a factor library of hundreds of factors
-
- * Write R code to backtest factors and stock ranking systems
+ * Wrote R code to backtest factors and stock ranking systems
  
  * Microcap Portfolio Manager with double-digit outperformance over the benchmark
 
@@ -50,7 +51,8 @@ Detailed achievements:
 
  * Produce daily ranks and feed data to FactSet, Bloomberg, Portia, & Charles River
 
-*Standard & Poor's Corp.*, Various quantitative roles, New York \hfill 1998-2004
+
+*Standard & Poor's Corp.*, Various quantitative roles (New York) \hfill 1998-2004
 
 * Modified S&P Fair Value model for new data source
 
@@ -60,29 +62,48 @@ Detailed achievements:
 
 * Conducted research on the S&P indices while a member of the Index Committee.
    
-*Value Line Corp.*, Fundamental Equity Analyst, New York \hfill 1996-1998
+
+*Value Line Corp.*, Fundamental Equity Analyst (New York) \hfill 1996-1998
+
+* Covererd 30+ companies fundamentally across four different sectors.
+
+* Wrote investment analysis reports on a quarterly basis for each covered company.
+
 
 # Education
 
+
 *Carnegie Mellon University*, Tepper School of Business, M.S. in Computational Finance \hfill 1999
+
 Multidiscipliary degree in mathematics, statistics, finance, and computer science focused on derivative pricing models.
 
+
 *University of the West Indies*, Cave Hill Campus, Barbados, M.Phil. in Economics \hfill 1996
+
 Studied economics and wrote a master's thesis on exchange rate effects in small open economies.
 
+
 *Rockhurst University*, Kansas City, MO, B.S.B.A. in Finance Economics \hfill 1994
+
 Dual degree in finance economics and global studies.
+
+
+# Programming Languages
+
+R, Python, TypeScript, and SQL Server
+
 
 # Publications
 
 * R packages on Github, such as for risk models and SVM recession prediction.
 
-*Index Calculation Primer*, Standard & Poor's, July 2000
+* _Index Calculation Primer_, Standard & Poor's, July 2000
 
-*General Criteria for S&P U.S. Index Membership*, Standard & Poor's, September 2000
+* _General Criteria for S&P U.S. Index Membership_, Standard & Poor's, September 2000
 
-*Event Study:	Quantifying the Effect of Being Added to an S&P Index*, Standard & Poor's, January 2001
+* _Event Study:	Quantifying the Effect of Being Added to an S&P Index_, Standard & Poor's, January 2001
 
-# Interests
+# Interests / Hobbies
 
-Investing in equities, crypto, and real-estate.  Home automation using Python and Raspberry Pi.  All things do-it-yourself.
+Investing in equities, crypto, and real-estate.  Home automation using Python and Raspberry Pi.  Running, hiking, all things do-it-yourself.
+
